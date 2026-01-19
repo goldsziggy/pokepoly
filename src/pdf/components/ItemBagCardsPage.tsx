@@ -3,6 +3,7 @@ import type { PaperSize, CardSize } from '@/types'
 import { CARD_SIZE_MULTIPLIERS, PAPER_DIMENSIONS } from '@/types/board'
 import { ITEM_BAG_CARDS } from '@/lib/cards'
 import { baseStyles, cardStyles, colors } from './styles'
+import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 
 interface ItemBagCardsPageProps {
   paperSize: PaperSize
@@ -88,7 +89,61 @@ function getCardStyles(cardSize: CardSize) {
       fontSize: baseEffectFont * multiplier,
       textAlign: 'center',
     },
+    effectRow: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+    },
+    effectText: {
+      fontSize: baseEffectFont * multiplier,
+    },
   })
+}
+
+// Helper function to render text with PokeCoin symbols
+function renderEffectWithCoins(effect: string, coinSize: number, textStyle: any) {
+  // Match ₽ followed by numbers
+  const parts: Array<{ type: 'text' | 'coin'; value: string }> = []
+  const regex = /₽(\d+)/g
+  let lastIndex = 0
+  let match
+
+  while ((match = regex.exec(effect)) !== null) {
+    // Add text before the match
+    if (match.index > lastIndex) {
+      parts.push({ type: 'text', value: effect.substring(lastIndex, match.index) })
+    }
+    // Add coin with amount
+    parts.push({ type: 'coin', value: match[1] })
+    lastIndex = regex.lastIndex
+  }
+  
+  // Add remaining text
+  if (lastIndex < effect.length) {
+    parts.push({ type: 'text', value: effect.substring(lastIndex) })
+  }
+
+  // If no matches, return original text
+  if (parts.length === 0) {
+    return <Text style={textStyle}>{effect}</Text>
+  }
+
+  return (
+    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', flexWrap: 'wrap' }}>
+      {parts.map((part, index) => {
+        if (part.type === 'coin') {
+          return (
+            <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 1 }}>
+              <PokeCoinPDF size={coinSize} />
+              <Text style={textStyle}>{part.value}</Text>
+            </View>
+          )
+        }
+        return <Text key={index} style={textStyle}>{part.value}</Text>
+      })}
+    </View>
+  )
 }
 
 export function ItemBagCardsPage({ paperSize, cardSize, pageNumber = 0 }: ItemBagCardsPageProps) {
@@ -123,7 +178,7 @@ export function ItemBagCardsPage({ paperSize, cardSize, pageNumber = 0 }: ItemBa
             </View>
             <Text style={styles.cardTitle}>{card.name}</Text>
             <Text style={styles.cardDescription}>"{card.description}"</Text>
-            <Text style={styles.cardEffect}>{card.effect}</Text>
+            {renderEffectWithCoins(card.effect, 6 * multiplier, styles.cardEffect)}
           </View>
         ))}
       </View>

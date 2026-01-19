@@ -1,0 +1,7 @@
+- Increase the size of the sprites on the board. Take advantage of the container size
+- Go To Hideout image should take full height/width of the container.  The only square with the mini-square should be the one with the Just Visiting
+- Gym Leaders and Utilites should have Property Deed Cards available
+- Increase the Size of the rules Text, and center it in the white-zone
+- Make a spot outline to place the cards to the left and right of the Text
+- Allow seperate prints of each material (cards / money / board) and custom sizing
+- Allow custom sizing of Property Deed Cards.
