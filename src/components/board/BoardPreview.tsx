@@ -49,7 +49,7 @@ function BoardCenter() {
 
   const centerSize = 630
   const pokeballRadius = centerSize / 2 - 20
-  const spriteSize = 40
+  const spriteSize = 50
 
   const positions = calculateHalfCirclePositions(
     pokemon.length,
@@ -102,15 +102,28 @@ function BoardCenter() {
 
       {/* Bottom half - White */}
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100 flex flex-col items-center justify-center px-8">
-        <div className="text-center">
-          <div className="text-[10px] font-pixel text-red-600 font-bold mb-2">QUICK RULES</div>
-          <div className="space-y-0.5 text-[7px] font-pixel text-gray-800 leading-relaxed max-w-[500px]">
-            <div><span className="font-bold">Setup:</span> Each player starts with <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />1500</span> on GO. <span className="font-bold">Play:</span> Roll dice, move clockwise.</div>
-            <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it! <span className="font-bold">Rent:</span> Others land on yours? Collect!</div>
-            <div><span className="font-bold">Build:</span> Own all of a color → add Berries. 4 Berries = 1 Evolution Stone.</div>
-            <div><span className="font-bold">Jail:</span> Pay <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />50</span> or roll doubles. <span className="font-bold">Gyms:</span> Rent = <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />25</span> × owned.</div>
-            <div><span className="font-bold">Free Parking:</span> Collect Grunt Ambush, Giovanni & card fees!</div>
-            <div><span className="font-bold">Win:</span> Last player with money! <span className="font-bold">Start:</span> 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />500</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />100</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />50</span> • 6×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />20</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />10</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />5</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />1</span></div>
+        <div className="flex items-center justify-center gap-4 w-full max-w-[600px] mx-auto">
+          {/* Left card outline */}
+          <div className="flex-shrink-0 w-24 h-32 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
+            <span className="text-[8px] font-pixel text-gray-500 text-center">Card<br/>Place</span>
+          </div>
+          
+          {/* Center rules text */}
+          <div className="text-center flex-1">
+            <div className="text-[14px] font-pixel text-red-600 font-bold mb-3">QUICK RULES</div>
+            <div className="space-y-1 text-[10px] font-pixel text-gray-800 leading-relaxed">
+              <div><span className="font-bold">Setup:</span> Each player starts with <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />1500</span> on GO. <span className="font-bold">Play:</span> Roll dice, move clockwise.</div>
+              <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it! <span className="font-bold">Rent:</span> Others land on yours? Collect!</div>
+              <div><span className="font-bold">Build:</span> Own all of a color → add Berries. 4 Berries = 1 Evolution Stone.</div>
+              <div><span className="font-bold">Jail:</span> Pay <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />50</span> or roll doubles. <span className="font-bold">Gyms:</span> Rent = <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />25</span> × owned.</div>
+              <div><span className="font-bold">Free Parking:</span> Collect Grunt Ambush, Giovanni & card fees!</div>
+              <div><span className="font-bold">Win:</span> Last player with money! <span className="font-bold">Start:</span> 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />500</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />100</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />50</span> • 6×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />20</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />10</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />5</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />1</span></div>
+            </div>
+          </div>
+          
+          {/* Right card outline */}
+          <div className="flex-shrink-0 w-24 h-32 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
+            <span className="text-[8px] font-pixel text-gray-500 text-center">Card<br/>Place</span>
           </div>
         </div>
       </div>
@@ -152,7 +165,7 @@ function PropertyCell({ space }: { space: PropertySpace }) {
             <img
               src={pokemon.sprite}
               alt={pokemon.name}
-              className="w-10 h-10 pixelated object-contain"
+              className="w-16 h-16 pixelated object-contain"
               loading="lazy"
             />
             <span className="text-[7px] leading-tight text-gray-800 font-pixel font-bold text-center truncate w-full">
@@ -258,8 +271,6 @@ function SpaceCell({ space }: { space: BoardSpace }) {
     const sprite = getSpaceSprite('go-to-jail')
     return (
       <div className={`${baseClass} bg-purple-100 flex-col p-1 relative`}>
-        {/* Inner square border */}
-        <div className="absolute inset-2 border-2 border-gray-800 pointer-events-none z-10" />
         {sprite && (
           <img
             src={sprite}

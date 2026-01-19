@@ -2,15 +2,29 @@ import { useState, useCallback } from 'react'
 import { pdf } from '@react-pdf/renderer'
 import { Button, Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
-import { BoardDocument } from '@/pdf'
+import { BoardDocument, type PrintMaterial } from '@/pdf'
 
 export function GeneratePdfButton() {
   const { boardSpaces, paperSize, cardSize, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
   const [progress, setProgress] = useState('')
+  const [selectedMaterials, setSelectedMaterials] = useState<PrintMaterial[]>(['board', 'deeds', 'cards', 'money', 'tokens-rules'])
+
+  const toggleMaterial = (material: PrintMaterial) => {
+    setSelectedMaterials(prev => 
+      prev.includes(material)
+        ? prev.filter(m => m !== material)
+        : [...prev, material]
+    )
+  }
 
   const handleGenerate = useCallback(async () => {
     if (boardSpaces.length === 0) {
       alert('Please wait for the board to generate first.')
+      return
+    }
+
+    if (selectedMaterials.length === 0) {
+      alert('Please select at least one material to print.')
       return
     }
 
@@ -19,7 +33,7 @@ export function GeneratePdfButton() {
 
     try {
       // Create the PDF document
-      const doc = <BoardDocument spaces={boardSpaces} paperSize={paperSize} cardSize={cardSize} />
+      const doc = <BoardDocument spaces={boardSpaces} paperSize={paperSize} cardSize={cardSize} materials={selectedMaterials} />
 
       // Generate the blob with error handling
       setProgress('Rendering pages...')
@@ -34,7 +48,8 @@ export function GeneratePdfButton() {
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `poke-poly-game-kit-${Date.now()}.pdf`
+      const materialNames = selectedMaterials.join('-')
+      link.download = `poke-poly-${materialNames}-${Date.now()}.pdf`
       document.body.appendChild(link)
       link.click()
       document.body.removeChild(link)
@@ -48,18 +63,41 @@ export function GeneratePdfButton() {
     } finally {
       setIsPdfGenerating(false)
     }
-  }, [boardSpaces, paperSize, cardSize, setIsPdfGenerating])
+  }, [boardSpaces, paperSize, cardSize, selectedMaterials, setIsPdfGenerating])
+
+  const materialLabels: Record<PrintMaterial, string> = {
+    'board': 'Board',
+    'deeds': 'Property & Gym Deeds',
+    'cards': 'Cards (Item Bag & Prof. Oak)',
+    'money': 'Money',
+    'tokens-rules': 'Tokens & Rules'
+  }
 
   return (
     <div className="space-y-3">
       <h3 className="font-pixel text-xs text-pixel-accent">Generate PDF</h3>
       <p className="font-pixel text-[8px] text-gray-500">
-        Download your complete game kit (12 pages)
+        Select materials to include in your PDF
       </p>
+
+      <div className="space-y-2">
+        {(Object.keys(materialLabels) as PrintMaterial[]).map((material) => (
+          <label key={material} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={selectedMaterials.includes(material)}
+              onChange={() => toggleMaterial(material)}
+              className="w-4 h-4 cursor-pointer"
+              disabled={isPdfGenerating}
+            />
+            <span className="font-pixel text-[9px] text-gray-700">{materialLabels[material]}</span>
+          </label>
+        ))}
+      </div>
 
       <Button
         onClick={handleGenerate}
-        disabled={isPdfGenerating || boardSpaces.length === 0}
+        disabled={isPdfGenerating || boardSpaces.length === 0 || selectedMaterials.length === 0}
         className="w-full"
         size="lg"
       >
@@ -69,12 +107,12 @@ export function GeneratePdfButton() {
             {progress || 'Generating...'}
           </span>
         ) : (
-          'Download Game Kit PDF'
+          `Download PDF (${selectedMaterials.length} material${selectedMaterials.length !== 1 ? 's' : ''})`
         )}
       </Button>
 
       <p className="font-pixel text-[6px] text-gray-500 text-center">
-        Includes: Board (4 pages), Deeds, Cards, Money, Tokens & Rules
+        Select which materials to include in your printable game kit
       </p>
     </div>
   )

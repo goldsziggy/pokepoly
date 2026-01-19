@@ -18,9 +18,9 @@ const TILE_HEIGHT = BOARD_SIZE / TILE_ROWS // 480 points = 6.67"
 const CORNER_SIZE = 140 // ~1.94" for corner spaces
 const SIDE_SIZE = (BOARD_SIZE - 2 * CORNER_SIZE) / 9 // ~1.29" for each of 9 spaces per side
 
-// Sprite sizes
-const PROPERTY_SPRITE_SIZE = 38
-const COLLAGE_SPRITE_SIZE = 44
+// Sprite sizes - increased to take advantage of container size
+const PROPERTY_SPRITE_SIZE = 55
+const COLLAGE_SPRITE_SIZE = 50
 
 const styles = StyleSheet.create({
   page: {
@@ -253,19 +253,36 @@ const styles = StyleSheet.create({
   rulesContainer: {
     position: 'absolute',
     alignItems: 'center',
+    flexDirection: 'row',
+    gap: 20,
+  },
+  cardPlaceholder: {
+    width: 60,
+    height: 90,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    borderColor: '#9CA3AF',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cardPlaceholderText: {
+    fontSize: 6,
+    color: '#6B7280',
+    textAlign: 'center',
   },
   rulesTitle: {
-    fontSize: 12,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   rulesText: {
-    fontSize: 8,
+    fontSize: 11,
     color: '#374151',
     textAlign: 'center',
-    marginBottom: 4,
+    marginBottom: 5,
   },
   rulesBold: {
     fontWeight: 'bold',
@@ -542,21 +559,12 @@ function SpaceContent({ space }: { space: BoardSpace }) {
     const sprite = getSpaceSprite('go-to-jail')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        {/* Outer square - text at bottom-left (outer corner) */}
-        <View style={styles.outerSquareTextBottomLeft}>
-          <Text style={styles.overlaySubtext}>GO TO</Text>
-        </View>
-        
-        {/* Inner square border - aligned to top-right (inner corner toward center) */}
-        <View style={styles.innerSquareBorderTopRight} />
-        
-        {/* Inner square content - image and "HIDEOUT" */}
-        <View style={styles.innerSquareContentTopRight}>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
           {sprite && (
             <PDFImage src={sprite} style={styles.cornerImage} />
           )}
           <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>HIDEOUT</Text>
+            <Text style={styles.overlayText}>GO TO HIDEOUT</Text>
           </View>
         </View>
       </View>
@@ -755,8 +763,15 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                   },
                 ]}
               >
-                <Text style={styles.rulesTitle}>QUICK RULES</Text>
-                <Text style={styles.rulesText}>
+                {/* Left card placeholder */}
+                <View style={styles.cardPlaceholder}>
+                  <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                </View>
+                
+                {/* Center rules text */}
+                <View style={{ flex: 1, alignItems: 'center' }}>
+                  <Text style={styles.rulesTitle}>QUICK RULES</Text>
+                  <Text style={styles.rulesText}>
                   <Text style={styles.rulesText}>
                     <Text style={styles.rulesBold}>Setup:</Text> Each player starts with{' '}
                     <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
@@ -815,6 +830,12 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                     5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>1</Text></View>
                   </Text>
                 </Text>
+                </View>
+                
+                {/* Right card placeholder */}
+                <View style={styles.cardPlaceholder}>
+                  <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                </View>
               </View>
             )}
           </>
