@@ -23,7 +23,6 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
         with:
-          static_site_generator: vite
           enablement: true
 
       - uses: actions/setup-node@v4
