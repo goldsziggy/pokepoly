@@ -22,8 +22,18 @@ export function usePokemonData() {
     init()
   }, [])
 
-  // Fetch Pokémon for selected regions
-  const { data: regionPokemon, isLoading } = useQuery({
+  // Load all Pokemon for questionnaire mode (always load all)
+  const { data: allPokemon, isLoading: isLoadingAll } = useQuery({
+    queryKey: ['pokemon', 'all'],
+    queryFn: async () => {
+      return await getAllCachedPokemon()
+    },
+    enabled: isInitialized,
+    staleTime: Infinity,
+  })
+
+  // Fetch Pokémon for selected regions (for backward compatibility)
+  const { data: regionPokemon, isLoading: isLoadingRegions } = useQuery({
     queryKey: ['pokemon', 'regions', selectedRegions],
     queryFn: async () => {
       const results: Pokemon[] = []
@@ -36,19 +46,21 @@ export function usePokemonData() {
       return results
     },
     enabled: isInitialized && selectedRegions.length > 0,
-    staleTime: Infinity, // Data doesn't change
+    staleTime: Infinity,
   })
 
-  // Update store when data changes
+  // Update store - prefer all Pokemon, fallback to region Pokemon
   useEffect(() => {
-    if (regionPokemon && regionPokemon.length > 0) {
+    if (allPokemon && allPokemon.length > 0) {
+      setAvailablePokemon(allPokemon)
+    } else if (regionPokemon && regionPokemon.length > 0) {
       setAvailablePokemon(regionPokemon)
     }
-  }, [regionPokemon, setAvailablePokemon])
+  }, [allPokemon, regionPokemon, setAvailablePokemon])
 
   return {
-    isLoading: !isInitialized || isLoading,
-    pokemonCount: regionPokemon?.length ?? 0,
+    isLoading: !isInitialized || (isLoadingAll && isLoadingRegions),
+    pokemonCount: allPokemon?.length ?? regionPokemon?.length ?? 0,
   }
 }
 

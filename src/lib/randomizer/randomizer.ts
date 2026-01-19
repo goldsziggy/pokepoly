@@ -6,7 +6,6 @@ import { getPrimaryType } from '@/lib/typeIcons'
 
 export interface BoardSlot {
   color: BoardColor
-  tier: BSTTier
   pokemon?: Pokemon
 }
 
@@ -14,6 +13,7 @@ export interface RandomizerConfig {
   regions: Region[]
   favorites: Pokemon[]
   seed: string
+  typeColorMapping?: Record<BoardColor, string | null>
 }
 
 export interface BoardAssignment {
@@ -21,21 +21,17 @@ export interface BoardAssignment {
   seed: string
 }
 
-// Property slots per color (matching Monopoly layout)
-// Very Common: 2 + 2 = 4 properties
-// Common: 3 + 3 = 6 properties
-// Rare: 3 + 3 = 6 properties
-// Ultra Rare: 3 + 3 = 6 properties
+// Property slots per color (matching standard Monopoly layout)
 // Total: 22 properties
-const BOARD_LAYOUT: { tier: BSTTier; colorIndex: 0 | 1; count: number }[] = [
-  { tier: 'very-common', colorIndex: 0, count: 2 },  // Brown (2)
-  { tier: 'very-common', colorIndex: 1, count: 2 },  // Light Blue (2)
-  { tier: 'common', colorIndex: 0, count: 3 },       // Pink (3)
-  { tier: 'common', colorIndex: 1, count: 3 },       // Orange (3)
-  { tier: 'rare', colorIndex: 0, count: 3 },         // Red (3)
-  { tier: 'rare', colorIndex: 1, count: 3 },         // Yellow (3)
-  { tier: 'ultra-rare', colorIndex: 0, count: 3 },   // Green (3)
-  { tier: 'ultra-rare', colorIndex: 1, count: 3 },   // Dark Blue (3)
+const BOARD_LAYOUT: { color: BoardColor; count: number }[] = [
+  { color: 'brown', count: 2 },        // Brown (2)
+  { color: 'lightblue', count: 3 },    // Light Blue (3)
+  { color: 'pink', count: 3 },         // Pink (3)
+  { color: 'orange', count: 3 },       // Orange (3)
+  { color: 'red', count: 3 },          // Red (3)
+  { color: 'yellow', count: 3 },       // Yellow (3)
+  { color: 'green', count: 3 },        // Green (3)
+  { color: 'darkblue', count: 2 },     // Dark Blue (2)
 ]
 
 export function getBSTTier(bst: number): BSTTier {
@@ -93,59 +89,59 @@ export function randomizeBoard(
 ): BoardAssignment {
   const rng = seedrandom(config.seed)
 
-  // Group Pokémon by BST tier
-  const pokemonByTier: Record<BSTTier, Pokemon[]> = {
-    'very-common': [],
-    'common': [],
-    'rare': [],
-    'ultra-rare': [],
-  }
-
   // Filter by selected regions
   const filteredPokemon = availablePokemon.filter(p =>
     config.regions.length === 0 || config.regions.includes(p.region)
   )
 
-  // Categorize all available Pokémon
-  for (const pokemon of filteredPokemon) {
-    const tier = getBSTTier(pokemon.bst)
-    pokemonByTier[tier].push(pokemon)
-  }
-
   // Create slots based on board layout
   const properties: BoardSlot[] = []
 
-  // Process favorites first - lock them into their tiers
+  // Process favorites - group by their assigned color (if type mapping exists)
   const usedFavoriteIds = new Set<number>()
-  const favoritesByTier: Record<BSTTier, Pokemon[]> = {
-    'very-common': [],
-    'common': [],
-    'rare': [],
-    'ultra-rare': [],
-  }
-
-  for (const fav of config.favorites) {
-    const tier = getBSTTier(fav.bst)
-    favoritesByTier[tier].push(fav)
-    usedFavoriteIds.add(fav.id)
+  const favoritesByColor = new Map<BoardColor, Pokemon[]>()
+  
+  // If we have type mapping, assign favorites to colors based on their type
+  if (config.typeColorMapping) {
+    for (const fav of config.favorites) {
+      const primaryType = getPrimaryType(fav.types)
+      if (primaryType) {
+        // Find which color this type is assigned to
+        for (const [color, type] of Object.entries(config.typeColorMapping)) {
+          if (type === primaryType) {
+            if (!favoritesByColor.has(color as BoardColor)) {
+              favoritesByColor.set(color as BoardColor, [])
+            }
+            favoritesByColor.get(color as BoardColor)!.push(fav)
+            usedFavoriteIds.add(fav.id)
+            break
+          }
+        }
+      }
+    }
   }
 
   // Fill each color group
-  for (const { tier, colorIndex, count } of BOARD_LAYOUT) {
-    const color = TIER_COLORS[tier][colorIndex]
+  for (const { color, count } of BOARD_LAYOUT) {
+    // Get available Pokémon (excluding already used)
+    const available = filteredPokemon.filter(p => !usedFavoriteIds.has(p.id))
 
-    // Get available Pokémon for this tier (excluding already used)
-    const available = pokemonByTier[tier].filter(p => !usedFavoriteIds.has(p.id))
-
-    // Take favorites for this tier first
-    const favoritesForThisTier = favoritesByTier[tier].splice(0, count)
+    // Get favorites for this color
+    const favoritesForThisColor = favoritesByColor.get(color) || []
+    // Limit to count
+    const favoritesToUse = favoritesForThisColor.slice(0, count)
+    favoritesToUse.forEach(fav => usedFavoriteIds.add(fav.id))
 
     // Determine the primary type for this color group
-    // Use the type from the first favorite, or pick the most common type among favorites
+    // Use explicit mapping if provided, otherwise auto-determine
     let targetType: string | null = null
-    if (favoritesForThisTier.length > 0) {
+    
+    if (config.typeColorMapping && config.typeColorMapping[color] !== null) {
+      // Use explicit type-to-color mapping (only if not null)
+      targetType = config.typeColorMapping[color]!
+    } else if (favoritesToUse.length > 0) {
       // Use the primary type of the first favorite
-      targetType = getPrimaryType(favoritesForThisTier[0].types)
+      targetType = getPrimaryType(favoritesToUse[0].types)
     } else {
       // If no favorites, we'll determine type from available Pokemon
       // Count types in available Pokemon
@@ -177,8 +173,8 @@ export function randomizeBoard(
       : available
 
     // Fill remaining slots, preferring evolution family members of favorites
-    const remaining = count - favoritesForThisTier.length
-    const selectedPokemon = [...favoritesForThisTier]
+    const remaining = count - favoritesToUse.length
+    const selectedPokemon = [...favoritesToUse]
 
     if (remaining > 0) {
       // Group available Pokemon by evolution family
@@ -193,7 +189,7 @@ export function randomizeBoard(
 
       // Get families that already have members in favorites (for this color)
       const favoritesFamilies = new Set(
-        favoritesForThisTier.map(p => p.evolutionFamily ?? getEvolutionFamily(p.id))
+        favoritesToUse.map(p => p.evolutionFamily ?? getEvolutionFamily(p.id))
       )
 
       // Prioritize: 1) family members of favorites, 2) families with multiple members, 3) random
@@ -298,7 +294,6 @@ export function randomizeBoard(
     for (let i = 0; i < count; i++) {
       properties.push({
         color,
-        tier,
         pokemon: groupedByFamily[i],
       })
     }
@@ -310,30 +305,68 @@ export function randomizeBoard(
   }
 }
 
-// Calculate property values based on tier
-export function getPropertyValues(tier: BSTTier): {
+// Calculate property values based on color (standard Monopoly pricing)
+export function getPropertyValues(color: BoardColor, indexInColor: number): {
   price: number
   rent: number[]
   houseCost: number
 } {
-  const values: Record<BSTTier, { price: number; baseRent: number; houseCost: number }> = {
-    'very-common': { price: 60, baseRent: 4, houseCost: 50 },
-    'common': { price: 140, baseRent: 10, houseCost: 100 },
-    'rare': { price: 260, baseRent: 22, houseCost: 150 },
-    'ultra-rare': { price: 350, baseRent: 35, houseCost: 200 },
+  // Standard Monopoly prices per color group
+  const colorPrices: Record<BoardColor, number[]> = {
+    brown: [60, 60],                    // 2 properties
+    lightblue: [100, 100, 120],         // 3 properties
+    pink: [140, 140, 160],              // 3 properties
+    orange: [180, 180, 200],            // 3 properties
+    red: [220, 220, 240],               // 3 properties
+    yellow: [260, 260, 280],            // 3 properties
+    green: [300, 300, 320],             // 3 properties
+    darkblue: [350, 400],               // 2 properties
   }
 
-  const { price, baseRent, houseCost } = values[tier]
-
+  const price = colorPrices[color][indexInColor] || colorPrices[color][0]
+  
+  // Standard Monopoly rent values by price range
   // Rent array: [no houses, 1 house, 2 houses, 3 houses, 4 houses, hotel]
-  const rent = [
-    baseRent,
-    baseRent * 5,
-    baseRent * 15,
-    baseRent * 45,
-    baseRent * 80,
-    baseRent * 125,
-  ]
+  let rent: number[]
+  let houseCost: number
+
+  if (price <= 60) {
+    // Brown properties
+    rent = [2, 10, 30, 90, 160, 250]
+    houseCost = 50
+  } else if (price <= 120) {
+    // Light Blue properties
+    rent = [6, 30, 90, 270, 400, 550]
+    houseCost = 50
+  } else if (price <= 160) {
+    // Pink properties
+    rent = [10, 50, 150, 450, 625, 750]
+    houseCost = 100
+  } else if (price <= 200) {
+    // Orange properties
+    rent = [14, 70, 200, 550, 750, 950]
+    houseCost = 100
+  } else if (price <= 240) {
+    // Red properties
+    rent = [18, 90, 250, 700, 875, 1050]
+    houseCost = 150
+  } else if (price <= 280) {
+    // Yellow properties
+    rent = [22, 110, 330, 800, 975, 1150]
+    houseCost = 150
+  } else if (price <= 320) {
+    // Green properties
+    rent = [26, 130, 390, 900, 1100, 1275]
+    houseCost = 200
+  } else {
+    // Dark Blue properties ($350 or $400)
+    if (price === 400) {
+      rent = [50, 200, 600, 1400, 1700, 2000]
+    } else {
+      rent = [35, 175, 500, 1100, 1300, 1500]
+    }
+    houseCost = 200
+  }
 
   return { price, rent, houseCost }
 }

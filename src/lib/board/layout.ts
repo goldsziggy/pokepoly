@@ -155,7 +155,17 @@ export function buildBoardSpaces(properties: BoardSlot[]): BoardSpace[] {
     // Properties
     const slot = properties[propertyIndex]
     if (slot) {
-      const values = getPropertyValues(slot.tier)
+      // Track index within color group for pricing
+      const colorCounts = new Map<BoardColor, number>()
+      for (let j = 0; j < propertyIndex; j++) {
+        const prevSlot = properties[j]
+        if (prevSlot && prevSlot.color === slot.color) {
+          colorCounts.set(slot.color, (colorCounts.get(slot.color) || 0) + 1)
+        }
+      }
+      const indexInColor = colorCounts.get(slot.color) || 0
+      
+      const values = getPropertyValues(slot.color, indexInColor)
       spaces.push({
         type: 'property',
         color: slot.color,

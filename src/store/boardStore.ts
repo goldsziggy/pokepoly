@@ -3,6 +3,8 @@ import type { Pokemon, Region, PaperSize, BoardSpace, CardSize } from '@/types'
 import { randomizeBoard, generateSeed, type BoardSlot } from '@/lib/randomizer'
 import { buildBoardSpaces } from '@/lib/board'
 
+import type { BoardColor } from '@/types/board'
+
 interface BoardState {
   // Configuration
   selectedRegions: Region[]
@@ -10,6 +12,7 @@ interface BoardState {
   paperSize: PaperSize
   cardSize: CardSize
   seed: string
+  typeColorMapping: Record<BoardColor, string | null> | null
 
   // Generated board
   properties: BoardSlot[]
@@ -31,10 +34,13 @@ interface BoardState {
   setCardSize: (size: CardSize) => void
   setSeed: (seed: string) => void
   setAvailablePokemon: (pokemon: Pokemon[]) => void
+  setTypeColorMapping: (mapping: Record<BoardColor, string | null>) => void
   regenerateBoard: () => void
   newRandomSeed: () => void
   setIsGenerating: (generating: boolean) => void
   setIsPdfGenerating: (generating: boolean) => void
+  resetQuestionnaire: () => void
+  generateRandomBoard: () => void
 
   // State restoration (from URL)
   restoreState: (state: Partial<{
@@ -53,6 +59,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   paperSize: 'letter',
   cardSize: 'small',
   seed: generateSeed(),
+  typeColorMapping: null,
   properties: [],
   boardSpaces: [],
   availablePokemon: [],
@@ -84,12 +91,12 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     if (current.length >= 22) return // Max 22 properties
 
     set({ favoritePokemon: [...current, pokemon] })
-    get().regenerateBoard()
+    // Don't auto-regenerate in questionnaire mode
   },
 
   removeFavorite: (id) => {
     set({ favoritePokemon: get().favoritePokemon.filter(p => p.id !== id) })
-    get().regenerateBoard()
+    // Don't auto-regenerate in questionnaire mode
   },
 
   setPaperSize: (size) => set({ paperSize: size }),
@@ -102,11 +109,16 @@ export const useBoardStore = create<BoardState>((set, get) => ({
 
   setAvailablePokemon: (pokemon) => {
     set({ availablePokemon: pokemon })
+    // Don't auto-regenerate - wait for questionnaire completion
+  },
+
+  setTypeColorMapping: (mapping) => {
+    set({ typeColorMapping: mapping })
     get().regenerateBoard()
   },
 
   regenerateBoard: () => {
-    const { availablePokemon, selectedRegions, favoritePokemon, seed } = get()
+    const { availablePokemon, selectedRegions, favoritePokemon, seed, typeColorMapping } = get()
 
     if (availablePokemon.length === 0) return
 
@@ -116,6 +128,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
       regions: selectedRegions,
       favorites: favoritePokemon,
       seed,
+      typeColorMapping: typeColorMapping || undefined,
     })
 
     const boardSpaces = buildBoardSpaces(result.properties)
@@ -123,6 +136,44 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     set({
       properties: result.properties,
       boardSpaces,
+      isGenerating: false,
+    })
+  },
+
+  resetQuestionnaire: () => {
+    set({
+      favoritePokemon: [],
+      typeColorMapping: null,
+      seed: generateSeed(),
+      properties: [],
+      boardSpaces: [],
+    })
+  },
+
+  generateRandomBoard: () => {
+    const { availablePokemon, selectedRegions } = get()
+    if (availablePokemon.length === 0) return
+
+    set({ 
+      isGenerating: true,
+      favoritePokemon: [],
+      typeColorMapping: null,
+      seed: generateSeed(),
+    })
+
+    const newSeed = generateSeed()
+    const result = randomizeBoard(availablePokemon, {
+      regions: selectedRegions,
+      favorites: [],
+      seed: newSeed,
+    })
+
+    const boardSpaces = buildBoardSpaces(result.properties)
+
+    set({
+      properties: result.properties,
+      boardSpaces,
+      seed: newSeed,
       isGenerating: false,
     })
   },
