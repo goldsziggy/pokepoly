@@ -3,26 +3,33 @@
  * Uses local images from public/images
  */
 
+function withBaseUrl(path: string) {
+  const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
+  const normalizedPath = path.startsWith('/') ? path.slice(1) : path
+  return `${normalizedBase}${normalizedPath}`
+}
+
 // Local image paths for board spaces
 export const SPACE_SPRITES = {
-  go: '/images/GO.png',
-  jail: '/images/hideout.png',
-  'free-parking': '/images/poke-coin.png',
-  'go-to-jail': '/images/hideout.png',
-  'item-bag': '/images/bag.png',
-  'professor-oak': '/images/oak.png',
-  'grunt-ambush': '/images/grunt-ambush.png',
-  giovanni: '/images/giovanni.png',
+  go: withBaseUrl('images/GO.png'),
+  jail: withBaseUrl('images/hideout.png'),
+  'free-parking': withBaseUrl('images/poke-coin.png'),
+  'go-to-jail': withBaseUrl('images/hideout.png'),
+  'item-bag': withBaseUrl('images/bag.png'),
+  'professor-oak': withBaseUrl('images/oak.png'),
+  'grunt-ambush': withBaseUrl('images/grunt-ambush.png'),
+  giovanni: withBaseUrl('images/giovanni.png'),
 } as const
 
 // Gym name to image mapping
 const GYM_IMAGES: Record<string, string> = {
-  'Pewter Gym': '/images/pewter.png',
-  'Cerulean Gym': '/images/cerulean.jpg',
-  'Vermilion Gym': '/images/vermillion.jpg',
-  'Celadon Gym': '/images/celadon.png',
-  'Power Plant': '/images/power-plant.png',
-  'Poké Mart': '/images/pokemart.png',
+  'Pewter Gym': withBaseUrl('images/pewter.png'),
+  'Cerulean Gym': withBaseUrl('images/cerulean.jpg'),
+  'Vermilion Gym': withBaseUrl('images/vermillion.jpg'),
+  'Celadon Gym': withBaseUrl('images/celadon.png'),
+  'Power Plant': withBaseUrl('images/power-plant.png'),
+  'Poké Mart': withBaseUrl('images/pokemart.png'),
 }
 
 export function getSpaceSprite(spaceType: string): string | null {

@@ -2,8 +2,16 @@ import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/rend
 import type { PaperSize } from '@/types'
 import { baseStyles, colors } from './styles'
 
-const GYM_BADGE_IMAGE = '/images/gym-badge.png'
-const LEAGUE_BADGE_IMAGE = '/images/league-badge.png'
+const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/'
+const normalizedBase = base.endsWith('/') ? base : `${base}/`
+const assetUrl = (path: string) => {
+  const normalizedPath = path.startsWith('/') ? path.slice(1) : path
+  return typeof window !== 'undefined'
+    ? `${window.location.origin}${normalizedBase}${normalizedPath}`
+    : `${normalizedBase}${normalizedPath}`
+}
+const GYM_BADGE_IMAGE = assetUrl('images/gym-badge.png')
+const LEAGUE_BADGE_IMAGE = assetUrl('images/league-badge.png')
 
 const styles = StyleSheet.create({
   section: {
@@ -149,7 +157,12 @@ export function TokensRulesPage({ paperSize }: TokensRulesPageProps) {
 
             <Text style={styles.rulesBold}>Gyms:</Text>
             <Text style={styles.rulesText}>
-              Rent = P25 x number of Gyms owned. Collect when landed on.
+              Rent = P25 × number of Gyms owned. Collect when landed on.
+            </Text>
+
+            <Text style={styles.rulesBold}>Utilities (Power Plant & Poké Mart):</Text>
+            <Text style={styles.rulesText}>
+              Roll dice and pay owner: 4× your roll if they own 1 utility, or 10× if they own both.
             </Text>
 
             <Text style={styles.rulesBold}>Winning:</Text>

@@ -8,10 +8,12 @@ interface PokeCoinProps {
  */
 export function PokeCoin({ size = 12, className = '' }: PokeCoinProps) {
   const sizeStyle = typeof size === 'number' ? { width: size, height: size } : {}
+  const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
   
   return (
     <img
-      src="/images/poke-coin.png"
+      src={`${normalizedBase}images/poke-coin.png`}
       alt="Poké Coin"
       className={`inline-block pixelated object-contain ${className}`}
       style={sizeStyle}

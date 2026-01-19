@@ -1,6 +1,6 @@
-import { useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { pdf } from '@react-pdf/renderer'
-import { Button, Spinner } from '@/components/ui'
+import { Button, BuyMeACoffeeButton, Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
 import {
   BoardDocument,
@@ -15,6 +15,24 @@ export function GeneratePdfButton() {
   const { boardSpaces, paperSize, cardSize, boardSize, players, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
   const [progress, setProgress] = useState('')
   const [selectedMaterials, setSelectedMaterials] = useState<PrintMaterial[]>(['board', 'deeds', 'cards', 'money', 'tokens-rules'])
+  const [showPdfModal, setShowPdfModal] = useState(false)
+  const [pdfComplete, setPdfComplete] = useState(false)
+  const wasPdfGeneratingRef = useRef(false)
+
+  useEffect(() => {
+    if (isPdfGenerating) {
+      setShowPdfModal(true)
+      setPdfComplete(false)
+      wasPdfGeneratingRef.current = true
+      return
+    }
+
+    if (wasPdfGeneratingRef.current) {
+      setPdfComplete(true)
+      setShowPdfModal(true)
+      wasPdfGeneratingRef.current = false
+    }
+  }, [isPdfGenerating])
 
   const toggleMaterial = (material: PrintMaterial) => {
     setSelectedMaterials(prev => 
@@ -113,6 +131,54 @@ export function GeneratePdfButton() {
 
   return (
     <div className="space-y-3">
+      {(isPdfGenerating || showPdfModal) && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-black/40" />
+          <div className="relative w-full max-w-md bg-pixel-surface border-4 border-pixel-border shadow-pixel p-6">
+            <div className="flex flex-col items-center text-center gap-3">
+              {!pdfComplete ? <Spinner size="lg" /> : null}
+              <div className="space-y-1">
+                <p className="font-pixel text-sm text-pixel-text">
+                  {pdfComplete ? 'Enjoy!' : 'Printing press warming up...'}
+                </p>
+                <p className="font-pixel text-[10px] text-gray-200">
+                  {!pdfComplete ? (progress || 'Rendering pages...') : 'All set. Your download should have started.'}{' '}
+                  <span className="text-gray-300">
+                    I hope you and your friends/family enjoy. Feel free to request features at{' '}
+                    <a
+                      href="https://github.com/goldsziggy/pokepoly"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-poke-yellow underline underline-offset-2"
+                    >
+                      GitHub
+                    </a>
+                    , and if you have the means and want to buy me a coffee go for it!
+                  </span>
+                </p>
+              </div>
+              <div className="w-full pt-2">
+                <BuyMeACoffeeButton className="w-full">
+                  Buy me a coffee
+                </BuyMeACoffeeButton>
+              </div>
+              {pdfComplete && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowPdfModal(false)
+                    setPdfComplete(false)
+                  }}
+                  className="mt-1 font-pixel text-[10px] text-gray-300 underline underline-offset-2 hover:text-white"
+                >
+                  Close
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <h3 className="font-pixel text-xs text-pixel-accent">Generate PDF</h3>
       <p className="font-pixel text-[8px] text-gray-500">
         Select materials to include in your PDF

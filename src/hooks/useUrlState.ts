@@ -20,7 +20,13 @@ type UrlStateOptions = {
 }
 
 export function useUrlState(options: UrlStateOptions = {}) {
-  const store = useBoardStore()
+  const restoreState = useBoardStore(s => s.restoreState)
+  const selectedRegions = useBoardStore(s => s.selectedRegions)
+  const favoritePokemon = useBoardStore(s => s.favoritePokemon)
+  const paperSize = useBoardStore(s => s.paperSize)
+  const boardSize = useBoardStore(s => s.boardSize)
+  const cardSize = useBoardStore(s => s.cardSize)
+  const seed = useBoardStore(s => s.seed)
   const didRestoreRef = useRef(false)
 
   // URL state
@@ -36,18 +42,22 @@ export function useUrlState(options: UrlStateOptions = {}) {
     if (!options.restoreOnMount) return
     if (didRestoreRef.current) return
 
+    // If the URL has no recognized params yet, don't restore anything.
+    // (nuqs can hydrate after first render in some deployments.)
+    const hasAnyParam =
+      (urlRegions && urlRegions.length > 0) ||
+      (urlFavoriteIds && urlFavoriteIds.length > 0) ||
+      !!urlPaperSize ||
+      !!urlBoardSize ||
+      !!urlCardSize ||
+      !!urlSeed
+
+    if (!hasAnyParam) return
+
+    // Prevent duplicate restores while async work is in-flight.
+    didRestoreRef.current = true
+
     const restoreFromUrl = async () => {
-      // If the URL has no recognized params, don't restore anything.
-      const hasAnyParam =
-        (urlRegions && urlRegions.length > 0) ||
-        (urlFavoriteIds && urlFavoriteIds.length > 0) ||
-        !!urlPaperSize ||
-        !!urlBoardSize ||
-        !!urlCardSize ||
-        !!urlSeed
-
-      if (!hasAnyParam) return
-
       const updates: Partial<{
         regions: Region[]
         favorites: Pokemon[]
@@ -104,30 +114,25 @@ export function useUrlState(options: UrlStateOptions = {}) {
       if (favorites.length > 0) updates.favorites = favorites
 
       if (Object.keys(updates).length > 0) {
-        store.restoreState(updates)
+        restoreState(updates)
       }
     }
 
-    restoreFromUrl().finally(() => {
-      didRestoreRef.current = true
-    })
-  }, [options.restoreOnMount, store, urlBoardSize, urlCardSize, urlFavoriteIds, urlPaperSize, urlRegions, urlSeed])
+    void restoreFromUrl()
+  }, [options.restoreOnMount, restoreState, urlBoardSize, urlCardSize, urlFavoriteIds, urlPaperSize, urlRegions, urlSeed])
 
   // Sync store changes to URL
   const syncToUrl = useCallback(() => {
-    const { selectedRegions, favoritePokemon, paperSize, boardSize, cardSize, seed } = store
-
     setUrlRegions(selectedRegions)
     setUrlFavoriteIds(favoritePokemon.map(p => p.id.toString()))
     setUrlPaperSize(paperSize)
     setUrlBoardSize(boardSize)
     setUrlCardSize(cardSize)
     setUrlSeed(seed)
-  }, [store, setUrlRegions, setUrlFavoriteIds, setUrlPaperSize, setUrlBoardSize, setUrlCardSize, setUrlSeed])
+  }, [boardSize, cardSize, favoritePokemon, paperSize, seed, selectedRegions, setUrlBoardSize, setUrlCardSize, setUrlFavoriteIds, setUrlPaperSize, setUrlRegions, setUrlSeed])
 
   // Generate shareable URL
   const getShareableUrl = useCallback(() => {
-    const { selectedRegions, favoritePokemon, paperSize, boardSize, cardSize, seed } = store
     const params = new URLSearchParams()
 
     if (selectedRegions.length > 0) {
@@ -154,7 +159,7 @@ export function useUrlState(options: UrlStateOptions = {}) {
     const normalizedBasePath = basePath.endsWith('/') ? basePath : `${basePath}/`
     const baseUrl = window.location.origin + normalizedBasePath
     return `${baseUrl}?${params.toString()}`
-  }, [store])
+  }, [boardSize, cardSize, favoritePokemon, paperSize, seed, selectedRegions])
 
   const copyShareableUrl = useCallback(async () => {
     const url = getShareableUrl()

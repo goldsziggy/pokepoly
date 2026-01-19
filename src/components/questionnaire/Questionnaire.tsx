@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Spinner } from '@/components/ui'
+import { useEffect, useRef, useState } from 'react'
+import { BuyMeACoffeeButton, Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
 import { Step1ModeSelection } from './Step1ModeSelection'
 import { Step2FavoriteSelection } from './Step2FavoriteSelection'
@@ -13,6 +13,24 @@ export function Questionnaire() {
   const [step, setStep] = useState(1)
   const [mode, setMode] = useState<QuestionnaireMode>(null)
   const { isGenerating } = useBoardStore()
+  const [showGeneratingModal, setShowGeneratingModal] = useState(false)
+  const [generationComplete, setGenerationComplete] = useState(false)
+  const wasGeneratingRef = useRef(false)
+
+  useEffect(() => {
+    if (isGenerating) {
+      setShowGeneratingModal(true)
+      setGenerationComplete(false)
+      wasGeneratingRef.current = true
+      return
+    }
+
+    if (wasGeneratingRef.current) {
+      setGenerationComplete(true)
+      setShowGeneratingModal(true)
+      wasGeneratingRef.current = false
+    }
+  }, [isGenerating])
 
   const handleModeSelect = (selectedMode: QuestionnaireMode, pokemon?: Pokemon[]) => {
     setMode(selectedMode)
@@ -54,13 +72,49 @@ export function Questionnaire() {
     useBoardStore.getState().resetQuestionnaire()
   }
 
-  if (isGenerating) {
+  if (isGenerating || showGeneratingModal) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px]">
-        <Spinner size="lg" />
-        <p className="font-pixel text-xs text-pixel-text mt-4">
-          Generating board...
-        </p>
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="absolute inset-0 bg-black/40" />
+        <div className="relative w-full max-w-md bg-pixel-surface border-4 border-pixel-border shadow-pixel p-6">
+          <div className="flex flex-col items-center text-center gap-3">
+            {!generationComplete ? <Spinner size="lg" /> : null}
+            <div className="space-y-1">
+              <p className="font-pixel text-sm text-pixel-text">
+                {generationComplete ? 'Enjoy!' : 'Brewing your board...'}
+              </p>
+              <p className="font-pixel text-[10px] text-gray-200">
+                I hope you and your friends/family enjoy. Feel free to request features at{' '}
+                <a
+                  href="https://github.com/goldsziggy/pokepoly"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-poke-yellow underline underline-offset-2"
+                >
+                  GitHub
+                </a>
+                , and if you have the means and want to buy me a coffee go for it!
+              </p>
+            </div>
+            <div className="w-full pt-2">
+              <BuyMeACoffeeButton className="w-full">
+                Buy me a coffee
+              </BuyMeACoffeeButton>
+            </div>
+            {generationComplete && (
+              <button
+                type="button"
+                onClick={() => {
+                  setShowGeneratingModal(false)
+                  setGenerationComplete(false)
+                }}
+                className="mt-1 font-pixel text-[10px] text-gray-300 underline underline-offset-2 hover:text-white"
+              >
+                Close
+              </button>
+            )}
+          </div>
+        </div>
       </div>
     )
   }

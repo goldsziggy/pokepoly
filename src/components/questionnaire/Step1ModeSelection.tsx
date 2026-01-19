@@ -51,27 +51,47 @@ export function Step1ModeSelection({ onSelect }: Step1ModeSelectionProps) {
             <button
               onClick={() => onSelect('random', pokemon)}
               disabled={isDisabled || !pokemon || pokemon.length === 0}
-              className={`p-6 border-4 border-gray-800 bg-white transition-colors text-left ${
-                isDisabled || !pokemon || pokemon.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
-              }`}
+              className={`
+                w-full p-6 text-left
+                border-4 border-pixel-border bg-pixel-surface
+                shadow-pixel-sm transition-all
+                focus:outline-none focus:ring-2 focus:ring-pixel-accent
+                ${isDisabled || !pokemon || pokemon.length === 0
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'cursor-pointer hover:brightness-110 hover:-translate-y-0.5 hover:shadow-pixel active:translate-y-0 active:shadow-pixel-sm'
+                }
+              `}
             >
               <h3 className="font-pixel text-base text-pixel-accent mb-2">Full Random</h3>
-              <p className="font-pixel text-[10px] text-gray-700">
+              <p className="font-pixel text-[10px] text-gray-200">
                 Generate a completely random board with no customization
               </p>
+              <div className="mt-4 font-pixel text-[10px] text-poke-yellow">
+                Tap to generate →
+              </div>
             </button>
 
             <button
               onClick={() => onSelect('customized')}
               disabled={isDisabled}
-              className={`p-6 border-4 border-gray-800 bg-white transition-colors text-left ${
-                isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
-              }`}
+              className={`
+                w-full p-6 text-left
+                border-4 border-pixel-border bg-pixel-surface
+                shadow-pixel-sm transition-all
+                focus:outline-none focus:ring-2 focus:ring-pixel-accent
+                ${isDisabled
+                  ? 'opacity-50 cursor-not-allowed'
+                  : 'cursor-pointer hover:brightness-110 hover:-translate-y-0.5 hover:shadow-pixel active:translate-y-0 active:shadow-pixel-sm'
+                }
+              `}
             >
               <h3 className="font-pixel text-base text-pixel-accent mb-2">Customized</h3>
-              <p className="font-pixel text-[10px] text-gray-700">
+              <p className="font-pixel text-[10px] text-gray-200">
                 Select your favorite Pokemon and customize type assignments
               </p>
+              <div className="mt-4 font-pixel text-[10px] text-poke-yellow">
+                Tap to customize →
+              </div>
             </button>
           </div>
         </div>

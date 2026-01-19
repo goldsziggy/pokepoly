@@ -1,4 +1,4 @@
-import { Spinner } from '@/components/ui'
+import { BuyMeACoffeeButton, Spinner } from '@/components/ui'
 import { Questionnaire } from '@/components/questionnaire'
 import { usePokemonData, useUrlState } from '@/hooks'
 
@@ -35,6 +35,16 @@ function LoadingScreen() {
 function Footer() {
   return (
     <footer className="mt-8 py-4 border-t border-pixel-border text-center">
+      <div className="max-w-md mx-auto space-y-2 mb-4">
+        <p className="font-pixel text-[10px] text-gray-600">
+          Enjoying the chaos? Help keep the Poké-coffee flowing.
+        </p>
+        <div className="flex justify-center">
+          <BuyMeACoffeeButton className="w-full sm:w-auto">
+            Buy me a coffee
+          </BuyMeACoffeeButton>
+        </div>
+      </div>
       <p className="font-pixel text-[8px] text-gray-500">
         Pokemon data from PokeAPI • Not affiliated with Nintendo or The Pokemon Company
       </p>

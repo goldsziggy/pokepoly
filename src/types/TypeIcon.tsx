@@ -9,7 +9,9 @@ interface TypeIconProps {
 }
 
 export function TypeIcon({ type, size = 12, className = '' }: TypeIconProps) {
-  const iconPath = `/icons/${type.toLowerCase()}.svg`
+  const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/'
+  const normalizedBase = base.endsWith('/') ? base : `${base}/`
+  const iconPath = `${normalizedBase}icons/${type.toLowerCase()}.svg`
   const sizeStyle = typeof size === 'number' ? { width: size, height: size } : {}
 
   return (

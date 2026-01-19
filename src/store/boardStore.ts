@@ -257,6 +257,9 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     if (state.seed) updates.seed = state.seed
 
     set(updates)
-    get().regenerateBoard()
+    // If Pokémon data isn't loaded yet, wait for `setAvailablePokemon` to trigger regeneration.
+    if (get().availablePokemon.length > 0) {
+      get().regenerateBoard()
+    }
   },
 }))

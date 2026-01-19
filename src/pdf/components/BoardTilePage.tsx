@@ -903,6 +903,8 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                           <Text style={styles.rulesText}>25</Text>
                         </View>
                         <Text style={styles.rulesText}> × gyms owned. </Text>
+                        <Text style={styles.rulesBold}>Utilities:</Text>
+                        <Text style={styles.rulesText}> Rent = 4× dice roll (or 10× if both utilities owned). </Text>
                         <Text style={styles.rulesBold}>Free Parking:</Text>
                         <Text style={styles.rulesText}> Collect the pot!</Text>
                       </View>
