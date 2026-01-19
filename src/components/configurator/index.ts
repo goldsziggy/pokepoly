@@ -1,6 +1,7 @@
 export * from './RegionSelector'
 export * from './FavoriteSelector'
 export * from './PaperSizeSelector'
+export * from './CardSizeSelector'
 export * from './SeedControl'
 export * from './ShareButton'
 export * from './GeneratePdfButton'

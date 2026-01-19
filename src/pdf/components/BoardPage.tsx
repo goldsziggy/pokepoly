@@ -1,7 +1,9 @@
 import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
-import type { PaperSize, BoardSpace, PropertySpace } from '@/types'
-import { PAGE_DIMENSIONS } from '@/pdf/templates'
+import type { PaperSize, BoardSpace } from '@/types'
 import { baseStyles, colors } from './styles'
+import { getSpaceSprite } from '@/components/board/spaceSprites'
+import { getPrimaryType } from '@/lib/typeIcons'
+import { TypeIconPDF } from '@/types/TypeIconPDF'
 
 const styles = StyleSheet.create({
   board: {
@@ -37,6 +39,15 @@ const styles = StyleSheet.create({
   },
   propertyHeader: {
     height: 16,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  typeIcon: {
+    fontSize: 5,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textShadow: '0 1px 1px rgba(0,0,0,0.8)',
   },
   propertyBody: {
     flex: 1,
@@ -87,6 +98,63 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: 4,
+    position: 'relative',
+  },
+  innerSquareBorder: {
+    position: 'absolute',
+    bottom: 3,
+    right: 3,
+    width: '50%',
+    height: '50%',
+    borderWidth: 2,
+    borderColor: colors.black,
+    zIndex: 10,
+  },
+  innerSquareBorderTopRight: {
+    position: 'absolute',
+    top: 3,
+    right: 3,
+    width: '50%',
+    height: '50%',
+    borderWidth: 2,
+    borderColor: colors.black,
+    zIndex: 10,
+  },
+  innerSquareContent: {
+    position: 'absolute',
+    bottom: 3,
+    right: 3,
+    width: '50%',
+    height: '50%',
+    overflow: 'hidden',
+    zIndex: 10,
+  },
+  innerSquareContentTopRight: {
+    position: 'absolute',
+    top: 3,
+    right: 3,
+    width: '50%',
+    height: '50%',
+    overflow: 'hidden',
+    zIndex: 10,
+  },
+  outerSquareText: {
+    position: 'absolute',
+    top: 3,
+    left: 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingHorizontal: 2,
+    paddingVertical: 1,
+    zIndex: 20,
+  },
+  outerSquareTextBottomLeft: {
+    position: 'absolute',
+    bottom: 3,
+    left: 3,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingHorizontal: 2,
+    paddingVertical: 1,
+    zIndex: 20,
   },
   cornerIcon: {
     fontSize: 16,
@@ -148,9 +216,14 @@ function SpaceCell({ space, orientation }: SpaceCellProps) {
 
   if (space.type === 'property') {
     const bgColor = colorMap[space.color] || colors.brown
+    const primaryType = space.pokemon ? getPrimaryType(space.pokemon.types) : null
     return (
       <View style={[styles.space, cellStyle]}>
-        <View style={[styles.propertyHeader, { backgroundColor: bgColor }]} />
+        <View style={[styles.propertyHeader, { backgroundColor: bgColor }]}>
+          {primaryType && (
+            <TypeIconPDF type={primaryType} size={8} />
+          )}
+        </View>
         <View style={styles.propertyBody}>
           {space.pokemon?.sprite && (
             <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
@@ -198,9 +271,13 @@ function SpaceCell({ space, orientation }: SpaceCellProps) {
   }
 
   if (space.type === 'grunt-ambush') {
+    const sprite = getSpaceSprite('grunt-ambush')
     return (
-      <View style={[styles.space, cellStyle, { backgroundColor: '#FFCDD2' }]}>
-        <View style={styles.propertyBody}>
+      <View style={[styles.space, cellStyle, { backgroundColor: '#FFCDD2', position: 'relative' }]}>
+        {sprite && (
+          <PDFImage src={sprite} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
+        <View style={[styles.propertyBody, { position: 'relative', zIndex: 1 }]}>
           <Text style={styles.propertyName}>GRUNT</Text>
           <Text style={styles.propertyName}>AMBUSH</Text>
           <Text style={styles.propertyPrice}>Pay P{space.amount}</Text>
@@ -233,15 +310,27 @@ function SpaceCell({ space, orientation }: SpaceCellProps) {
 
   // Corner: Jail (Team Rocket Hideout)
   if (space.type === 'jail') {
+    const sprite = getSpaceSprite('jail')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#FFE0B2' }]}>
-        <View style={styles.jailBars}>
-          <View style={[styles.jailBar, { left: 6 }]} />
-          <View style={[styles.jailBar, { left: 14 }]} />
-          <View style={[styles.jailBar, { left: 22 }]} />
+        {/* Outer square - "Just Visiting" text at top-left (outer corner) */}
+        <View style={styles.outerSquareText}>
+          <Text style={styles.cornerLabel}>Just Visiting</Text>
         </View>
-        <Text style={styles.cornerTitle}>HIDEOUT</Text>
-        <Text style={styles.cornerLabel}>Just Visiting</Text>
+        
+        {/* Inner square border - aligned to bottom-right (inner corner toward center) */}
+        <View style={styles.innerSquareBorder} />
+        
+        {/* Inner square content - image and "Team Rocket Hideout" */}
+        <View style={styles.innerSquareContent}>
+          {sprite && (
+            <PDFImage src={sprite} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          )}
+          <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: 'rgba(0, 0, 0, 0.7)', paddingHorizontal: 2, paddingVertical: 1 }}>
+            <Text style={[styles.cornerTitle, { fontSize: 5, color: '#FFFFFF' }]}>TEAM ROCKET</Text>
+            <Text style={[styles.cornerLabel, { fontSize: 4, color: '#FFFFFF' }]}>HIDEOUT</Text>
+          </View>
+        </View>
       </View>
     )
   }
@@ -259,11 +348,26 @@ function SpaceCell({ space, orientation }: SpaceCellProps) {
 
   // Corner: Go To Jail
   if (space.type === 'go-to-jail') {
+    const sprite = getSpaceSprite('go-to-jail')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        <Text style={[styles.cornerIcon, { color: '#7B1FA2' }]}>☞</Text>
-        <Text style={styles.cornerTitle}>GO TO</Text>
-        <Text style={styles.cornerTitle}>HIDEOUT</Text>
+        {/* Outer square - text at bottom-left (outer corner) */}
+        <View style={styles.outerSquareTextBottomLeft}>
+          <Text style={styles.cornerLabel}>GO TO</Text>
+        </View>
+        
+        {/* Inner square border - aligned to top-right (inner corner toward center) */}
+        <View style={styles.innerSquareBorderTopRight} />
+        
+        {/* Inner square content - image and "HIDEOUT" */}
+        <View style={styles.innerSquareContentTopRight}>
+          {sprite && (
+            <PDFImage src={sprite} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          )}
+          <View style={{ position: 'absolute', bottom: 0, left: 0, right: 0, backgroundColor: 'rgba(0, 0, 0, 0.7)', paddingHorizontal: 2, paddingVertical: 1 }}>
+            <Text style={[styles.cornerTitle, { fontSize: 5, color: '#FFFFFF' }]}>HIDEOUT</Text>
+          </View>
+        </View>
       </View>
     )
   }

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import type { Pokemon, Region, PaperSize, BoardSpace } from '@/types'
+import type { Pokemon, Region, PaperSize, BoardSpace, CardSize } from '@/types'
 import { randomizeBoard, generateSeed, type BoardSlot } from '@/lib/randomizer'
 import { buildBoardSpaces } from '@/lib/board'
 
@@ -8,6 +8,7 @@ interface BoardState {
   selectedRegions: Region[]
   favoritePokemon: Pokemon[]
   paperSize: PaperSize
+  cardSize: CardSize
   seed: string
 
   // Generated board
@@ -27,6 +28,7 @@ interface BoardState {
   addFavorite: (pokemon: Pokemon) => void
   removeFavorite: (id: number) => void
   setPaperSize: (size: PaperSize) => void
+  setCardSize: (size: CardSize) => void
   setSeed: (seed: string) => void
   setAvailablePokemon: (pokemon: Pokemon[]) => void
   regenerateBoard: () => void
@@ -39,6 +41,7 @@ interface BoardState {
     regions: Region[]
     favorites: Pokemon[]
     paperSize: PaperSize
+    cardSize: CardSize
     seed: string
   }>) => void
 }
@@ -48,6 +51,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   selectedRegions: ['kanto'],
   favoritePokemon: [],
   paperSize: 'letter',
+  cardSize: 'small',
   seed: generateSeed(),
   properties: [],
   boardSpaces: [],
@@ -89,6 +93,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   },
 
   setPaperSize: (size) => set({ paperSize: size }),
+  setCardSize: (size) => set({ cardSize: size }),
 
   setSeed: (seed) => {
     set({ seed })
@@ -137,6 +142,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
     if (state.regions) updates.selectedRegions = state.regions
     if (state.favorites) updates.favoritePokemon = state.favorites
     if (state.paperSize) updates.paperSize = state.paperSize
+    if (state.cardSize) updates.cardSize = state.cardSize
     if (state.seed) updates.seed = state.seed
 
     set(updates)

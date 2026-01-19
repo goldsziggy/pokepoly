@@ -90,3 +90,11 @@ export const PAPER_DIMENSIONS: Record<PaperSize, { width: number; height: number
   letter: { width: 612, height: 792 }, // 8.5" x 11" at 72 DPI
   a4: { width: 595, height: 842 }, // 210mm x 297mm at 72 DPI
 }
+
+export type CardSize = 'small' | 'medium' | 'large'
+
+export const CARD_SIZE_MULTIPLIERS: Record<CardSize, number> = {
+  small: 1.0,
+  medium: 1.5,
+  large: 2.0,
+}

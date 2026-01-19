@@ -2,6 +2,7 @@ import seedrandom from 'seedrandom'
 import type { Pokemon, Region } from '@/types'
 import { TIER_COLORS, type BSTTier, type BoardColor } from '@/types/board'
 import { getEvolutionFamily } from '@/data/evolutionFamilies'
+import { getPrimaryType } from '@/lib/typeIcons'
 
 export interface BoardSlot {
   color: BoardColor
@@ -139,6 +140,42 @@ export function randomizeBoard(
     // Take favorites for this tier first
     const favoritesForThisTier = favoritesByTier[tier].splice(0, count)
 
+    // Determine the primary type for this color group
+    // Use the type from the first favorite, or pick the most common type among favorites
+    let targetType: string | null = null
+    if (favoritesForThisTier.length > 0) {
+      // Use the primary type of the first favorite
+      targetType = getPrimaryType(favoritesForThisTier[0].types)
+    } else {
+      // If no favorites, we'll determine type from available Pokemon
+      // Count types in available Pokemon
+      const typeCounts = new Map<string, number>()
+      for (const p of available) {
+        const primaryType = getPrimaryType(p.types)
+        if (primaryType) {
+          typeCounts.set(primaryType, (typeCounts.get(primaryType) || 0) + 1)
+        }
+      }
+      // Find the type with the most Pokemon that can fill this color group
+      let maxCount = 0
+      const slotsNeeded = count
+      for (const [type, typeCount] of typeCounts) {
+        if (typeCount >= slotsNeeded && typeCount > maxCount) {
+          maxCount = typeCount
+          targetType = type
+        }
+      }
+      // If no type has enough, pick the most common type
+      if (!targetType && typeCounts.size > 0) {
+        targetType = Array.from(typeCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+      }
+    }
+
+    // Filter available Pokemon to only those matching the target type
+    const typeFilteredAvailable = targetType
+      ? available.filter(p => getPrimaryType(p.types) === targetType)
+      : available
+
     // Fill remaining slots, preferring evolution family members of favorites
     const remaining = count - favoritesForThisTier.length
     const selectedPokemon = [...favoritesForThisTier]
@@ -146,7 +183,7 @@ export function randomizeBoard(
     if (remaining > 0) {
       // Group available Pokemon by evolution family
       const familyGroups = new Map<number, Pokemon[]>()
-      for (const p of available) {
+      for (const p of typeFilteredAvailable) {
         const familyId = p.evolutionFamily ?? getEvolutionFamily(p.id)
         if (!familyGroups.has(familyId)) {
           familyGroups.set(familyId, [])
@@ -190,6 +227,66 @@ export function randomizeBoard(
             selectedPokemon.push(pokemon)
             usedFavoriteIds.add(pokemon.id)
             slotsToFill--
+          }
+        }
+      }
+
+      // If we still don't have enough Pokemon of the target type, fall back to any type
+      // but still try to keep evolution families together
+      if (slotsToFill > 0) {
+        const fallbackAvailable = available.filter(
+          p => !usedFavoriteIds.has(p.id) && getPrimaryType(p.types) === targetType
+        )
+        
+        // Group fallback by evolution family
+        const fallbackFamilies = new Map<number, Pokemon[]>()
+        for (const p of fallbackAvailable) {
+          const familyId = p.evolutionFamily ?? getEvolutionFamily(p.id)
+          if (!fallbackFamilies.has(familyId)) {
+            fallbackFamilies.set(familyId, [])
+          }
+          fallbackFamilies.get(familyId)!.push(p)
+        }
+
+        const fallbackFamilyArrays = Array.from(fallbackFamilies.values())
+        const shuffledFallback = shuffleArray(fallbackFamilyArrays, rng)
+
+        for (const familyMembers of shuffledFallback) {
+          if (slotsToFill <= 0) break
+          for (const pokemon of familyMembers) {
+            if (slotsToFill <= 0) break
+            if (!usedFavoriteIds.has(pokemon.id)) {
+              selectedPokemon.push(pokemon)
+              usedFavoriteIds.add(pokemon.id)
+              slotsToFill--
+            }
+          }
+        }
+      }
+    }
+
+    // Verify all selected Pokemon have the same primary type (or handle edge case)
+    const selectedTypes = new Set(selectedPokemon.map(p => getPrimaryType(p.types)).filter(Boolean))
+    if (selectedTypes.size > 1 && targetType) {
+      // If we have mixed types, prioritize the target type
+      const targetTypePokemon = selectedPokemon.filter(p => getPrimaryType(p.types) === targetType)
+      const otherTypePokemon = selectedPokemon.filter(p => getPrimaryType(p.types) !== targetType)
+      
+      // Try to replace other types with target type if possible
+      const replacementCandidates = typeFilteredAvailable.filter(
+        p => !usedFavoriteIds.has(p.id) && !selectedPokemon.includes(p)
+      )
+      
+      if (replacementCandidates.length > 0) {
+        // Replace other types with target type
+        for (let i = 0; i < otherTypePokemon.length && replacementCandidates.length > 0; i++) {
+          const toReplace = otherTypePokemon[i]
+          const replacement = replacementCandidates.shift()!
+          const index = selectedPokemon.indexOf(toReplace)
+          if (index !== -1) {
+            usedFavoriteIds.delete(toReplace.id)
+            selectedPokemon[index] = replacement
+            usedFavoriteIds.add(replacement.id)
           }
         }
       }

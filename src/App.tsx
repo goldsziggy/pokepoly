@@ -4,6 +4,7 @@ import {
   RegionSelector,
   FavoriteSelector,
   PaperSizeSelector,
+  CardSizeSelector,
   SeedControl,
   ShareButton,
   GeneratePdfButton,
@@ -58,6 +59,7 @@ function Configurator() {
       <Card title="Settings">
         <div className="space-y-6">
           <PaperSizeSelector />
+          <CardSizeSelector />
           <SeedControl />
         </div>
       </Card>

@@ -1,6 +1,10 @@
 import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
 import type { PaperSize, BoardSpace, Pokemon } from '@/types'
 import { colors } from './styles'
+import { getSpaceSprite, getGymImage } from '@/components/board/spaceSprites'
+import { PokeCoinPDF } from '@/components/ui/PokeCoin'
+import { getPrimaryType } from '@/lib/typeIcons'
+import { TypeIconPDF } from '@/types/TypeIconPDF'
 
 // 20" x 20" board at 72 DPI = 1440 x 1440 points
 const BOARD_SIZE = 1440
@@ -52,6 +56,15 @@ const styles = StyleSheet.create({
   },
   propertyHeader: {
     height: 22,
+    position: 'relative',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  typeIcon: {
+    fontSize: 7,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    textShadow: '0 1px 1px rgba(0,0,0,0.8)',
   },
   propertyBody: {
     flex: 1,
@@ -74,11 +87,94 @@ const styles = StyleSheet.create({
     height: PROPERTY_SPRITE_SIZE,
     objectFit: 'contain',
   },
+  spaceImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  spaceImageContain: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'contain',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
   cornerCell: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 6,
+    position: 'relative',
+    overflow: 'visible',
+  },
+  innerSquareBorder: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    width: '50%',
+    height: '50%',
+    borderWidth: 2,
+    borderColor: colors.black,
+    zIndex: 10,
+  },
+  innerSquareBorderTopRight: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: '50%',
+    height: '50%',
+    borderWidth: 2,
+    borderColor: colors.black,
+    zIndex: 10,
+  },
+  innerSquareContent: {
+    position: 'absolute',
+    bottom: 4,
+    right: 4,
+    width: '50%',
+    height: '50%',
+    overflow: 'hidden',
+    zIndex: 10,
+  },
+  innerSquareContentTopRight: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: '50%',
+    height: '50%',
+    overflow: 'hidden',
+    zIndex: 10,
+  },
+  outerSquareText: {
+    position: 'absolute',
+    top: 4,
+    left: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingHorizontal: 3,
+    paddingVertical: 2,
+    zIndex: 20,
+  },
+  outerSquareTextBottomLeft: {
+    position: 'absolute',
+    bottom: 4,
+    left: 4,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingHorizontal: 3,
+    paddingVertical: 2,
+    zIndex: 20,
+  },
+  cornerImage: {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 0,
   },
   cornerTitle: {
     fontSize: 10,
@@ -89,6 +185,31 @@ const styles = StyleSheet.create({
     fontSize: 8,
     textAlign: 'center',
     marginTop: 3,
+  },
+  textOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    paddingHorizontal: 4,
+    paddingVertical: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 22,
+    width: '100%',
+  },
+  overlayText: {
+    color: '#FFFFFF',
+    fontSize: 8,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  overlaySubtext: {
+    color: '#FFFFFF',
+    fontSize: 6,
+    textAlign: 'center',
+    marginTop: 1,
   },
   // Pokeball center styles
   pokeballTop: {
@@ -236,9 +357,14 @@ function SpaceContent({ space }: { space: BoardSpace }) {
 
   if (space.type === 'property') {
     const bgColor = colorMap[space.color] || colors.brown
+    const primaryType = space.pokemon ? getPrimaryType(space.pokemon.types) : null
     return (
       <View style={{ flex: 1 }}>
-        <View style={[styles.propertyHeader, { backgroundColor: bgColor }]} />
+        <View style={[styles.propertyHeader, { backgroundColor: bgColor }]}>
+          {primaryType && (
+            <TypeIconPDF type={primaryType} size={10} />
+          )}
+        </View>
         <View style={styles.propertyBody}>
           {space.pokemon?.sprite && (
             <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
@@ -246,95 +372,193 @@ function SpaceContent({ space }: { space: BoardSpace }) {
           <Text style={styles.propertyName}>
             {space.pokemon ? capitalize(space.pokemon.name) : '???'}
           </Text>
-          <Text style={styles.propertyPrice}>P{space.price}</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+            <PokeCoinPDF size={8} />
+            <Text style={styles.propertyPrice}>{space.price}</Text>
+          </View>
         </View>
       </View>
     )
   }
 
   if (space.type === 'gym') {
+    const gymImage = getGymImage(space.name)
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#E8E8E8' }]}>
-        <Text style={[styles.cornerTitle, { fontSize: 9 }]}>{space.name}</Text>
-        <Text style={styles.cornerLabel}>GYM</Text>
-        <Text style={[styles.cornerLabel, { fontWeight: 'bold' }]}>P{space.price}</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {gymImage && (
+            <PDFImage src={gymImage} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>{space.name}</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
+              <PokeCoinPDF size={6} />
+              <Text style={styles.overlaySubtext}>{space.price}</Text>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'item-bag') {
+    const sprite = getSpaceSprite('item-bag')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#BBDEFB' }]}>
-        <Text style={styles.cornerTitle}>ITEM</Text>
-        <Text style={styles.cornerTitle}>BAG</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>ITEM BAG</Text>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'professor-oak') {
+    const sprite = getSpaceSprite('professor-oak')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#C8E6C9' }]}>
-        <Text style={styles.cornerTitle}>PROF.</Text>
-        <Text style={styles.cornerTitle}>OAK</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>PROF. OAK</Text>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'grunt-ambush') {
+    const sprite = getSpaceSprite('grunt-ambush')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
-        <Text style={styles.cornerTitle}>GRUNT</Text>
-        <Text style={styles.cornerTitle}>AMBUSH</Text>
-        <Text style={[styles.cornerLabel, { fontWeight: 'bold' }]}>Pay P{space.amount}</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>GRUNT AMBUSH</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
+              <Text style={styles.overlaySubtext}>Pay </Text>
+              <PokeCoinPDF size={6} />
+              <Text style={styles.overlaySubtext}>{space.amount}</Text>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'giovanni') {
+    const sprite = getSpaceSprite('giovanni')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        <Text style={styles.cornerTitle}>GIOVANNI</Text>
-        <Text style={[styles.cornerLabel, { fontWeight: 'bold' }]}>Pay P{space.amount}+</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>GIOVANNI</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
+              <Text style={styles.overlaySubtext}>Pay </Text>
+              <PokeCoinPDF size={6} />
+              <Text style={styles.overlaySubtext}>{space.amount}+</Text>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'go') {
+    const sprite = getSpaceSprite('go')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
-        <Text style={{ fontSize: 28, color: '#D32F2F', fontWeight: 'bold' }}>→</Text>
-        <Text style={[styles.cornerTitle, { fontSize: 14 }]}>GO</Text>
-        <Text style={styles.cornerLabel}>Collect P200</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>GO</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
+              <Text style={styles.overlaySubtext}>Collect </Text>
+              <PokeCoinPDF size={6} />
+              <Text style={styles.overlaySubtext}>200</Text>
+            </View>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'jail') {
+    const sprite = getSpaceSprite('jail')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#FFE0B2' }]}>
-        <Text style={[styles.cornerTitle, { fontSize: 9 }]}>TEAM ROCKET</Text>
-        <Text style={[styles.cornerTitle, { fontSize: 12 }]}>HIDEOUT</Text>
-        <Text style={styles.cornerLabel}>Just Visiting</Text>
+        {/* Outer square - "Just Visiting" text at top-left (outer corner) */}
+        <View style={styles.outerSquareText}>
+          <Text style={styles.overlaySubtext}>Just Visiting</Text>
+        </View>
+        
+        {/* Inner square border - aligned to bottom-right (inner corner toward center) */}
+        <View style={styles.innerSquareBorder} />
+        
+        {/* Inner square content - image and "Team Rocket Hideout" */}
+        <View style={styles.innerSquareContent}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>TEAM ROCKET</Text>
+            <Text style={styles.overlaySubtext}>HIDEOUT</Text>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'free-parking') {
+    const sprite = getSpaceSprite('free-parking')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#FFF9C4' }]}>
-        <Text style={{ fontSize: 20, color: '#F57F17', fontWeight: 'bold' }}>P</Text>
-        <Text style={styles.cornerTitle}>FREE</Text>
-        <Text style={styles.cornerTitle}>PARKING</Text>
+        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>FREE PARKING</Text>
+          </View>
+        </View>
       </View>
     )
   }
 
   if (space.type === 'go-to-jail') {
+    const sprite = getSpaceSprite('go-to-jail')
     return (
       <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        <Text style={{ fontSize: 20, color: '#7B1FA2' }}>☞</Text>
-        <Text style={styles.cornerTitle}>GO TO</Text>
-        <Text style={styles.cornerTitle}>HIDEOUT</Text>
+        {/* Outer square - text at bottom-left (outer corner) */}
+        <View style={styles.outerSquareTextBottomLeft}>
+          <Text style={styles.overlaySubtext}>GO TO</Text>
+        </View>
+        
+        {/* Inner square border - aligned to top-right (inner corner toward center) */}
+        <View style={styles.innerSquareBorderTopRight} />
+        
+        {/* Inner square content - image and "HIDEOUT" */}
+        <View style={styles.innerSquareContentTopRight}>
+          {sprite && (
+            <PDFImage src={sprite} style={styles.cornerImage} />
+          )}
+          <View style={styles.textOverlay}>
+            <Text style={styles.overlayText}>HIDEOUT</Text>
+          </View>
+        </View>
       </View>
     )
   }
@@ -533,7 +757,14 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
               >
                 <Text style={styles.rulesTitle}>QUICK RULES</Text>
                 <Text style={styles.rulesText}>
-                  <Text style={styles.rulesBold}>Setup:</Text> Each player starts with P1500 on GO.
+                  <Text style={styles.rulesText}>
+                    <Text style={styles.rulesBold}>Setup:</Text> Each player starts with{' '}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
+                      <PokeCoinPDF size={6} />
+                      <Text>1500</Text>
+                    </View>{' '}
+                    on GO.
+                  </Text>
                   <Text style={styles.rulesBold}> Play:</Text> Roll dice, move clockwise.
                 </Text>
                 <Text style={styles.rulesText}>
@@ -544,13 +775,45 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                   <Text style={styles.rulesBold}>Build:</Text> Own all of a color → add Berries (houses). 4 Berries = 1 Evolution Stone (hotel).
                 </Text>
                 <Text style={styles.rulesText}>
-                  <Text style={styles.rulesBold}>Jail:</Text> Pay P50 or roll doubles.
-                  <Text style={styles.rulesBold}> Gyms:</Text> Rent = P25 × gyms owned.
+                  <Text style={styles.rulesText}>
+                    <Text style={styles.rulesBold}>Jail:</Text> Pay{' '}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
+                      <PokeCoinPDF size={6} />
+                      <Text>50</Text>
+                    </View>{' '}
+                    or roll doubles.{' '}
+                    <Text style={styles.rulesBold}>Gyms:</Text> Rent ={' '}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
+                      <PokeCoinPDF size={6} />
+                      <Text>25</Text>
+                    </View>{' '}
+                    × gyms owned.
+                  </Text>
                   <Text style={styles.rulesBold}> Free Parking:</Text> Collect the pot!
                 </Text>
                 <Text style={styles.rulesText}>
                   <Text style={styles.rulesBold}>Win:</Text> Last player with money wins!
-                  <Text style={styles.rulesBold}> Start P1500:</Text> 2×P500 • 2×P100 • 2×P50 • 6×P20 • 5×P10 • 5×P5 • 5×P1
+                  <Text style={styles.rulesText}>
+                    <Text style={styles.rulesBold}>Start </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
+                      <PokeCoinPDF size={6} />
+                      <Text>1500</Text>
+                    </View>
+                    <Text>: </Text>
+                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>500</Text></View>
+                    {' • '}
+                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>100</Text></View>
+                    {' • '}
+                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>50</Text></View>
+                    {' • '}
+                    6×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>20</Text></View>
+                    {' • '}
+                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>10</Text></View>
+                    {' • '}
+                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>5</Text></View>
+                    {' • '}
+                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>1</Text></View>
+                  </Text>
                 </Text>
               </View>
             )}

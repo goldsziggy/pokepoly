@@ -5,7 +5,7 @@ import { useBoardStore } from '@/store'
 import { BoardDocument } from '@/pdf'
 
 export function GeneratePdfButton() {
-  const { boardSpaces, paperSize, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
+  const { boardSpaces, paperSize, cardSize, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
   const [progress, setProgress] = useState('')
 
   const handleGenerate = useCallback(async () => {
@@ -19,10 +19,14 @@ export function GeneratePdfButton() {
 
     try {
       // Create the PDF document
-      const doc = <BoardDocument spaces={boardSpaces} paperSize={paperSize} />
+      const doc = <BoardDocument spaces={boardSpaces} paperSize={paperSize} cardSize={cardSize} />
 
-      // Generate the blob
+      // Generate the blob with error handling
       setProgress('Rendering pages...')
+      
+      // Use setTimeout to allow UI to update and prevent blocking
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
       const blob = await pdf(doc).toBlob()
 
       // Download
@@ -39,12 +43,12 @@ export function GeneratePdfButton() {
       setProgress('')
     } catch (error) {
       console.error('PDF generation failed:', error)
-      alert('Failed to generate PDF. Please try again.')
+      alert(`Failed to generate PDF: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`)
       setProgress('')
     } finally {
       setIsPdfGenerating(false)
     }
-  }, [boardSpaces, paperSize, setIsPdfGenerating])
+  }, [boardSpaces, paperSize, cardSize, setIsPdfGenerating])
 
   return (
     <div className="space-y-3">

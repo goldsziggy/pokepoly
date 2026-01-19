@@ -1,18 +1,19 @@
 import { Document } from '@react-pdf/renderer'
-import type { PaperSize, BoardSpace, PropertySpace } from '@/types'
+import type { PaperSize, BoardSpace, PropertySpace, CardSize } from '@/types'
 import { BoardTilePage } from './BoardTilePage'
 import { PropertyDeedsPage } from './PropertyDeedsPage'
-import { ItemBagCardsPage } from './ItemBagCardsPage'
-import { ProfessorOakCardsPage } from './ProfessorOakCardsPage'
-import { MoneyPage } from './MoneyPage'
+import { ItemBagCardsPages } from './ItemBagCardsPages'
+import { ProfessorOakCardsPages } from './ProfessorOakCardsPages'
+import { MoneyPages } from './MoneyPages'
 import { TokensRulesPage } from './TokensRulesPage'
 
 interface BoardDocumentProps {
   spaces: BoardSpace[]
   paperSize: PaperSize
+  cardSize: CardSize
 }
 
-export function BoardDocument({ spaces, paperSize }: BoardDocumentProps) {
+export function BoardDocument({ spaces, paperSize, cardSize }: BoardDocumentProps) {
   // Extract property spaces for deeds
   const properties = spaces.filter(
     (space): space is PropertySpace => space.type === 'property'
@@ -37,15 +38,14 @@ export function BoardDocument({ spaces, paperSize }: BoardDocumentProps) {
       <PropertyDeedsPage properties={properties} paperSize={paperSize} pageNumber={1} />
       <PropertyDeedsPage properties={properties} paperSize={paperSize} pageNumber={2} />
 
-      {/* Item Bag Cards (1 page) */}
-      <ItemBagCardsPage paperSize={paperSize} />
+      {/* Item Bag Cards - dynamically generate pages */}
+      <ItemBagCardsPages paperSize={paperSize} cardSize={cardSize} />
 
-      {/* Professor Oak Cards (1 page) */}
-      <ProfessorOakCardsPage paperSize={paperSize} />
+      {/* Professor Oak Cards - dynamically generate pages */}
+      <ProfessorOakCardsPages paperSize={paperSize} cardSize={cardSize} />
 
-      {/* Money Sheets (2 pages) */}
-      <MoneyPage paperSize={paperSize} pageNumber={0} />
-      <MoneyPage paperSize={paperSize} pageNumber={1} />
+      {/* Money Sheets - dynamically generate pages */}
+      <MoneyPages paperSize={paperSize} cardSize={cardSize} />
 
       {/* Tokens + Rules (1 page) */}
       <TokensRulesPage paperSize={paperSize} />

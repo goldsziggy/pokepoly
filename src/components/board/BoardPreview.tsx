@@ -1,7 +1,9 @@
 import { useBoardStore } from '@/store'
-import { Spinner } from '@/components/ui'
+import { Spinner, PokeCoin } from '@/components/ui'
 import { COLOR_HEX, type BoardSpace, type PropertySpace } from '@/types/board'
-import { getSpaceSprite } from './spaceSprites'
+import { getSpaceSprite, getGymImage } from './spaceSprites'
+import { getPrimaryType } from '@/lib/typeIcons'
+import { TypeIcon } from '@/types/TypeIcon'
 import type { Pokemon } from '@/types'
 
 function calculateHalfCirclePositions(
@@ -13,23 +15,21 @@ function calculateHalfCirclePositions(
   const positions: { x: number; y: number }[] = []
   if (count === 0) return positions
 
-  // Half circle from left to right (180 degrees, rotated to top)
-  const startAngle = Math.PI // Start from left
-  const endAngle = 2*Math.PI // End at right
-
+  const startAngle = Math.PI
+  const endAngle = 2 * Math.PI
   const maxPerRing = 10
   const rings = Math.ceil(count / maxPerRing)
   let pokemonIndex = 0
 
   for (let ring = 0; ring < rings && pokemonIndex < count; ring++) {
-    const ringRadius = radius * (0.5 + (ring * 0.5) / Math.max(rings - 1, 1))
+    const ringRadius = radius * (0.35 + (ring * 0.65) / Math.max(rings - 1, 1))
     const pokemonInThisRing = Math.min(maxPerRing + ring * 2, count - pokemonIndex)
 
     for (let i = 0; i < pokemonInThisRing && pokemonIndex < count; i++) {
       const angle = startAngle + ((endAngle - startAngle) * i) / Math.max(pokemonInThisRing - 1, 1)
       positions.push({
         x: centerX + Math.cos(angle) * ringRadius,
-        y: centerY + Math.sin(angle) * ringRadius,
+        y: centerY + Math.sin(angle) * ringRadius * 0.65,
       })
       pokemonIndex++
     }
@@ -47,27 +47,21 @@ function BoardCenter() {
 
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
-  // Dimensions for the pokeball layout
-  const centerSize = 630 // 9 cells × 70px
+  const centerSize = 630
   const pokeballRadius = centerSize / 2 - 20
-  const spriteSize = 36
+  const spriteSize = 40
 
   const positions = calculateHalfCirclePositions(
     pokemon.length,
     centerSize / 2,
-    pokeballRadius * 0.8, // Position in top half
+    pokeballRadius * 0.55,
     pokeballRadius * 0.85
   )
 
   return (
     <div className="w-full h-full relative overflow-hidden">
-      {/* Top half - Red (Pokemon collage) */}
-      <div
-        className="absolute inset-x-0 top-0 h-1/2"
-        style={{
-          background: 'linear-gradient(180deg, #DC2626 0%, #EF4444 100%)',
-        }}
-      >
+      {/* Top half - Red */}
+      <div className="absolute inset-x-0 top-0 h-1/2 bg-red-600">
         {/* Pokemon sprites */}
         {pokemon.map((poke, index) => {
           const pos = positions[index]
@@ -91,8 +85,8 @@ function BoardCenter() {
                 loading="lazy"
               />
               <span
-                className="text-[6px] font-pixel text-white text-center truncate w-full bg-black/30 rounded px-0.5"
-                style={{ maxWidth: spriteSize + 8 }}
+                className="text-[6px] font-pixel text-white text-center truncate w-full bg-black/50 rounded px-0.5"
+                style={{ maxWidth: spriteSize + 10 }}
               >
                 {capitalize(poke.name)}
               </span>
@@ -100,58 +94,37 @@ function BoardCenter() {
           )
         })}
 
-        {/* Title in top section */}
-        <div className="absolute bottom-2 left-0 right-0 text-center">
-          <div className="text-[14px] font-pixel text-white font-bold drop-shadow-lg">MASTER LEAGUE</div>
+        {/* Title */}
+        <div className="absolute bottom-3 left-0 right-0 text-center">
+          <div className="text-[16px] font-pixel text-white font-bold drop-shadow-lg">MASTER LEAGUE</div>
         </div>
       </div>
 
-      {/* Bottom half - White (Rules) */}
-      <div
-        className="absolute inset-x-0 bottom-0 h-1/2 flex flex-col items-center justify-center px-6"
-        style={{
-          background: 'linear-gradient(180deg, #F5F5F5 0%, #FFFFFF 100%)',
-        }}
-      >
-        {/* Quick Rules */}
-        <div className="text-center mt-4">
-          <div className="text-[8px] font-pixel text-red-600 font-bold mb-2">QUICK RULES</div>
-          <div className="space-y-0.5 text-[6px] font-pixel text-gray-800 leading-relaxed max-w-[450px]">
-            <div><span className="font-bold">Setup:</span> Each player starts with ₽1500 on GO.</div>
-            <div><span className="font-bold">Play:</span> Roll dice, move clockwise, follow space.</div>
-            <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it!</div>
-            <div><span className="font-bold">Rent:</span> Others land on yours? Collect rent!</div>
-            <div><span className="font-bold">Build:</span> Own all of a color to add Berries. <span className="font-bold">Upgrade:</span> 4 Berries = 1 Stone.</div>
-            <div><span className="font-bold">Jail:</span> Pay ₽50 or roll doubles. <span className="font-bold">Gyms:</span> Rent = ₽25 × owned.</div>
-            <div><span className="font-bold">Free Parking:</span> Collect all Grunt Ambush, Giovanni & card fees!</div>
-            <div><span className="font-bold">Win:</span> Last player with money!</div>
-          </div>
-        </div>
-
-        {/* Starting Money */}
-        <div className="text-center mt-3">
-          <div className="text-[7px] font-pixel text-gray-600">
-            <span className="font-bold">START ₽1500:</span> 2×₽500 • 2×₽100 • 2×₽50 • 6×₽20 • 5×₽10 • 5×₽5 • 5×₽1
+      {/* Bottom half - White */}
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100 flex flex-col items-center justify-center px-8">
+        <div className="text-center">
+          <div className="text-[10px] font-pixel text-red-600 font-bold mb-2">QUICK RULES</div>
+          <div className="space-y-0.5 text-[7px] font-pixel text-gray-800 leading-relaxed max-w-[500px]">
+            <div><span className="font-bold">Setup:</span> Each player starts with <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />1500</span> on GO. <span className="font-bold">Play:</span> Roll dice, move clockwise.</div>
+            <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it! <span className="font-bold">Rent:</span> Others land on yours? Collect!</div>
+            <div><span className="font-bold">Build:</span> Own all of a color → add Berries. 4 Berries = 1 Evolution Stone.</div>
+            <div><span className="font-bold">Jail:</span> Pay <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />50</span> or roll doubles. <span className="font-bold">Gyms:</span> Rent = <span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />25</span> × owned.</div>
+            <div><span className="font-bold">Free Parking:</span> Collect Grunt Ambush, Giovanni & card fees!</div>
+            <div><span className="font-bold">Win:</span> Last player with money! <span className="font-bold">Start:</span> 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />500</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />100</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />50</span> • 6×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />20</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />10</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />5</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={6} />1</span></div>
           </div>
         </div>
       </div>
 
-      {/* Center band (black stripe) */}
-      <div
-        className="absolute left-0 right-0 h-6 bg-gray-900"
-        style={{ top: 'calc(50% - 12px)' }}
-      />
+      {/* Center band */}
+      <div className="absolute left-0 right-0 h-7 bg-gray-900" style={{ top: 'calc(50% - 14px)' }} />
 
       {/* Center button */}
       <div
-        className="absolute w-16 h-16 rounded-full bg-white border-8 border-gray-900 shadow-lg"
-        style={{
-          left: 'calc(50% - 32px)',
-          top: 'calc(50% - 32px)',
-        }}
+        className="absolute w-16 h-16 rounded-full bg-white border-[6px] border-gray-900 shadow-lg"
+        style={{ left: 'calc(50% - 32px)', top: 'calc(50% - 32px)' }}
       >
-        <div className="w-full h-full rounded-full bg-gradient-to-br from-white to-gray-200 flex items-center justify-center">
-          <div className="w-6 h-6 rounded-full bg-gray-300 border-2 border-gray-400" />
+        <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
+          <div className="w-6 h-6 rounded-full bg-gray-300" />
         </div>
       </div>
     </div>
@@ -161,26 +134,34 @@ function BoardCenter() {
 function PropertyCell({ space }: { space: PropertySpace }) {
   const pokemon = space.pokemon
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
+  const primaryType = pokemon ? getPrimaryType(pokemon.types) : null
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full bg-white">
       <div
-        className="h-4 w-full border-b border-gray-800"
+        className="h-5 w-full border-b-2 border-gray-800 relative flex items-center justify-center"
         style={{ backgroundColor: COLOR_HEX[space.color] }}
-      />
-      <div className="flex-1 flex flex-col items-center justify-center p-1.5 bg-green-50 min-h-0">
+      >
+        {primaryType && (
+          <TypeIcon type={primaryType} size={14} className="drop-shadow-[0_1px_1px_rgba(0,0,0,0.8)]" />
+        )}
+      </div>
+      <div className="flex-1 flex flex-col items-center justify-center p-1 min-h-0">
         {pokemon ? (
           <>
             <img
               src={pokemon.sprite}
               alt={pokemon.name}
-              className="w-10 h-10 pixelated object-contain mb-1"
+              className="w-10 h-10 pixelated object-contain"
               loading="lazy"
             />
-            <span className="text-[7px] leading-tight text-gray-800 font-pixel text-center truncate w-full px-0.5">
+            <span className="text-[7px] leading-tight text-gray-800 font-pixel font-bold text-center truncate w-full">
               {capitalize(pokemon.name)}
             </span>
-            <span className="text-[7px] text-gray-700 font-pixel font-bold mt-0.5">₽{space.price}</span>
+            <span className="text-[7px] text-gray-700 font-pixel inline-flex items-center gap-0.5">
+              <PokeCoin size={8} />
+              {space.price}
+            </span>
           </>
         ) : (
           <span className="text-[8px] text-gray-400 font-pixel">Empty</span>
@@ -190,12 +171,12 @@ function PropertyCell({ space }: { space: PropertySpace }) {
   )
 }
 
-function SpaceCell({ space, position }: { space: BoardSpace; position: number }) {
-  const baseClass = "border-2 border-gray-800 bg-green-100 flex items-center justify-center h-full w-full"
+function SpaceCell({ space }: { space: BoardSpace }) {
+  const baseClass = "border-2 border-gray-800 flex items-center justify-center h-full w-full"
 
   if (space.type === 'property') {
     return (
-      <div className={`${baseClass} p-0`}>
+      <div className={`${baseClass} p-0 bg-white`}>
         <PropertyCell space={space} />
       </div>
     )
@@ -204,18 +185,20 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'go') {
     const sprite = getSpaceSprite('go')
     return (
-      <div className={`${baseClass} bg-red-100 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-red-100 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="GO"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[10px] font-pixel text-red-600 font-bold mb-0.5">GO</div>
-          <div className="text-[7px] text-gray-700 font-pixel">Collect ₽200</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[10px] font-pixel text-white font-bold text-center">GO</div>
+          <div className="text-[7px] text-white font-pixel text-center inline-flex items-center justify-center gap-0.5 w-full">
+            Collect <PokeCoin size={8} />200
+          </div>
         </div>
       </div>
     )
@@ -224,19 +207,29 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'jail') {
     const sprite = getSpaceSprite('jail')
     return (
-      <div className={`${baseClass} bg-orange-100 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-orange-100 flex-col p-1 relative`}>
+        {/* Outer square - "Just Visiting" text at top-left (outer corner) */}
+        <div className="absolute top-1 left-1 bg-black/70 px-1 py-0.5 z-20">
+          <div className="text-[7px] text-white font-pixel text-center">Just Visiting</div>
+        </div>
+        
+        {/* Inner square border - aligned to bottom-right (inner corner toward center) */}
+        <div className="absolute bottom-2 right-2 w-1/2 h-1/2 border-2 border-gray-800 pointer-events-none z-10" />
+        
+        {/* Inner square content - image and "Team Rocket Hideout" */}
+        <div className="absolute bottom-2 right-2 w-1/2 h-1/2 overflow-hidden z-10">
         {sprite && (
           <img
             src={sprite}
             alt="Team Rocket Hideout"
-            className="w-8 h-8 pixelated object-contain mb-1"
+              className="w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-orange-700 font-bold leading-tight">TEAM</div>
-          <div className="text-[8px] font-pixel text-orange-700 font-bold leading-tight">ROCKET</div>
-          <div className="text-[7px] text-gray-700 font-pixel mt-0.5">Hideout</div>
+          <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5">
+            <div className="text-[6px] font-pixel text-white font-bold leading-tight text-center">TEAM ROCKET</div>
+            <div className="text-[5px] text-white font-pixel text-center">HIDEOUT</div>
+          </div>
         </div>
       </div>
     )
@@ -245,18 +238,17 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'free-parking') {
     const sprite = getSpaceSprite('free-parking')
     return (
-      <div className={`${baseClass} bg-yellow-100 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-yellow-100 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="Free Parking"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-yellow-700 font-bold leading-tight">FREE</div>
-          <div className="text-[8px] font-pixel text-yellow-700 font-bold leading-tight">PARKING</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold leading-tight text-center">FREE PARKING</div>
         </div>
       </div>
     )
@@ -265,38 +257,42 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'go-to-jail') {
     const sprite = getSpaceSprite('go-to-jail')
     return (
-      <div className={`${baseClass} bg-purple-100 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-purple-100 flex-col p-1 relative`}>
+        {/* Inner square border */}
+        <div className="absolute inset-2 border-2 border-gray-800 pointer-events-none z-10" />
         {sprite && (
           <img
             src={sprite}
             alt="Go to Hideout"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-purple-700 font-bold leading-tight">GO TO</div>
-          <div className="text-[8px] font-pixel text-purple-700 font-bold leading-tight">HIDEOUT</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold leading-tight text-center">GO TO HIDEOUT</div>
         </div>
       </div>
     )
   }
 
   if (space.type === 'gym') {
-    const sprite = getSpaceSprite('gym')
+    const sprite = getGymImage(space.name)
     return (
-      <div className={`${baseClass} bg-gray-200 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-gray-200 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt={space.name}
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-gray-700 font-bold leading-tight">{space.name}</div>
-          <div className="text-[7px] text-gray-700 font-pixel mt-0.5">₽{space.price}</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold text-center leading-tight">{space.name}</div>
+          <div className="text-[7px] font-pixel text-white font-bold text-center inline-flex items-center justify-center gap-0.5 w-full">
+            <PokeCoin size={8} />
+            {space.price}
+          </div>
         </div>
       </div>
     )
@@ -305,18 +301,17 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'item-bag') {
     const sprite = getSpaceSprite('item-bag')
     return (
-      <div className={`${baseClass} bg-blue-100 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-blue-100 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="Item Bag"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-blue-700 font-bold leading-tight">ITEM</div>
-          <div className="text-[8px] font-pixel text-blue-700 font-bold leading-tight">BAG</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold leading-tight text-center">ITEM BAG</div>
         </div>
       </div>
     )
@@ -325,18 +320,17 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'professor-oak') {
     const sprite = getSpaceSprite('professor-oak')
     return (
-      <div className={`${baseClass} bg-green-200 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-green-200 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="Professor Oak"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-green-700 font-bold leading-tight">PROF.</div>
-          <div className="text-[8px] font-pixel text-green-700 font-bold leading-tight">OAK</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold leading-tight text-center">PROF. OAK</div>
         </div>
       </div>
     )
@@ -345,19 +339,21 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'grunt-ambush') {
     const sprite = getSpaceSprite('grunt-ambush')
     return (
-      <div className={`${baseClass} bg-red-200 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-red-200 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="Grunt Ambush"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-red-700 font-bold leading-tight">GRUNT</div>
-          <div className="text-[8px] font-pixel text-red-700 font-bold leading-tight">AMBUSH</div>
-          <div className="text-[7px] text-gray-700 font-pixel mt-0.5">Pay ₽{space.amount}</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold text-center">GRUNT AMBUSH</div>
+          <div className="text-[7px] text-white font-pixel font-bold text-center inline-flex items-center justify-center gap-0.5 w-full">
+            Pay <PokeCoin size={8} />
+            {space.amount}
+          </div>
         </div>
       </div>
     )
@@ -366,18 +362,21 @@ function SpaceCell({ space, position }: { space: BoardSpace; position: number })
   if (space.type === 'giovanni') {
     const sprite = getSpaceSprite('giovanni')
     return (
-      <div className={`${baseClass} bg-purple-200 p-1 flex flex-col items-center justify-center`}>
+      <div className={`${baseClass} bg-purple-200 flex-col p-1 relative`}>
         {sprite && (
           <img
             src={sprite}
             alt="Giovanni"
-            className="w-8 h-8 pixelated object-contain mb-1"
+            className="absolute inset-0 w-full h-full pixelated object-cover"
             loading="lazy"
           />
         )}
-        <div className="text-center">
-          <div className="text-[8px] font-pixel text-purple-700 font-bold">GIOVANNI</div>
-          <div className="text-[7px] text-gray-700 font-pixel mt-0.5">Pay ₽{space.amount}+</div>
+        <div className="absolute bottom-0 left-0 right-0 bg-black/70 px-1 py-0.5 z-10">
+          <div className="text-[8px] font-pixel text-white font-bold text-center">GIOVANNI</div>
+          <div className="text-[7px] text-white font-pixel font-bold text-center inline-flex items-center justify-center gap-0.5 w-full">
+            Pay <PokeCoin size={8} />
+            {space.amount}+
+          </div>
         </div>
       </div>
     )
@@ -405,36 +404,38 @@ export function BoardPreview() {
     )
   }
 
-  // Build the board grid
-  // Monopoly board: 11x11 grid with properties around the edge
   const gridSize = 11
-  const regularCellSize = 70 // Increased from 45px
-  const cornerCellSize = 90 // Increased from 60px
+  const regularCellSize = 70
+  const cornerCellSize = 95
 
-  // Map positions to grid coordinates
   const getGridPosition = (index: number): { row: number; col: number } | null => {
+    // Handle corners first
+    if (index === 0) return { row: 10, col: 10 }  // GO - bottom-right
+    if (index === 10) return { row: 0, col: 0 }   // Jail - top-left
+    if (index === 20) return { row: 0, col: 10 }  // Free Parking - top-right
+    if (index === 30) return { row: 10, col: 0 }  // Go To Jail - bottom-left
+
+    // Handle regular spaces
     if (index < 10) {
-      // Bottom row (right to left): indices 0-9 -> row 10, col 10-1
+      // Bottom row (right to left): indices 1-9 -> row 10, col 9-1
       return { row: 10, col: 10 - index }
     } else if (index < 20) {
-      // Left column (bottom to top): indices 10-19 -> col 0, row 9-0
-      return { row: 10 - (index - 10) - 1, col: 0 }
+      // Left column (bottom to top): indices 11-19 -> col 0, row 8-1
+      return { row: 10 - (index - 10), col: 0 }
     } else if (index < 30) {
-      // Top row (left to right): indices 20-29 -> row 0, col 1-10
-      return { row: 0, col: index - 20 + 1 }
+      // Top row (left to right): indices 21-29 -> row 0, col 1-9
+      return { row: 0, col: index - 20 }
     } else if (index < 40) {
-      // Right column (top to bottom): indices 30-39 -> col 10, row 1-9
-      return { row: index - 30 + 1, col: 10 }
+      // Right column (top to bottom): indices 31-39 -> col 10, row 1-9
+      return { row: index - 30, col: 10 }
     }
     return null
   }
 
-  // Create grid
   const grid: (BoardSpace | null)[][] = Array(gridSize)
     .fill(null)
     .map(() => Array(gridSize).fill(null))
 
-  // Place spaces
   boardSpaces.forEach((space, index) => {
     const pos = getGridPosition(index)
     if (pos) {
@@ -442,7 +443,6 @@ export function BoardPreview() {
     }
   })
 
-  // Create grid template with larger corners
   const createGridTemplate = (size: number, regular: number, corner: number) => {
     const templates: string[] = []
     for (let i = 0; i < size; i++) {
@@ -473,8 +473,6 @@ export function BoardPreview() {
               colIndex === 10
 
             if (!isEdge) {
-              // Center area - render the BoardCenter component only once at position (1,1)
-              // and have it span all 9x9 center cells
               if (rowIndex === 1 && colIndex === 1) {
                 return (
                   <div
@@ -489,27 +487,19 @@ export function BoardPreview() {
                   </div>
                 )
               }
-              // Skip other center cells as they're covered by the spanning cell
               return null
             }
 
             if (space) {
-              const index = boardSpaces.indexOf(space)
               return (
-                <div
-                  key={`${rowIndex}-${colIndex}`}
-                  className="h-full w-full"
-                >
-                  <SpaceCell space={space} position={index} />
+                <div key={`${rowIndex}-${colIndex}`} className="h-full w-full">
+                  <SpaceCell space={space} />
                 </div>
               )
             }
 
             return (
-              <div
-                key={`${rowIndex}-${colIndex}`}
-                className="bg-green-200"
-              />
+              <div key={`${rowIndex}-${colIndex}`} className="bg-green-200" />
             )
           })
         )}

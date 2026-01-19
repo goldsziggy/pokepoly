@@ -1,6 +1,8 @@
-export * from './Button'
-export * from './Input'
-export * from './Card'
-export * from './Checkbox'
-export * from './Badge'
-export * from './Spinner'
+export * from "./Button"
+export * from "./Input"
+export * from "./Card"
+export * from "./Checkbox"
+export * from "./Badge"
+export * from "./Spinner"
+export { PokeCoin } from "./PokeCoinReact"
+export { PokeCoinPDF } from "./PokeCoin"
