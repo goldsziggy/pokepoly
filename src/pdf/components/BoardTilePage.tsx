@@ -245,35 +245,38 @@ const createStyles = (
     gap: scale(20),
   },
   cardPlaceholder: {
-    width: scale(72),
-    height: scale(42),
+    width: scale(96),
+    height: scale(128),
     borderWidth: scale(2),
     borderStyle: 'dashed',
     borderColor: '#9CA3AF',
     borderRadius: scale(4),
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#F9FAFB',
   },
   cardPlaceholderText: {
-    fontSize: scale(6),
+    fontSize: scale(8),
     color: '#6B7280',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   rulesTitle: {
-    fontSize: scale(16),
+    fontSize: scale(18),
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
     marginBottom: scale(10),
   },
   rulesText: {
-    fontSize: scale(11),
+    fontSize: scale(12),
     color: '#374151',
     textAlign: 'center',
     marginBottom: scale(5),
   },
   rulesBold: {
     fontWeight: 'bold',
+    fontSize: scale(12),
   },
   centerTitle: {
     position: 'absolute',
@@ -346,8 +349,8 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const overlayCoinSize = scale(6)
   const overlayGap = scale(2)
   const overlayMargin = scale(1)
-  const rulesCoinSize = scale(6)
-  const rulesInlineGap = scale(1)
+  const   rulesCoinSize = scale(8)
+  const rulesInlineGap = scale(2)
   const centerBandHalfHeight = scale(14)
   const centerButtonRadius = scale(40)
   const centerButtonOffset = scale(36)
@@ -355,9 +358,9 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const centerButtonInnerSize = scale(28)
   const centerButtonInnerRadius = scale(14)
   const collageRadiusPadding = scale(50)
-  const rulesOffsetX = scale(60)
-  const rulesOffsetY = scale(35)
-  const rulesWidth = scale(600)
+  const rulesOffsetX = scale(40)
+  const rulesOffsetY = scale(20)
+  const rulesWidth = scale(650)
   const headerMarginBottom = scale(3)
   const headerTitleFont = scale(9)
   const headerSubtitleFont = scale(6)
@@ -651,20 +654,19 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const rulesContainerLeft = centerStart + rulesOffsetX
   const rulesContainerTop = centerMidY + rulesOffsetY // Start from middle of center area
   const rulesContainerRight = rulesContainerLeft + rulesWidth
-  // Estimate height based on content (title + text lines + padding)
-  // More accurate height: title (16) + title margin (10) + 7 text lines (11 each + 5 margin) + bottom padding (20)
-  const estimatedRulesHeight = scale(16 + 10 + (11 + 5) * 7 + 20)
+  // Estimate height based on content (title (18) + title margin (10) + 7 text lines (12 each + 6 margin) + bottom padding (20))
+  const estimatedRulesHeight = scale(18 + 10 + (12 + 6) * 7 + 20)
   const rulesContainerBottom = rulesContainerTop + estimatedRulesHeight
   
-  // Check if rules container overlaps with current tile
+  // Show rules on ALL bottom row tiles (row=2) that show the center
+  // This ensures rules are always visible and can span multiple tiles
+  const showRules = tileRow === 2 && showCenter
+  
+  // Check if rules container overlaps with current tile (for clipping)
   const rulesOverlapsTile = rulesContainerLeft < tileX + tileWidth && 
                             rulesContainerRight > tileX &&
                             rulesContainerTop < tileY + tileHeight &&
                             rulesContainerBottom > tileY
-  
-  // Show rules on any bottom row tile (row=2) where it overlaps
-  // Fallback: always show on bottom-left tile (row=2, col=0) if center is visible
-  const showRules = tileRow === 2 && showCenter && (rulesOverlapsTile || (tileCol === 0))
 
   // Calculate visible portion of rules container on this tile (if showing rules)
   let visibleRulesLeft = 0
@@ -678,7 +680,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   
   if (showRules) {
     if (rulesOverlapsTile) {
-      // Normal case: calculate visible portion
+      // Calculate visible portion that overlaps with this tile
       visibleRulesLeft = Math.max(rulesContainerLeft, tileX)
       visibleRulesRight = Math.min(rulesContainerRight, tileX + tileWidth)
       visibleRulesTop = Math.max(rulesContainerTop, tileY)
@@ -688,11 +690,10 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
       visibleRulesLeftOffset = visibleRulesLeft - rulesContainerLeft
       visibleRulesTopOffset = visibleRulesTop - rulesContainerTop
     } else {
-      // Fallback case: show full rules container on bottom-left tile
-      // Position relative to tile
+      // Fallback: if no overlap detected, show rules positioned from container start
+      // This ensures rules always show on bottom row tiles
       visibleRulesLeft = rulesContainerLeft - tileX
       visibleRulesTop = rulesContainerTop - tileY
-      // Use full container dimensions, but clip to tile bounds
       visibleRulesWidth = Math.min(rulesWidth, tileWidth - Math.max(0, visibleRulesLeft))
       visibleRulesHeight = Math.min(estimatedRulesHeight, tileHeight - Math.max(0, visibleRulesTop))
       visibleRulesLeftOffset = 0
@@ -842,8 +843,8 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                   {
                     left: visibleRulesLeft - tileX,
                     top: visibleRulesTop - tileY,
-                    width: visibleRulesWidth,
-                    height: visibleRulesHeight,
+                    width: visibleRulesWidth > 0 ? visibleRulesWidth : rulesWidth,
+                    height: visibleRulesHeight > 0 ? visibleRulesHeight : estimatedRulesHeight,
                     overflow: 'hidden',
                   },
                 ]}
@@ -862,7 +863,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                 >
                   {/* Left card placeholder */}
                   <View style={styles.cardPlaceholder}>
-                    <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                    <Text style={styles.cardPlaceholderText}>Oak/Bag{'\n'}Cards</Text>
                   </View>
                   
                   {/* Center rules text */}
@@ -931,7 +932,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                   
                   {/* Right card placeholder */}
                   <View style={styles.cardPlaceholder}>
-                    <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                    <Text style={styles.cardPlaceholderText}>Oak/Bag{'\n'}Cards</Text>
                   </View>
                 </View>
               </View>

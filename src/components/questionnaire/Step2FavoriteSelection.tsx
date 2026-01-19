@@ -150,24 +150,25 @@ export function Step2FavoriteSelection({ onComplete, onBack }: Step2FavoriteSele
                       {capitalize(pokemon.name)}
                     </span>
                     <div className={`w-2 h-2 ${TIER_COLORS[tier]}`} title={TIER_LABELS[tier]} />
-                    <button
-                      onClick={() => removeFavorite(pokemon.id)}
-                      className="text-red-500 hover:text-red-400 font-pixel text-[10px]"
-                    >
-                      ×
-                    </button>
-                  </div>
-                )
-              })}
+                  <button
+                    onClick={() => removeFavorite(pokemon.id)}
+                    className="text-red-500 hover:text-red-400 font-pixel text-sm min-w-[32px] min-h-[32px] inline-flex items-center justify-center"
+                    aria-label={`Remove ${pokemon.name} from favorites`}
+                  >
+                    ×
+                  </button>
+                </div>
+              )
+            })}
             </div>
           </div>
         )}
 
-        <div className="flex justify-between pt-4">
-          <Button onClick={onBack} variant="secondary" size="lg">
+        <div className="flex flex-col sm:flex-row justify-between gap-2 pt-4">
+          <Button onClick={onBack} variant="secondary" size="lg" className="w-full sm:w-auto">
             Back
           </Button>
-          <Button onClick={onComplete} size="lg">
+          <Button onClick={onComplete} size="lg" className="w-full sm:w-auto">
             Continue to Type Assignment
           </Button>
         </div>

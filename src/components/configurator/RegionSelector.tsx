@@ -18,7 +18,7 @@ export function RegionSelector() {
           />
         ))}
       </div>
-      <p className="font-pixel text-[8px] text-gray-500 mt-2">
+      <p className="font-pixel text-[10px] text-gray-600 mt-2">
         {selectedRegions.length} region{selectedRegions.length !== 1 ? 's' : ''} selected
       </p>
     </div>

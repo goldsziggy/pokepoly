@@ -468,7 +468,7 @@ export function BoardPreview() {
   }
 
   return (
-    <div className="overflow-auto p-2 -m-2">
+    <div className="p-2 -m-2">
       <div
         className="inline-grid gap-0 border-4 border-gray-800 bg-green-200 shadow-lg"
         style={{

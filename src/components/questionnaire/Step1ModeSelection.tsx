@@ -55,8 +55,8 @@ export function Step1ModeSelection({ onSelect }: Step1ModeSelectionProps) {
                 isDisabled || !pokemon || pokemon.length === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
               }`}
             >
-              <h3 className="font-pixel text-sm text-pixel-accent mb-2">Full Random</h3>
-              <p className="font-pixel text-[8px] text-gray-600">
+              <h3 className="font-pixel text-base text-pixel-accent mb-2">Full Random</h3>
+              <p className="font-pixel text-[10px] text-gray-700">
                 Generate a completely random board with no customization
               </p>
             </button>
@@ -68,8 +68,8 @@ export function Step1ModeSelection({ onSelect }: Step1ModeSelectionProps) {
                 isDisabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'
               }`}
             >
-              <h3 className="font-pixel text-sm text-pixel-accent mb-2">Customized</h3>
-              <p className="font-pixel text-[8px] text-gray-600">
+              <h3 className="font-pixel text-base text-pixel-accent mb-2">Customized</h3>
+              <p className="font-pixel text-[10px] text-gray-700">
                 Select your favorite Pokemon and customize type assignments
               </p>
             </button>

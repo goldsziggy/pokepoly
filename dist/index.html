@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/pokeball.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <title>Poke-Poly - The Master League</title>
+    <script type="module" crossorigin src="/assets/index-BmRjpZmM.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-B7YFM02f.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      // Polyfill Buffer for @react-pdf/renderer
+      if (typeof global === 'undefined') {
+        var global = globalThis;
+      }
+      if (typeof Buffer === 'undefined') {
+        // Simple Buffer polyfill using Uint8Array
+        global.Buffer = class Buffer extends Uint8Array {
+          constructor(arg, encoding) {
+            if (typeof arg === 'string') {
+              const bytes = new TextEncoder().encode(arg);
+              super(bytes.length);
+              this.set(bytes);
+            } else if (arg instanceof ArrayBuffer || arg instanceof Uint8Array) {
+              super(arg);
+            } else if (typeof arg === 'number') {
+              super(arg);
+            } else {
+              super(0);
+            }
+          }
+          static from(arg, encoding) {
+            return new Buffer(arg, encoding);
+          }
+          static alloc(size, fill) {
+            const buf = new Buffer(size);
+            if (fill !== undefined) {
+              const fillValue = typeof fill === 'number' ? fill : fill.charCodeAt(0);
+              for (let i = 0; i < size; i++) {
+                buf[i] = fillValue;
+              }
+            }
+            return buf;
+          }
+          static allocUnsafe(size) {
+            return new Buffer(size);
+          }
+          toString(encoding = 'utf8') {
+            return new TextDecoder(encoding).decode(this);
+          }
+          fill(value, start, end) {
+            const startIdx = start || 0;
+            const endIdx = end || this.length;
+            const fillValue = typeof value === 'number' ? value : value.charCodeAt(0);
+            for (let i = startIdx; i < endIdx; i++) {
+              this[i] = fillValue;
+            }
+            return this;
+          }
+          slice(start, end) {
+            return new Buffer(super.slice(start, end));
+          }
+        };
+        // Add common Buffer methods
+        Buffer.isBuffer = (obj) => obj instanceof Buffer;
+        // Make Buffer available globally
+        window.Buffer = global.Buffer;
+      }
+    </script>
+  </body>
+</html>

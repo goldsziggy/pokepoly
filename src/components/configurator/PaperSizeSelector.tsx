@@ -12,13 +12,13 @@ export function PaperSizeSelector() {
   return (
     <div className="space-y-3">
       <h3 className="font-pixel text-xs text-pixel-accent">Paper Size</h3>
-      <div className="flex gap-3">
+      <div className="flex flex-col sm:flex-row gap-3">
         {options.map((option) => (
           <button
             key={option.value}
             onClick={() => setPaperSize(option.value)}
             className={`
-              flex-1 p-3 text-left
+              flex-1 p-3 text-left min-h-[56px]
               border-4 transition-all
               ${paperSize === option.value
                 ? 'bg-pixel-accent border-b-red-900 border-r-red-900 border-t-red-300 border-l-red-300'
@@ -26,8 +26,8 @@ export function PaperSizeSelector() {
               }
             `}
           >
-            <div className="font-pixel text-[10px] text-pixel-text">{option.label}</div>
-            <div className="font-pixel text-[8px] text-gray-400 mt-1">{option.description}</div>
+            <div className="font-pixel text-xs text-pixel-text">{option.label}</div>
+            <div className="font-pixel text-[10px] text-gray-500 mt-1">{option.description}</div>
           </button>
         ))}
       </div>

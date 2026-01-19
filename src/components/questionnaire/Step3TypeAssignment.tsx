@@ -185,11 +185,11 @@ export function Step3TypeAssignment({ onComplete, onBack }: Step3TypeAssignmentP
           </div>
         )}
 
-        <div className="flex justify-between pt-4">
-          <Button onClick={onBack} variant="secondary" size="lg">
+        <div className="flex flex-col sm:flex-row justify-between gap-2 pt-4">
+          <Button onClick={onBack} variant="secondary" size="lg" className="w-full sm:w-auto">
             Back
           </Button>
-          <Button onClick={handleComplete} size="lg">
+          <Button onClick={handleComplete} size="lg" className="w-full sm:w-auto">
             Generate Board
           </Button>
         </div>

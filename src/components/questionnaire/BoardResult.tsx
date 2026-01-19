@@ -15,18 +15,18 @@ export function BoardResult({ onRestart, onBack }: BoardResultProps) {
     <div className="space-y-6">
       <Card title="Your Board is Ready!">
         <div className="space-y-4">
-          <div className="flex justify-between items-center flex-wrap gap-2">
-            <p className="font-pixel text-xs text-pixel-text">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+            <p className="font-pixel text-xs text-pixel-text break-all">
               Seed: {seed}
             </p>
-            <div className="flex gap-2">
-              <Button onClick={onBack} variant="secondary" size="sm">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+              <Button onClick={onBack} variant="secondary" size="sm" className="w-full sm:w-auto">
                 Back
               </Button>
-              <Button onClick={newRandomSeed} size="sm">
+              <Button onClick={newRandomSeed} size="sm" className="w-full sm:w-auto">
                 Regenerate
               </Button>
-              <Button onClick={onRestart} size="sm">
+              <Button onClick={onRestart} size="sm" className="w-full sm:w-auto">
                 Start Over
               </Button>
             </div>
@@ -58,7 +58,7 @@ export function BoardResult({ onRestart, onBack }: BoardResultProps) {
       </Card>
 
       <Card title="Board Preview">
-        <div className="overflow-auto max-h-[calc(100vh-300px)]">
+        <div className="overflow-auto max-h-[70vh] sm:max-h-[calc(100vh-300px)]">
           <div className="flex justify-center">
             <BoardPreview />
           </div>

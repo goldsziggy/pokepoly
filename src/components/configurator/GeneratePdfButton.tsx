@@ -120,15 +120,15 @@ export function GeneratePdfButton() {
 
       <div className="space-y-2">
         {(Object.keys(materialLabels) as PrintMaterial[]).map((material) => (
-          <label key={material} className="flex items-center gap-2 cursor-pointer">
+          <label key={material} className="flex items-center gap-3 cursor-pointer min-h-[44px] select-none touch-manipulation">
             <input
               type="checkbox"
               checked={selectedMaterials.includes(material)}
               onChange={() => toggleMaterial(material)}
-              className="w-4 h-4 cursor-pointer"
+              className="w-5 h-5 cursor-pointer"
               disabled={isPdfGenerating}
             />
-            <span className="font-pixel text-[9px] text-gray-700">{materialLabels[material]}</span>
+            <span className="font-pixel text-xs text-gray-700">{materialLabels[material]}</span>
           </label>
         ))}
       </div>

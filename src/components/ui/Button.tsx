@@ -10,6 +10,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = `
       font-pixel inline-flex items-center justify-center
       border-4 transition-all cursor-pointer
+      select-none touch-manipulation
+      min-h-[44px]
       disabled:opacity-50 disabled:cursor-not-allowed
     `
 
@@ -35,9 +37,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }
 
     const sizes = {
-      sm: 'px-2 py-1 text-[8px]',
-      md: 'px-4 py-2 text-[10px]',
-      lg: 'px-6 py-3 text-xs',
+      sm: 'px-3 py-2 text-[10px]',
+      md: 'px-4 py-2 text-xs',
+      lg: 'px-6 py-3 text-sm',
     }
 
     return (
