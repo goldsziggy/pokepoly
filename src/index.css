@@ -1,0 +1,54 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-pixel-bg text-pixel-text font-pixel;
+  }
+
+  * {
+    image-rendering: pixelated;
+  }
+}
+
+@layer components {
+  .pixel-border {
+    @apply border-4 border-pixel-border shadow-pixel;
+  }
+
+  .pixel-button {
+    @apply px-4 py-2 bg-pixel-accent text-white font-pixel text-xs
+           border-4 border-b-black border-r-black border-t-white border-l-white
+           hover:brightness-110 active:border-t-black active:border-l-black
+           active:border-b-white active:border-r-white transition-all;
+  }
+
+  .pixel-input {
+    @apply px-3 py-2 bg-pixel-surface text-pixel-text font-pixel text-xs
+           border-4 border-t-black border-l-black border-b-white border-r-white
+           focus:outline-none focus:ring-2 focus:ring-pixel-accent;
+  }
+
+  .pixel-card {
+    @apply bg-pixel-surface border-4 border-pixel-border shadow-pixel p-4;
+  }
+}
+
+/* Custom scrollbar for pixel art feel */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-pixel-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-pixel-border border-2 border-pixel-surface;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-pixel-accent;
+}

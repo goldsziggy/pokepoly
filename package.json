@@ -1,0 +1,39 @@
+{
+  "name": "poke-olpoly",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "download-font": "tsx scripts/download-font.ts"
+  },
+  "keywords": ["pokemon", "monopoly", "game", "pdf"],
+  "author": "",
+  "license": "MIT",
+  "description": "Generate custom Pokemon-themed Monopoly game boards",
+  "dependencies": {
+    "@react-pdf/renderer": "^4.3.2",
+    "@tanstack/react-query": "^5.90.19",
+    "idb": "^8.0.3",
+    "nuqs": "^2.8.6",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "seedrandom": "^3.0.5",
+    "zustand": "^5.0.10"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.31",
+    "@types/react": "^19.2.8",
+    "@types/react-dom": "^19.2.3",
+    "@types/seedrandom": "^3.0.8",
+    "@vitejs/plugin-react": "^5.1.2",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1"
+  }
+}
