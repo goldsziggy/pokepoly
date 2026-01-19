@@ -1,5 +1,5 @@
 import { useQueryState, parseAsArrayOf, parseAsString } from 'nuqs'
-import { useEffect, useCallback } from 'react'
+import { useEffect, useCallback, useRef } from 'react'
 import { useBoardStore } from '@/store'
 import type { Region, PaperSize, Pokemon, BoardSize, CardSize } from '@/types'
 import { REGIONS } from '@/types'
@@ -21,6 +21,7 @@ type UrlStateOptions = {
 
 export function useUrlState(options: UrlStateOptions = {}) {
   const store = useBoardStore()
+  const didRestoreRef = useRef(false)
 
   // URL state
   const [urlRegions, setUrlRegions] = useQueryState('r', parseAsRegions)
@@ -33,8 +34,20 @@ export function useUrlState(options: UrlStateOptions = {}) {
   // Restore state from URL on mount
   useEffect(() => {
     if (!options.restoreOnMount) return
+    if (didRestoreRef.current) return
 
     const restoreFromUrl = async () => {
+      // If the URL has no recognized params, don't restore anything.
+      const hasAnyParam =
+        (urlRegions && urlRegions.length > 0) ||
+        (urlFavoriteIds && urlFavoriteIds.length > 0) ||
+        !!urlPaperSize ||
+        !!urlBoardSize ||
+        !!urlCardSize ||
+        !!urlSeed
+
+      if (!hasAnyParam) return
+
       const updates: Partial<{
         regions: Region[]
         favorites: Pokemon[]
@@ -95,9 +108,10 @@ export function useUrlState(options: UrlStateOptions = {}) {
       }
     }
 
-    restoreFromUrl()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []) // Only run on mount
+    restoreFromUrl().finally(() => {
+      didRestoreRef.current = true
+    })
+  }, [options.restoreOnMount, store, urlBoardSize, urlCardSize, urlFavoriteIds, urlPaperSize, urlRegions, urlSeed])
 
   // Sync store changes to URL
   const syncToUrl = useCallback(() => {
@@ -135,7 +149,10 @@ export function useUrlState(options: UrlStateOptions = {}) {
       params.set('s', seed)
     }
 
-    const baseUrl = window.location.origin + window.location.pathname
+    // Prefer Vite BASE_URL so subpath deployments (GitHub/GitLab Pages) share correct links.
+    const basePath = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || window.location.pathname
+    const normalizedBasePath = basePath.endsWith('/') ? basePath : `${basePath}/`
+    const baseUrl = window.location.origin + normalizedBasePath
     return `${baseUrl}?${params.toString()}`
   }, [store])
 

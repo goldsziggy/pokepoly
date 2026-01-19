@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { Pokemon, Region, PaperSize, BoardSpace, CardSize, BoardSize } from '@/types'
+import { REGIONS } from '@/types'
 import { randomizeBoard, generateSeed, type BoardSlot } from '@/lib/randomizer'
 import { buildBoardSpaces } from '@/lib/board'
 
@@ -59,7 +60,7 @@ interface BoardState {
 
 export const useBoardStore = create<BoardState>((set, get) => ({
   // Initial state
-  selectedRegions: ['kanto'],
+  selectedRegions: REGIONS,
   favoritePokemon: [],
   paperSize: 'letter',
   boardSize: 'medium',
