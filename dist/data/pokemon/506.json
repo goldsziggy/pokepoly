@@ -1,0 +1,11 @@
+{
+  "id": 506,
+  "name": "lillipup",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/506.png",
+  "bst": 275,
+  "types": [
+    "normal"
+  ],
+  "region": "unova",
+  "evolutionFamily": 506
+}

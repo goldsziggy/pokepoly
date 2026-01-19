@@ -1,0 +1,11 @@
+{
+  "id": 368,
+  "name": "gorebyss",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/368.png",
+  "bst": 485,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 366
+}

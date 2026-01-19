@@ -1,0 +1,12 @@
+{
+  "id": 867,
+  "name": "runerigus",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/867.png",
+  "bst": 483,
+  "types": [
+    "ground",
+    "ghost"
+  ],
+  "region": "galar",
+  "evolutionFamily": 867
+}

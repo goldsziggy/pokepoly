@@ -1,0 +1,12 @@
+{
+  "id": 792,
+  "name": "lunala",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/792.png",
+  "bst": 680,
+  "types": [
+    "psychic",
+    "ghost"
+  ],
+  "region": "alola",
+  "evolutionFamily": 792
+}

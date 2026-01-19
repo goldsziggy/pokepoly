@@ -1,0 +1,12 @@
+{
+  "id": 1018,
+  "name": "archaludon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1018.png",
+  "bst": 600,
+  "types": [
+    "steel",
+    "dragon"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1018
+}

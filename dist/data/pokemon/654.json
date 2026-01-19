@@ -1,0 +1,11 @@
+{
+  "id": 654,
+  "name": "braixen",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/654.png",
+  "bst": 409,
+  "types": [
+    "fire"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 654
+}

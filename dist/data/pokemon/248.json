@@ -1,0 +1,12 @@
+{
+  "id": 248,
+  "name": "tyranitar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/248.png",
+  "bst": 600,
+  "types": [
+    "rock",
+    "dark"
+  ],
+  "region": "johto",
+  "evolutionFamily": 246
+}

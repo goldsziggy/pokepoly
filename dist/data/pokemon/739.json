@@ -1,0 +1,11 @@
+{
+  "id": 739,
+  "name": "crabrawler",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/739.png",
+  "bst": 338,
+  "types": [
+    "fighting"
+  ],
+  "region": "alola",
+  "evolutionFamily": 739
+}

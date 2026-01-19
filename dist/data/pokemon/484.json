@@ -1,0 +1,12 @@
+{
+  "id": 484,
+  "name": "palkia",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/484.png",
+  "bst": 680,
+  "types": [
+    "water",
+    "dragon"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 484
+}

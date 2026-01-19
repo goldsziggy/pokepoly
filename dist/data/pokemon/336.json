@@ -1,0 +1,11 @@
+{
+  "id": 336,
+  "name": "seviper",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/336.png",
+  "bst": 458,
+  "types": [
+    "poison"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 336
+}

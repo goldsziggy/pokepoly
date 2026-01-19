@@ -1,0 +1,11 @@
+{
+  "id": 766,
+  "name": "passimian",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/766.png",
+  "bst": 490,
+  "types": [
+    "fighting"
+  ],
+  "region": "alola",
+  "evolutionFamily": 766
+}

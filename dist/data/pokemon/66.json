@@ -1,0 +1,11 @@
+{
+  "id": 66,
+  "name": "machop",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png",
+  "bst": 305,
+  "types": [
+    "fighting"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 66
+}

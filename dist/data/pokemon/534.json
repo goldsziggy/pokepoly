@@ -1,0 +1,11 @@
+{
+  "id": 534,
+  "name": "conkeldurr",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/534.png",
+  "bst": 505,
+  "types": [
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 534
+}

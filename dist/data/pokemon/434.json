@@ -1,0 +1,12 @@
+{
+  "id": 434,
+  "name": "stunky",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/434.png",
+  "bst": 329,
+  "types": [
+    "poison",
+    "dark"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 434
+}

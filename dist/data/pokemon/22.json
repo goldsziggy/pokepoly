@@ -1,0 +1,12 @@
+{
+  "id": 22,
+  "name": "fearow",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png",
+  "bst": 442,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 21
+}

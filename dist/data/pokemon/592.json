@@ -1,0 +1,12 @@
+{
+  "id": 592,
+  "name": "frillish",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/592.png",
+  "bst": 335,
+  "types": [
+    "water",
+    "ghost"
+  ],
+  "region": "unova",
+  "evolutionFamily": 592
+}

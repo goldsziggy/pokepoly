@@ -1,0 +1,11 @@
+{
+  "id": 508,
+  "name": "stoutland",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/508.png",
+  "bst": 500,
+  "types": [
+    "normal"
+  ],
+  "region": "unova",
+  "evolutionFamily": 508
+}

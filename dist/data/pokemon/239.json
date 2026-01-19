@@ -1,0 +1,11 @@
+{
+  "id": 239,
+  "name": "elekid",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/239.png",
+  "bst": 360,
+  "types": [
+    "electric"
+  ],
+  "region": "johto",
+  "evolutionFamily": 125
+}

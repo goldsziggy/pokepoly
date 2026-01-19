@@ -1,0 +1,11 @@
+{
+  "id": 366,
+  "name": "clamperl",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/366.png",
+  "bst": 345,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 366
+}

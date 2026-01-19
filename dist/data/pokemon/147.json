@@ -1,0 +1,11 @@
+{
+  "id": 147,
+  "name": "dratini",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png",
+  "bst": 300,
+  "types": [
+    "dragon"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 147
+}

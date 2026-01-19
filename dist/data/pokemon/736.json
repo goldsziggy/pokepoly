@@ -1,0 +1,11 @@
+{
+  "id": 736,
+  "name": "grubbin",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/736.png",
+  "bst": 300,
+  "types": [
+    "bug"
+  ],
+  "region": "alola",
+  "evolutionFamily": 736
+}

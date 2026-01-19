@@ -1,0 +1,11 @@
+{
+  "id": 61,
+  "name": "poliwhirl",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png",
+  "bst": 385,
+  "types": [
+    "water"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 60
+}

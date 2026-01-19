@@ -1,0 +1,12 @@
+{
+  "id": 198,
+  "name": "murkrow",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/198.png",
+  "bst": 405,
+  "types": [
+    "dark",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 198
+}

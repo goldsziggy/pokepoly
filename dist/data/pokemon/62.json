@@ -1,0 +1,12 @@
+{
+  "id": 62,
+  "name": "poliwrath",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png",
+  "bst": 510,
+  "types": [
+    "water",
+    "fighting"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 60
+}

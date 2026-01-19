@@ -1,0 +1,12 @@
+{
+  "id": 636,
+  "name": "larvesta",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/636.png",
+  "bst": 360,
+  "types": [
+    "bug",
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 636
+}

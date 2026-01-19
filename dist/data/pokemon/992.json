@@ -1,0 +1,12 @@
+{
+  "id": 992,
+  "name": "iron-hands",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/992.png",
+  "bst": 570,
+  "types": [
+    "fighting",
+    "electric"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 992
+}

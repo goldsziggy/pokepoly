@@ -1,0 +1,11 @@
+{
+  "id": 673,
+  "name": "gogoat",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/673.png",
+  "bst": 531,
+  "types": [
+    "grass"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 673
+}

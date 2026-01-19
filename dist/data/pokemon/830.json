@@ -1,0 +1,11 @@
+{
+  "id": 830,
+  "name": "eldegoss",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/830.png",
+  "bst": 460,
+  "types": [
+    "grass"
+  ],
+  "region": "galar",
+  "evolutionFamily": 830
+}

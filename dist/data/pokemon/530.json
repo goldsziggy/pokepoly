@@ -1,0 +1,12 @@
+{
+  "id": 530,
+  "name": "excadrill",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/530.png",
+  "bst": 508,
+  "types": [
+    "ground",
+    "steel"
+  ],
+  "region": "unova",
+  "evolutionFamily": 530
+}

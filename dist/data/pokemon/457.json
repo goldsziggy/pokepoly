@@ -1,0 +1,11 @@
+{
+  "id": 457,
+  "name": "lumineon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/457.png",
+  "bst": 460,
+  "types": [
+    "water"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 457
+}

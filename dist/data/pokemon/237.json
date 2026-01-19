@@ -1,0 +1,11 @@
+{
+  "id": 237,
+  "name": "hitmontop",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/237.png",
+  "bst": 455,
+  "types": [
+    "fighting"
+  ],
+  "region": "johto",
+  "evolutionFamily": 236
+}

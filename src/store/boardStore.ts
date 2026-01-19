@@ -62,7 +62,7 @@ export const useBoardStore = create<BoardState>((set, get) => ({
   selectedRegions: ['kanto'],
   favoritePokemon: [],
   paperSize: 'letter',
-  boardSize: 'small',
+  boardSize: 'medium',
   cardSize: 'medium',
   players: 4,
   seed: generateSeed(),

@@ -1,0 +1,12 @@
+{
+  "id": 437,
+  "name": "bronzong",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/437.png",
+  "bst": 500,
+  "types": [
+    "steel",
+    "psychic"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 437
+}

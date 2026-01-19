@@ -1,0 +1,12 @@
+{
+  "id": 79,
+  "name": "slowpoke",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png",
+  "bst": 315,
+  "types": [
+    "water",
+    "psychic"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 79
+}

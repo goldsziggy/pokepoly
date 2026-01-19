@@ -1,0 +1,11 @@
+{
+  "id": 831,
+  "name": "wooloo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/831.png",
+  "bst": 270,
+  "types": [
+    "normal"
+  ],
+  "region": "galar",
+  "evolutionFamily": 831
+}

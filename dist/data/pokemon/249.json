@@ -1,0 +1,12 @@
+{
+  "id": 249,
+  "name": "lugia",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/249.png",
+  "bst": 680,
+  "types": [
+    "psychic",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 249
+}

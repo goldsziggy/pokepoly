@@ -1,0 +1,12 @@
+{
+  "id": 476,
+  "name": "probopass",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/476.png",
+  "bst": 525,
+  "types": [
+    "rock",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 476
+}

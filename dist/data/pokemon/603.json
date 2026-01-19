@@ -1,0 +1,11 @@
+{
+  "id": 603,
+  "name": "eelektrik",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/603.png",
+  "bst": 405,
+  "types": [
+    "electric"
+  ],
+  "region": "unova",
+  "evolutionFamily": 603
+}

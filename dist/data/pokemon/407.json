@@ -1,0 +1,12 @@
+{
+  "id": 407,
+  "name": "roserade",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/407.png",
+  "bst": 515,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 407
+}

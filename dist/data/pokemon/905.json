@@ -1,0 +1,12 @@
+{
+  "id": 905,
+  "name": "enamorus-incarnate",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/905.png",
+  "bst": 580,
+  "types": [
+    "fairy",
+    "flying"
+  ],
+  "region": "galar",
+  "evolutionFamily": 905
+}

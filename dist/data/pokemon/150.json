@@ -1,0 +1,11 @@
+{
+  "id": 150,
+  "name": "mewtwo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png",
+  "bst": 680,
+  "types": [
+    "psychic"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 150
+}

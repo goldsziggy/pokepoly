@@ -1,0 +1,11 @@
+{
+  "id": 455,
+  "name": "carnivine",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/455.png",
+  "bst": 454,
+  "types": [
+    "grass"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 455
+}

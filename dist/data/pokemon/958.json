@@ -1,0 +1,12 @@
+{
+  "id": 958,
+  "name": "tinkatuff",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/958.png",
+  "bst": 380,
+  "types": [
+    "fairy",
+    "steel"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 958
+}

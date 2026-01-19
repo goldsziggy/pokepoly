@@ -1,0 +1,12 @@
+{
+  "id": 71,
+  "name": "victreebel",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png",
+  "bst": 490,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 69
+}

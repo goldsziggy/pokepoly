@@ -1,0 +1,12 @@
+{
+  "id": 742,
+  "name": "cutiefly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/742.png",
+  "bst": 304,
+  "types": [
+    "bug",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 742
+}

@@ -1,0 +1,12 @@
+{
+  "id": 930,
+  "name": "arboliva",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/930.png",
+  "bst": 510,
+  "types": [
+    "grass",
+    "normal"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 930
+}

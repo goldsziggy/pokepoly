@@ -1,0 +1,12 @@
+{
+  "id": 45,
+  "name": "vileplume",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png",
+  "bst": 490,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 43
+}

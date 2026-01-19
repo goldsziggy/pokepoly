@@ -1,0 +1,11 @@
+{
+  "id": 262,
+  "name": "mightyena",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/262.png",
+  "bst": 420,
+  "types": [
+    "dark"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 261
+}

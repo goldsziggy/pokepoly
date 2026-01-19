@@ -1,0 +1,11 @@
+{
+  "id": 474,
+  "name": "porygon-z",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/474.png",
+  "bst": 535,
+  "types": [
+    "normal"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 474
+}

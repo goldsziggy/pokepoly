@@ -1,0 +1,11 @@
+{
+  "id": 950,
+  "name": "klawf",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/950.png",
+  "bst": 450,
+  "types": [
+    "rock"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 950
+}

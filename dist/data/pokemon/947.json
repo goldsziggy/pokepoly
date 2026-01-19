@@ -1,0 +1,12 @@
+{
+  "id": 947,
+  "name": "brambleghast",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/947.png",
+  "bst": 480,
+  "types": [
+    "grass",
+    "ghost"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 947
+}

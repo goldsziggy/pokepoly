@@ -1,0 +1,12 @@
+{
+  "id": 945,
+  "name": "grafaiai",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/945.png",
+  "bst": 485,
+  "types": [
+    "poison",
+    "normal"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 945
+}

@@ -1,0 +1,11 @@
+{
+  "id": 258,
+  "name": "mudkip",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/258.png",
+  "bst": 310,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 258
+}

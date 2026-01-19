@@ -1,0 +1,12 @@
+{
+  "id": 618,
+  "name": "stunfisk",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/618.png",
+  "bst": 471,
+  "types": [
+    "ground",
+    "electric"
+  ],
+  "region": "unova",
+  "evolutionFamily": 618
+}

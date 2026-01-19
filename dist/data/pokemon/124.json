@@ -1,0 +1,12 @@
+{
+  "id": 124,
+  "name": "jynx",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/124.png",
+  "bst": 455,
+  "types": [
+    "ice",
+    "psychic"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 124
+}

@@ -1,0 +1,12 @@
+{
+  "id": 848,
+  "name": "toxel",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/848.png",
+  "bst": 242,
+  "types": [
+    "electric",
+    "poison"
+  ],
+  "region": "galar",
+  "evolutionFamily": 848
+}

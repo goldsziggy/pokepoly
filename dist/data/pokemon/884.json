@@ -1,0 +1,12 @@
+{
+  "id": 884,
+  "name": "duraludon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/884.png",
+  "bst": 535,
+  "types": [
+    "steel",
+    "dragon"
+  ],
+  "region": "galar",
+  "evolutionFamily": 884
+}

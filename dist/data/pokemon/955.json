@@ -1,0 +1,11 @@
+{
+  "id": 955,
+  "name": "flittle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/955.png",
+  "bst": 255,
+  "types": [
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 955
+}

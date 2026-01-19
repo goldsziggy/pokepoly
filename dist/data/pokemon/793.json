@@ -1,0 +1,12 @@
+{
+  "id": 793,
+  "name": "nihilego",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/793.png",
+  "bst": 570,
+  "types": [
+    "rock",
+    "poison"
+  ],
+  "region": "alola",
+  "evolutionFamily": 793
+}

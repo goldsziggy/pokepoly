@@ -1,0 +1,12 @@
+{
+  "id": 1020,
+  "name": "gouging-fire",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1020.png",
+  "bst": 590,
+  "types": [
+    "fire",
+    "dragon"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1020
+}

@@ -1,0 +1,12 @@
+{
+  "id": 176,
+  "name": "togetic",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/176.png",
+  "bst": 405,
+  "types": [
+    "fairy",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 175
+}

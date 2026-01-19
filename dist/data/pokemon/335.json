@@ -1,0 +1,11 @@
+{
+  "id": 335,
+  "name": "zangoose",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/335.png",
+  "bst": 458,
+  "types": [
+    "normal"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 335
+}

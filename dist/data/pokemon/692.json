@@ -1,0 +1,11 @@
+{
+  "id": 692,
+  "name": "clauncher",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/692.png",
+  "bst": 330,
+  "types": [
+    "water"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 692
+}

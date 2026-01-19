@@ -1,0 +1,11 @@
+{
+  "id": 209,
+  "name": "snubbull",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/209.png",
+  "bst": 300,
+  "types": [
+    "fairy"
+  ],
+  "region": "johto",
+  "evolutionFamily": 209
+}

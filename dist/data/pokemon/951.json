@@ -1,0 +1,11 @@
+{
+  "id": 951,
+  "name": "capsakid",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/951.png",
+  "bst": 304,
+  "types": [
+    "grass"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 951
+}

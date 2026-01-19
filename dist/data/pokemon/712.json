@@ -1,0 +1,11 @@
+{
+  "id": 712,
+  "name": "bergmite",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/712.png",
+  "bst": 304,
+  "types": [
+    "ice"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 712
+}

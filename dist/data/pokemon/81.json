@@ -1,0 +1,12 @@
+{
+  "id": 81,
+  "name": "magnemite",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png",
+  "bst": 325,
+  "types": [
+    "electric",
+    "steel"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 81
+}

@@ -1,0 +1,12 @@
+{
+  "id": 861,
+  "name": "grimmsnarl",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/861.png",
+  "bst": 510,
+  "types": [
+    "dark",
+    "fairy"
+  ],
+  "region": "galar",
+  "evolutionFamily": 861
+}

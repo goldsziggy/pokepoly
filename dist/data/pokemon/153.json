@@ -1,0 +1,11 @@
+{
+  "id": 153,
+  "name": "bayleef",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/153.png",
+  "bst": 405,
+  "types": [
+    "grass"
+  ],
+  "region": "johto",
+  "evolutionFamily": 152
+}

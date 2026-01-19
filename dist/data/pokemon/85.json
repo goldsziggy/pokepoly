@@ -1,0 +1,12 @@
+{
+  "id": 85,
+  "name": "dodrio",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png",
+  "bst": 470,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 84
+}

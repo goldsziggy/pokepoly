@@ -1,0 +1,12 @@
+{
+  "id": 593,
+  "name": "jellicent",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/593.png",
+  "bst": 480,
+  "types": [
+    "water",
+    "ghost"
+  ],
+  "region": "unova",
+  "evolutionFamily": 593
+}

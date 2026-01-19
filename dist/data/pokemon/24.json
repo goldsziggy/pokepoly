@@ -1,0 +1,11 @@
+{
+  "id": 24,
+  "name": "arbok",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png",
+  "bst": 448,
+  "types": [
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 23
+}

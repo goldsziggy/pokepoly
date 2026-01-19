@@ -1,0 +1,12 @@
+{
+  "id": 343,
+  "name": "baltoy",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/343.png",
+  "bst": 300,
+  "types": [
+    "ground",
+    "psychic"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 343
+}

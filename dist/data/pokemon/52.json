@@ -1,0 +1,11 @@
+{
+  "id": 52,
+  "name": "meowth",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png",
+  "bst": 290,
+  "types": [
+    "normal"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 52
+}

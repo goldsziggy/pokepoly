@@ -1,0 +1,12 @@
+{
+  "id": 302,
+  "name": "sableye",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/302.png",
+  "bst": 380,
+  "types": [
+    "dark",
+    "ghost"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 302
+}

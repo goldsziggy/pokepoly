@@ -1,0 +1,12 @@
+{
+  "id": 520,
+  "name": "tranquill",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/520.png",
+  "bst": 358,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "unova",
+  "evolutionFamily": 520
+}

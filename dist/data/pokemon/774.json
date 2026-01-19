@@ -1,0 +1,12 @@
+{
+  "id": 774,
+  "name": "minior-red-meteor",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/774.png",
+  "bst": 440,
+  "types": [
+    "rock",
+    "flying"
+  ],
+  "region": "alola",
+  "evolutionFamily": 774
+}

@@ -1,0 +1,11 @@
+{
+  "id": 36,
+  "name": "clefable",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png",
+  "bst": 483,
+  "types": [
+    "fairy"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 35
+}

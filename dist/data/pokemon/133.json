@@ -1,0 +1,11 @@
+{
+  "id": 133,
+  "name": "eevee",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+  "bst": 325,
+  "types": [
+    "normal"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 133
+}

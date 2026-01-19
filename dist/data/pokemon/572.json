@@ -1,0 +1,11 @@
+{
+  "id": 572,
+  "name": "minccino",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/572.png",
+  "bst": 300,
+  "types": [
+    "normal"
+  ],
+  "region": "unova",
+  "evolutionFamily": 572
+}

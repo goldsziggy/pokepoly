@@ -1,0 +1,12 @@
+{
+  "id": 587,
+  "name": "emolga",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/587.png",
+  "bst": 428,
+  "types": [
+    "electric",
+    "flying"
+  ],
+  "region": "unova",
+  "evolutionFamily": 587
+}

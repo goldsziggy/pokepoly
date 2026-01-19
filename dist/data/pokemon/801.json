@@ -1,0 +1,12 @@
+{
+  "id": 801,
+  "name": "magearna",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/801.png",
+  "bst": 600,
+  "types": [
+    "steel",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 801
+}

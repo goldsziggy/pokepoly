@@ -1,0 +1,12 @@
+{
+  "id": 238,
+  "name": "smoochum",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/238.png",
+  "bst": 305,
+  "types": [
+    "ice",
+    "psychic"
+  ],
+  "region": "johto",
+  "evolutionFamily": 124
+}

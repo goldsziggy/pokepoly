@@ -1,0 +1,12 @@
+{
+  "id": 485,
+  "name": "heatran",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/485.png",
+  "bst": 600,
+  "types": [
+    "fire",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 485
+}

@@ -1,0 +1,11 @@
+{
+  "id": 972,
+  "name": "houndstone",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/972.png",
+  "bst": 488,
+  "types": [
+    "ghost"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 972
+}

@@ -1,0 +1,11 @@
+{
+  "id": 820,
+  "name": "greedent",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/820.png",
+  "bst": 460,
+  "types": [
+    "normal"
+  ],
+  "region": "galar",
+  "evolutionFamily": 820
+}

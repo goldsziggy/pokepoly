@@ -1,0 +1,11 @@
+{
+  "id": 674,
+  "name": "pancham",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/674.png",
+  "bst": 348,
+  "types": [
+    "fighting"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 674
+}

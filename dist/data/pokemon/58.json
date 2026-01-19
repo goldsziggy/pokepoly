@@ -1,0 +1,11 @@
+{
+  "id": 58,
+  "name": "growlithe",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png",
+  "bst": 350,
+  "types": [
+    "fire"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 58
+}

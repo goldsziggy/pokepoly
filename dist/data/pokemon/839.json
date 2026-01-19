@@ -1,0 +1,12 @@
+{
+  "id": 839,
+  "name": "coalossal",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/839.png",
+  "bst": 510,
+  "types": [
+    "rock",
+    "fire"
+  ],
+  "region": "galar",
+  "evolutionFamily": 839
+}

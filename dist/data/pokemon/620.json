@@ -1,0 +1,11 @@
+{
+  "id": 620,
+  "name": "mienshao",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/620.png",
+  "bst": 510,
+  "types": [
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 620
+}

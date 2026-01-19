@@ -1,0 +1,12 @@
+{
+  "id": 899,
+  "name": "wyrdeer",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/899.png",
+  "bst": 525,
+  "types": [
+    "normal",
+    "psychic"
+  ],
+  "region": "galar",
+  "evolutionFamily": 899
+}

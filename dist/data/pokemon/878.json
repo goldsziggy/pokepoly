@@ -1,0 +1,11 @@
+{
+  "id": 878,
+  "name": "cufant",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/878.png",
+  "bst": 330,
+  "types": [
+    "steel"
+  ],
+  "region": "galar",
+  "evolutionFamily": 878
+}

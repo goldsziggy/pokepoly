@@ -1,0 +1,12 @@
+{
+  "id": 768,
+  "name": "golisopod",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/768.png",
+  "bst": 530,
+  "types": [
+    "bug",
+    "water"
+  ],
+  "region": "alola",
+  "evolutionFamily": 768
+}

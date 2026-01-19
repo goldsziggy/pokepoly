@@ -1,0 +1,11 @@
+{
+  "id": 379,
+  "name": "registeel",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/379.png",
+  "bst": 580,
+  "types": [
+    "steel"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 379
+}

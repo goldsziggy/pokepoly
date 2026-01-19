@@ -1,0 +1,11 @@
+{
+  "id": 181,
+  "name": "ampharos",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/181.png",
+  "bst": 510,
+  "types": [
+    "electric"
+  ],
+  "region": "johto",
+  "evolutionFamily": 179
+}

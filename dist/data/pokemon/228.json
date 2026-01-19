@@ -1,0 +1,12 @@
+{
+  "id": 228,
+  "name": "houndour",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/228.png",
+  "bst": 330,
+  "types": [
+    "dark",
+    "fire"
+  ],
+  "region": "johto",
+  "evolutionFamily": 228
+}

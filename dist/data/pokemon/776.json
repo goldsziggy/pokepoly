@@ -1,0 +1,12 @@
+{
+  "id": 776,
+  "name": "turtonator",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/776.png",
+  "bst": 485,
+  "types": [
+    "fire",
+    "dragon"
+  ],
+  "region": "alola",
+  "evolutionFamily": 776
+}

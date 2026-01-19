@@ -1,0 +1,12 @@
+{
+  "id": 521,
+  "name": "unfezant",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/521.png",
+  "bst": 488,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "unova",
+  "evolutionFamily": 521
+}

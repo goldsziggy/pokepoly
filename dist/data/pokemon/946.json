@@ -1,0 +1,12 @@
+{
+  "id": 946,
+  "name": "bramblin",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/946.png",
+  "bst": 275,
+  "types": [
+    "grass",
+    "ghost"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 946
+}

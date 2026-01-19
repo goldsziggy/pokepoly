@@ -1,0 +1,11 @@
+{
+  "id": 27,
+  "name": "sandshrew",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png",
+  "bst": 300,
+  "types": [
+    "ground"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 27
+}

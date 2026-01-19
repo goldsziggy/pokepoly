@@ -1,0 +1,12 @@
+{
+  "id": 410,
+  "name": "shieldon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/410.png",
+  "bst": 350,
+  "types": [
+    "rock",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 410
+}

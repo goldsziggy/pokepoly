@@ -1,0 +1,12 @@
+{
+  "id": 44,
+  "name": "gloom",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png",
+  "bst": 395,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 43
+}

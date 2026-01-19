@@ -1,0 +1,12 @@
+{
+  "id": 967,
+  "name": "cyclizar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/967.png",
+  "bst": 501,
+  "types": [
+    "dragon",
+    "normal"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 967
+}

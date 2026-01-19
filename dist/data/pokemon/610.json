@@ -1,0 +1,11 @@
+{
+  "id": 610,
+  "name": "axew",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/610.png",
+  "bst": 320,
+  "types": [
+    "dragon"
+  ],
+  "region": "unova",
+  "evolutionFamily": 610
+}

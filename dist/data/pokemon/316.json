@@ -1,0 +1,11 @@
+{
+  "id": 316,
+  "name": "gulpin",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/316.png",
+  "bst": 302,
+  "types": [
+    "poison"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 316
+}

@@ -1,0 +1,12 @@
+{
+  "id": 304,
+  "name": "aron",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/304.png",
+  "bst": 330,
+  "types": [
+    "steel",
+    "rock"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 304
+}

@@ -1,0 +1,12 @@
+{
+  "id": 458,
+  "name": "mantyke",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/458.png",
+  "bst": 345,
+  "types": [
+    "water",
+    "flying"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 458
+}

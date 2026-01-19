@@ -242,7 +242,6 @@ const createStyles = (
     position: 'absolute',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: scale(20),
   },
   cardPlaceholder: {
     width: scale(96),
@@ -269,14 +268,14 @@ const createStyles = (
     marginBottom: scale(10),
   },
   rulesText: {
-    fontSize: scale(12),
+    fontSize: scale(13),
     color: '#374151',
     textAlign: 'center',
     marginBottom: scale(5),
   },
   rulesBold: {
     fontWeight: 'bold',
-    fontSize: scale(12),
+    fontSize: scale(13),
   },
   centerTitle: {
     position: 'absolute',
@@ -358,9 +357,9 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const centerButtonInnerSize = scale(28)
   const centerButtonInnerRadius = scale(14)
   const collageRadiusPadding = scale(50)
-  const rulesOffsetX = scale(40)
-  const rulesOffsetY = scale(20)
-  const rulesWidth = scale(650)
+  const rulesPadding = scale(32)
+  const rulesRowGap = scale(6)
+  const rulesColumnGap = scale(18)
   const headerMarginBottom = scale(3)
   const headerTitleFont = scale(9)
   const headerSubtitleFont = scale(6)
@@ -648,19 +647,14 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const showCenter = tileX < centerEnd && tileX + tileWidth > centerStart &&
                      tileY < centerEnd && tileY + tileHeight > centerStart
 
-  // Calculate rules container bounds (absolute position on board)
-  // Rules are in the bottom half of the center area
-  // Position rules starting from the middle of the center area (bottom half)
-  const rulesContainerLeft = centerStart + rulesOffsetX
-  const rulesContainerTop = centerMidY + rulesOffsetY // Start from middle of center area
-  const rulesContainerRight = rulesContainerLeft + rulesWidth
-  // Estimate height based on content (title (18) + title margin (10) + 7 text lines (12 each + 6 margin) + bottom padding (20))
-  const estimatedRulesHeight = scale(18 + 10 + (12 + 6) * 7 + 20)
-  const rulesContainerBottom = rulesContainerTop + estimatedRulesHeight
-  
-  // Show rules on ALL bottom row tiles (row=2) that show the center
-  // This ensures rules are always visible and can span multiple tiles
-  const showRules = tileRow === 2 && showCenter
+  // Rules container bounds (absolute position on board) — placed inside the white (bottom) half.
+  // We compute this from center bounds so it scales with board size and always stays in the white area.
+  const rulesContainerLeft = centerStart + rulesPadding
+  const rulesContainerTop = centerMidY + rulesPadding
+  const rulesContainerRight = centerEnd - rulesPadding
+  const rulesContainerBottom = centerEnd - rulesPadding
+  const rulesWidth = Math.max(0, rulesContainerRight - rulesContainerLeft)
+  const rulesHeight = Math.max(0, rulesContainerBottom - rulesContainerTop)
   
   // Check if rules container overlaps with current tile (for clipping)
   const rulesOverlapsTile = rulesContainerLeft < tileX + tileWidth && 
@@ -678,6 +672,8 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   let visibleRulesLeftOffset = 0
   let visibleRulesTopOffset = 0
   
+  const showRules = showCenter && rulesOverlapsTile
+
   if (showRules) {
     if (rulesOverlapsTile) {
       // Calculate visible portion that overlaps with this tile
@@ -689,15 +685,6 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
       visibleRulesHeight = Math.max(0, visibleRulesBottom - visibleRulesTop)
       visibleRulesLeftOffset = visibleRulesLeft - rulesContainerLeft
       visibleRulesTopOffset = visibleRulesTop - rulesContainerTop
-    } else {
-      // Fallback: if no overlap detected, show rules positioned from container start
-      // This ensures rules always show on bottom row tiles
-      visibleRulesLeft = rulesContainerLeft - tileX
-      visibleRulesTop = rulesContainerTop - tileY
-      visibleRulesWidth = Math.min(rulesWidth, tileWidth - Math.max(0, visibleRulesLeft))
-      visibleRulesHeight = Math.min(estimatedRulesHeight, tileHeight - Math.max(0, visibleRulesTop))
-      visibleRulesLeftOffset = 0
-      visibleRulesTopOffset = 0
     }
   }
 
@@ -835,7 +822,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
               )
             })}
 
-            {/* Quick Rules - split across bottom tiles (row=2) */}
+            {/* Quick Rules — rendered wherever the rules box overlaps this tile */}
             {showRules && (
               <View
                 style={[
@@ -843,8 +830,8 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                   {
                     left: visibleRulesLeft - tileX,
                     top: visibleRulesTop - tileY,
-                    width: visibleRulesWidth > 0 ? visibleRulesWidth : rulesWidth,
-                    height: visibleRulesHeight > 0 ? visibleRulesHeight : estimatedRulesHeight,
+                    width: visibleRulesWidth,
+                    height: visibleRulesHeight,
                     overflow: 'hidden',
                   },
                 ]}
@@ -856,82 +843,81 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                     left: -visibleRulesLeftOffset,
                     top: -visibleRulesTopOffset,
                     width: rulesWidth,
+                    height: rulesHeight,
                     flexDirection: 'row',
                     alignItems: 'center',
-                    gap: scale(20),
                   }}
                 >
                   {/* Left card placeholder */}
-                  <View style={styles.cardPlaceholder}>
+                  <View style={[styles.cardPlaceholder, { marginRight: rulesColumnGap }]}>
                     <Text style={styles.cardPlaceholderText}>Oak/Bag{'\n'}Cards</Text>
                   </View>
                   
                   {/* Center rules text */}
-                  <View style={{ flex: 1, alignItems: 'center' }}>
+                  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={styles.rulesTitle}>QUICK RULES</Text>
-                    <Text style={styles.rulesText}>
-                    <Text style={styles.rulesText}>
-                      <Text style={styles.rulesBold}>Setup:</Text> Each player starts with{' '}
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
-                        <PokeCoinPDF size={rulesCoinSize} />
-                        <Text>1500</Text>
-                      </View>{' '}
-                      on GO.
-                    </Text>
-                    <Text style={styles.rulesBold}> Play:</Text> Roll dice, move clockwise.
-                  </Text>
-                  <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Buy:</Text> Land on unowned property? Buy it!
-                    <Text style={styles.rulesBold}> Rent:</Text> Others land on yours? Collect rent!
-                  </Text>
-                  <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Build:</Text> Own all of a color → add Gym Badges (houses). 4 Gym Badges = 1 League Badge (hotel).
-                  </Text>
-                  <Text style={styles.rulesText}>
-                    <Text style={styles.rulesText}>
-                      <Text style={styles.rulesBold}>Jail:</Text> Pay{' '}
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
-                        <PokeCoinPDF size={rulesCoinSize} />
-                        <Text>50</Text>
-                      </View>{' '}
-                      or roll doubles.{' '}
-                      <Text style={styles.rulesBold}>Gyms:</Text> Rent ={' '}
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
-                        <PokeCoinPDF size={rulesCoinSize} />
-                        <Text>25</Text>
-                      </View>{' '}
-                      × gyms owned.
-                    </Text>
-                    <Text style={styles.rulesBold}> Free Parking:</Text> Collect the pot!
-                  </Text>
-                  <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Win:</Text> Last player with money wins!
-                    <Text style={styles.rulesText}>
-                      <Text style={styles.rulesBold}>Start </Text>
-                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
-                        <PokeCoinPDF size={rulesCoinSize} />
-                        <Text>1500</Text>
+
+                    <View style={{ alignItems: 'center' }}>
+                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <Text style={styles.rulesBold}>Setup:</Text>
+                        <Text style={styles.rulesText}> Each player starts with </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: rulesInlineGap }}>
+                          <PokeCoinPDF size={rulesCoinSize} />
+                          <Text style={styles.rulesText}>1500</Text>
+                        </View>
+                        <Text style={styles.rulesText}> on GO. </Text>
+                        <Text style={styles.rulesBold}>Play:</Text>
+                        <Text style={styles.rulesText}> Roll dice, move clockwise.</Text>
                       </View>
-                      <Text>: </Text>
-                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>500</Text></View>
-                      {' • '}
-                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>100</Text></View>
-                      {' • '}
-                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>50</Text></View>
-                      {' • '}
-                      6×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>20</Text></View>
-                      {' • '}
-                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>10</Text></View>
-                      {' • '}
-                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>5</Text></View>
-                      {' • '}
-                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>1</Text></View>
-                    </Text>
-                  </Text>
+
+                      <View style={{ height: rulesRowGap }} />
+
+                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <Text style={styles.rulesBold}>Buy:</Text>
+                        <Text style={styles.rulesText}> Land on unowned property? Buy it! </Text>
+                        <Text style={styles.rulesBold}>Rent:</Text>
+                        <Text style={styles.rulesText}> Others land on yours? Collect rent!</Text>
+                      </View>
+
+                      <View style={{ height: rulesRowGap }} />
+
+                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <Text style={styles.rulesBold}>Build:</Text>
+                        <Text style={styles.rulesText}> Own all of a color → add Gym Badges. 4 Gym Badges = 1 League Badge.</Text>
+                      </View>
+
+                      <View style={{ height: rulesRowGap }} />
+
+                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <Text style={styles.rulesBold}>Jail:</Text>
+                        <Text style={styles.rulesText}> Pay </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: rulesInlineGap }}>
+                          <PokeCoinPDF size={rulesCoinSize} />
+                          <Text style={styles.rulesText}>50</Text>
+                        </View>
+                        <Text style={styles.rulesText}> or roll doubles. </Text>
+                        <Text style={styles.rulesBold}>Gyms:</Text>
+                        <Text style={styles.rulesText}> Rent = </Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: rulesInlineGap }}>
+                          <PokeCoinPDF size={rulesCoinSize} />
+                          <Text style={styles.rulesText}>25</Text>
+                        </View>
+                        <Text style={styles.rulesText}> × gyms owned. </Text>
+                        <Text style={styles.rulesBold}>Free Parking:</Text>
+                        <Text style={styles.rulesText}> Collect the pot!</Text>
+                      </View>
+
+                      <View style={{ height: rulesRowGap }} />
+
+                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <Text style={styles.rulesBold}>Win:</Text>
+                        <Text style={styles.rulesText}> Last player with money wins!</Text>
+                      </View>
+                    </View>
                   </View>
                   
                   {/* Right card placeholder */}
-                  <View style={styles.cardPlaceholder}>
+                  <View style={[styles.cardPlaceholder, { marginLeft: rulesColumnGap }]}>
                     <Text style={styles.cardPlaceholderText}>Oak/Bag{'\n'}Cards</Text>
                   </View>
                 </View>

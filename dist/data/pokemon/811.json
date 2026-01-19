@@ -1,0 +1,11 @@
+{
+  "id": 811,
+  "name": "thwackey",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/811.png",
+  "bst": 420,
+  "types": [
+    "grass"
+  ],
+  "region": "galar",
+  "evolutionFamily": 811
+}

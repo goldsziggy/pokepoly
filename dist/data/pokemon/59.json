@@ -1,0 +1,11 @@
+{
+  "id": 59,
+  "name": "arcanine",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png",
+  "bst": 555,
+  "types": [
+    "fire"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 58
+}

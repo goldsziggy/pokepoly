@@ -1,0 +1,11 @@
+{
+  "id": 771,
+  "name": "pyukumuku",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/771.png",
+  "bst": 410,
+  "types": [
+    "water"
+  ],
+  "region": "alola",
+  "evolutionFamily": 771
+}

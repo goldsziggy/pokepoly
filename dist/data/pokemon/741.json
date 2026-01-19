@@ -1,0 +1,12 @@
+{
+  "id": 741,
+  "name": "oricorio-baile",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/741.png",
+  "bst": 476,
+  "types": [
+    "fire",
+    "flying"
+  ],
+  "region": "alola",
+  "evolutionFamily": 741
+}

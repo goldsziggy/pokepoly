@@ -1,0 +1,12 @@
+{
+  "id": 123,
+  "name": "scyther",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png",
+  "bst": 500,
+  "types": [
+    "bug",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 123
+}

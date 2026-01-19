@@ -1,0 +1,11 @@
+{
+  "id": 749,
+  "name": "mudbray",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/749.png",
+  "bst": 385,
+  "types": [
+    "ground"
+  ],
+  "region": "alola",
+  "evolutionFamily": 749
+}

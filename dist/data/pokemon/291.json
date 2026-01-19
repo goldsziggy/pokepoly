@@ -1,0 +1,12 @@
+{
+  "id": 291,
+  "name": "ninjask",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/291.png",
+  "bst": 456,
+  "types": [
+    "bug",
+    "flying"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 290
+}

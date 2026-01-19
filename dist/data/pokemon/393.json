@@ -1,0 +1,11 @@
+{
+  "id": 393,
+  "name": "piplup",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/393.png",
+  "bst": 314,
+  "types": [
+    "water"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 393
+}

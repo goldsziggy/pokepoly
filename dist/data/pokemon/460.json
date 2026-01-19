@@ -1,0 +1,12 @@
+{
+  "id": 460,
+  "name": "abomasnow",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/460.png",
+  "bst": 494,
+  "types": [
+    "grass",
+    "ice"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 460
+}

@@ -1,0 +1,11 @@
+{
+  "id": 556,
+  "name": "maractus",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/556.png",
+  "bst": 461,
+  "types": [
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 556
+}

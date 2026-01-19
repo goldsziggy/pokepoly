@@ -1,0 +1,12 @@
+{
+  "id": 770,
+  "name": "palossand",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/770.png",
+  "bst": 480,
+  "types": [
+    "ghost",
+    "ground"
+  ],
+  "region": "alola",
+  "evolutionFamily": 770
+}

@@ -4,9 +4,15 @@ import { StyleSheet, Font } from '@react-pdf/renderer'
 // Note: Press Start 2P only has a regular style (no italic or bold variants)
 // For browser-based PDF generation, we need an absolute URL
 // Priority: 1) Local font (if downloaded), 2) GitHub CDN (reliable fallback)
+const getBaseUrl = () => {
+  if (typeof window === 'undefined') return '/'
+  const base = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || '/'
+  return base.endsWith('/') ? base : `${base}/`
+}
+
 const fontUrl =
   typeof window !== 'undefined'
-    ? `${window.location.origin}/fonts/PressStart2P-Regular.ttf`
+    ? `${window.location.origin}${getBaseUrl()}fonts/PressStart2P-Regular.ttf`
     : 'https://raw.githubusercontent.com/google/fonts/main/ofl/pressstart2p/PressStart2P-Regular.ttf'
 
 Font.register({

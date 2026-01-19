@@ -1,0 +1,11 @@
+{
+  "id": 782,
+  "name": "jangmo-o",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/782.png",
+  "bst": 300,
+  "types": [
+    "dragon"
+  ],
+  "region": "alola",
+  "evolutionFamily": 782
+}

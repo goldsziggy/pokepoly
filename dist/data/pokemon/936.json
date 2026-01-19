@@ -1,0 +1,12 @@
+{
+  "id": 936,
+  "name": "armarouge",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/936.png",
+  "bst": 525,
+  "types": [
+    "fire",
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 936
+}

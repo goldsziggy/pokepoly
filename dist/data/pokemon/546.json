@@ -1,0 +1,12 @@
+{
+  "id": 546,
+  "name": "cottonee",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/546.png",
+  "bst": 280,
+  "types": [
+    "grass",
+    "fairy"
+  ],
+  "region": "unova",
+  "evolutionFamily": 546
+}

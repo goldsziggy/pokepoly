@@ -1,0 +1,12 @@
+{
+  "id": 804,
+  "name": "naganadel",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/804.png",
+  "bst": 540,
+  "types": [
+    "poison",
+    "dragon"
+  ],
+  "region": "alola",
+  "evolutionFamily": 804
+}

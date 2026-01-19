@@ -1,0 +1,12 @@
+{
+  "id": 205,
+  "name": "forretress",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/205.png",
+  "bst": 465,
+  "types": [
+    "bug",
+    "steel"
+  ],
+  "region": "johto",
+  "evolutionFamily": 204
+}

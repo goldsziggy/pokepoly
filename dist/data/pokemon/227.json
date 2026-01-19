@@ -1,0 +1,12 @@
+{
+  "id": 227,
+  "name": "skarmory",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/227.png",
+  "bst": 465,
+  "types": [
+    "steel",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 227
+}

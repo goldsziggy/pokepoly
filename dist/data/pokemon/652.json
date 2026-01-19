@@ -1,0 +1,12 @@
+{
+  "id": 652,
+  "name": "chesnaught",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/652.png",
+  "bst": 530,
+  "types": [
+    "grass",
+    "fighting"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 652
+}

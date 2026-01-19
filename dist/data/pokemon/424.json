@@ -1,0 +1,11 @@
+{
+  "id": 424,
+  "name": "ambipom",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/424.png",
+  "bst": 482,
+  "types": [
+    "normal"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 424
+}

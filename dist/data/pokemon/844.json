@@ -1,0 +1,11 @@
+{
+  "id": 844,
+  "name": "sandaconda",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/844.png",
+  "bst": 510,
+  "types": [
+    "ground"
+  ],
+  "region": "galar",
+  "evolutionFamily": 844
+}

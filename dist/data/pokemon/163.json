@@ -1,0 +1,12 @@
+{
+  "id": 163,
+  "name": "hoothoot",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/163.png",
+  "bst": 262,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 163
+}

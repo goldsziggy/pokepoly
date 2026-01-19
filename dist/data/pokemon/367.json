@@ -1,0 +1,11 @@
+{
+  "id": 367,
+  "name": "huntail",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/367.png",
+  "bst": 485,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 366
+}

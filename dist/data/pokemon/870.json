@@ -1,0 +1,11 @@
+{
+  "id": 870,
+  "name": "falinks",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/870.png",
+  "bst": 470,
+  "types": [
+    "fighting"
+  ],
+  "region": "galar",
+  "evolutionFamily": 870
+}

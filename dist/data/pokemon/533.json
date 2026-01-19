@@ -1,0 +1,11 @@
+{
+  "id": 533,
+  "name": "gurdurr",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/533.png",
+  "bst": 405,
+  "types": [
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 533
+}

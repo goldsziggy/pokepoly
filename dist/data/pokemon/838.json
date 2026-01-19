@@ -1,0 +1,12 @@
+{
+  "id": 838,
+  "name": "carkol",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/838.png",
+  "bst": 410,
+  "types": [
+    "rock",
+    "fire"
+  ],
+  "region": "galar",
+  "evolutionFamily": 838
+}

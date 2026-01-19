@@ -1,0 +1,11 @@
+{
+  "id": 616,
+  "name": "shelmet",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/616.png",
+  "bst": 305,
+  "types": [
+    "bug"
+  ],
+  "region": "unova",
+  "evolutionFamily": 616
+}

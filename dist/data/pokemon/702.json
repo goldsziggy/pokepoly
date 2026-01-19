@@ -1,0 +1,12 @@
+{
+  "id": 702,
+  "name": "dedenne",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/702.png",
+  "bst": 431,
+  "types": [
+    "electric",
+    "fairy"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 702
+}

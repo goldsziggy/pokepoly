@@ -1,0 +1,12 @@
+{
+  "id": 414,
+  "name": "mothim",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/414.png",
+  "bst": 424,
+  "types": [
+    "bug",
+    "flying"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 414
+}

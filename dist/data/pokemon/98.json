@@ -1,0 +1,11 @@
+{
+  "id": 98,
+  "name": "krabby",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/98.png",
+  "bst": 325,
+  "types": [
+    "water"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 98
+}

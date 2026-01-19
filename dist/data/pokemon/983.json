@@ -1,0 +1,12 @@
+{
+  "id": 983,
+  "name": "kingambit",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/983.png",
+  "bst": 550,
+  "types": [
+    "dark",
+    "steel"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 983
+}

@@ -1,0 +1,11 @@
+{
+  "id": 846,
+  "name": "arrokuda",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/846.png",
+  "bst": 280,
+  "types": [
+    "water"
+  ],
+  "region": "galar",
+  "evolutionFamily": 846
+}

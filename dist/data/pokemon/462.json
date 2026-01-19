@@ -1,0 +1,12 @@
+{
+  "id": 462,
+  "name": "magnezone",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/462.png",
+  "bst": 535,
+  "types": [
+    "electric",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 462
+}

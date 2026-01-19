@@ -1,0 +1,11 @@
+{
+  "id": 206,
+  "name": "dunsparce",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/206.png",
+  "bst": 415,
+  "types": [
+    "normal"
+  ],
+  "region": "johto",
+  "evolutionFamily": 206
+}

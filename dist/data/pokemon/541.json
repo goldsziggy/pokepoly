@@ -1,0 +1,12 @@
+{
+  "id": 541,
+  "name": "swadloon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/541.png",
+  "bst": 380,
+  "types": [
+    "bug",
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 541
+}

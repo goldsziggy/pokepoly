@@ -1,0 +1,12 @@
+{
+  "id": 873,
+  "name": "frosmoth",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/873.png",
+  "bst": 475,
+  "types": [
+    "ice",
+    "bug"
+  ],
+  "region": "galar",
+  "evolutionFamily": 873
+}

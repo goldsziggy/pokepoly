@@ -1,0 +1,12 @@
+{
+  "id": 345,
+  "name": "lileep",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/345.png",
+  "bst": 355,
+  "types": [
+    "rock",
+    "grass"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 345
+}

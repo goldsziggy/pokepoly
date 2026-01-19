@@ -1,0 +1,11 @@
+{
+  "id": 932,
+  "name": "nacli",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/932.png",
+  "bst": 280,
+  "types": [
+    "rock"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 932
+}

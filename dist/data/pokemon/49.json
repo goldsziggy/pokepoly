@@ -1,0 +1,12 @@
+{
+  "id": 49,
+  "name": "venomoth",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png",
+  "bst": 450,
+  "types": [
+    "bug",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 48
+}

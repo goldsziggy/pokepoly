@@ -1,0 +1,12 @@
+{
+  "id": 87,
+  "name": "dewgong",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png",
+  "bst": 475,
+  "types": [
+    "water",
+    "ice"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 86
+}

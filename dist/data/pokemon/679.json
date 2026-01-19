@@ -1,0 +1,12 @@
+{
+  "id": 679,
+  "name": "honedge",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/679.png",
+  "bst": 325,
+  "types": [
+    "steel",
+    "ghost"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 679
+}

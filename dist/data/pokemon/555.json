@@ -1,0 +1,11 @@
+{
+  "id": 555,
+  "name": "darmanitan-standard",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/555.png",
+  "bst": 480,
+  "types": [
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 555
+}

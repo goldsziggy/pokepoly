@@ -1,0 +1,12 @@
+{
+  "id": 542,
+  "name": "leavanny",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/542.png",
+  "bst": 500,
+  "types": [
+    "bug",
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 542
+}

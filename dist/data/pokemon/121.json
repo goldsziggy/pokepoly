@@ -1,0 +1,12 @@
+{
+  "id": 121,
+  "name": "starmie",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png",
+  "bst": 520,
+  "types": [
+    "water",
+    "psychic"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 120
+}

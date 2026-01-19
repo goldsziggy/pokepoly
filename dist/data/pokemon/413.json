@@ -1,0 +1,12 @@
+{
+  "id": 413,
+  "name": "wormadam-plant",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/413.png",
+  "bst": 424,
+  "types": [
+    "bug",
+    "grass"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 413
+}

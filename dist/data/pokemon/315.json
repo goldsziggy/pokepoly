@@ -1,0 +1,12 @@
+{
+  "id": 315,
+  "name": "roselia",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/315.png",
+  "bst": 400,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 315
+}

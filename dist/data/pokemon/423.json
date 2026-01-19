@@ -1,0 +1,12 @@
+{
+  "id": 423,
+  "name": "gastrodon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/423.png",
+  "bst": 475,
+  "types": [
+    "water",
+    "ground"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 423
+}

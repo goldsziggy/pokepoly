@@ -1,0 +1,12 @@
+{
+  "id": 987,
+  "name": "flutter-mane",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/987.png",
+  "bst": 570,
+  "types": [
+    "ghost",
+    "fairy"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 987
+}

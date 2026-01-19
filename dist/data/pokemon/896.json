@@ -1,0 +1,11 @@
+{
+  "id": 896,
+  "name": "glastrier",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/896.png",
+  "bst": 580,
+  "types": [
+    "ice"
+  ],
+  "region": "galar",
+  "evolutionFamily": 896
+}

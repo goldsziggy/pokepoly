@@ -1,0 +1,12 @@
+{
+  "id": 931,
+  "name": "squawkabilly-green-plumage",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/931.png",
+  "bst": 417,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 931
+}

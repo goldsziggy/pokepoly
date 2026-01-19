@@ -1,0 +1,12 @@
+{
+  "id": 340,
+  "name": "whiscash",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/340.png",
+  "bst": 468,
+  "types": [
+    "water",
+    "ground"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 339
+}

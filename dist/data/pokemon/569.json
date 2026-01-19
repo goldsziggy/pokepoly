@@ -1,0 +1,11 @@
+{
+  "id": 569,
+  "name": "garbodor",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/569.png",
+  "bst": 474,
+  "types": [
+    "poison"
+  ],
+  "region": "unova",
+  "evolutionFamily": 569
+}

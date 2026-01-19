@@ -1,0 +1,12 @@
+{
+  "id": 1015,
+  "name": "munkidori",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1015.png",
+  "bst": 555,
+  "types": [
+    "poison",
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1015
+}

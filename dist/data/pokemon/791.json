@@ -1,0 +1,12 @@
+{
+  "id": 791,
+  "name": "solgaleo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/791.png",
+  "bst": 680,
+  "types": [
+    "psychic",
+    "steel"
+  ],
+  "region": "alola",
+  "evolutionFamily": 791
+}

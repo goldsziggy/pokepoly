@@ -1,0 +1,11 @@
+{
+  "id": 916,
+  "name": "oinkologne-male",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/916.png",
+  "bst": 489,
+  "types": [
+    "normal"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 916
+}

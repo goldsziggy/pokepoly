@@ -1,0 +1,11 @@
+{
+  "id": 685,
+  "name": "slurpuff",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/685.png",
+  "bst": 480,
+  "types": [
+    "fairy"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 685
+}

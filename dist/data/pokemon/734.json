@@ -1,0 +1,11 @@
+{
+  "id": 734,
+  "name": "yungoos",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/734.png",
+  "bst": 253,
+  "types": [
+    "normal"
+  ],
+  "region": "alola",
+  "evolutionFamily": 734
+}

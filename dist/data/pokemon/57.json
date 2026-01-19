@@ -1,0 +1,11 @@
+{
+  "id": 57,
+  "name": "primeape",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png",
+  "bst": 455,
+  "types": [
+    "fighting"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 56
+}

@@ -1,0 +1,11 @@
+{
+  "id": 529,
+  "name": "drilbur",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/529.png",
+  "bst": 328,
+  "types": [
+    "ground"
+  ],
+  "region": "unova",
+  "evolutionFamily": 529
+}

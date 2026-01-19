@@ -1,0 +1,12 @@
+{
+  "id": 727,
+  "name": "incineroar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/727.png",
+  "bst": 530,
+  "types": [
+    "fire",
+    "dark"
+  ],
+  "region": "alola",
+  "evolutionFamily": 727
+}
