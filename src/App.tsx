@@ -1,8 +1,6 @@
-import { useEffect, useState } from 'react'
 import { Spinner } from '@/components/ui'
 import { Questionnaire } from '@/components/questionnaire'
-import { usePokemonData } from '@/hooks'
-import { useBoardStore } from '@/store'
+import { usePokemonData, useUrlState } from '@/hooks'
 
 function Header() {
   return (
@@ -11,7 +9,7 @@ function Header() {
         POKE-POLY
       </h1>
       <p className="font-pixel text-xs text-pixel-text">
-        The Master League
+        Gotta Own 'Em All!
       </p>
       <p className="font-pixel text-[8px] text-gray-500 mt-2">
         Generate a custom Pokemon Monopoly board
@@ -48,15 +46,8 @@ function Footer() {
 }
 
 export default function App() {
+  useUrlState({ restoreOnMount: true })
   const { isLoading } = usePokemonData()
-  const { setAvailablePokemon, availablePokemon } = useBoardStore()
-
-  // Load all Pokemon on mount
-  useEffect(() => {
-    if (availablePokemon.length === 0) {
-      // This will be handled by usePokemonData hook
-    }
-  }, [availablePokemon.length])
 
   if (isLoading) {
     return <LoadingScreen />

@@ -12,12 +12,16 @@ interface TypeIconPDFProps {
 }
 
 export function TypeIconPDF({ type, size = 12, style }: TypeIconPDFProps) {
-  const iconPath = `/icons/${type.toLowerCase()}.svg`
+  const iconPath = typeof window !== 'undefined'
+    ? `${window.location.origin}/icons/${type.toLowerCase()}.png`
+    : `/icons/${type.toLowerCase()}.png`
+
+  const baseStyle: Style = { width: size, height: size, objectFit: 'contain' }
 
   return (
     <PDFImage
       src={iconPath}
-      style={[{ width: size, height: size, objectFit: 'contain' }, style]}
+      style={style ? [baseStyle, style] : baseStyle}
     />
   )
 }

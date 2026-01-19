@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   sideSpace: {
-    width: 45,
+    width: 36,
     height: 60,
     // Will be rotated for left/right sides
   },

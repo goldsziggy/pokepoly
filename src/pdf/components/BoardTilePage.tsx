@@ -1,45 +1,40 @@
 import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
-import type { PaperSize, BoardSpace, Pokemon } from '@/types'
+import type { PaperSize, BoardSpace, Pokemon, BoardSize } from '@/types'
 import { colors } from './styles'
 import { getSpaceSprite, getGymImage } from '@/components/board/spaceSprites'
 import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 import { getPrimaryType } from '@/lib/typeIcons'
 import { TypeIconPDF } from '@/types/TypeIconPDF'
+import { BOARD_SIZE_INCHES, PAPER_DIMENSIONS } from '@/types/board'
 
-// 20" x 20" board at 72 DPI = 1440 x 1440 points
-const BOARD_SIZE = 1440
-// Landscape layout: 2 columns x 3 rows = 6 pages
-const TILE_COLS = 2
+const POINTS_PER_INCH = 72
+const BASE_CORNER_SIZE_IN = 2.5
+const BASE_SIDE_SIZE_IN = 1.5
+const BASE_BOARD_SIZE_IN = BASE_CORNER_SIZE_IN * 2 + BASE_SIDE_SIZE_IN * 9
+// Landscape layout: 3 columns x 3 rows = 9 pages
+const TILE_COLS = 3
 const TILE_ROWS = 3
-const TILE_WIDTH = BOARD_SIZE / TILE_COLS  // 720 points = 10"
-const TILE_HEIGHT = BOARD_SIZE / TILE_ROWS // 480 points = 6.67"
-
-// Space dimensions scaled for 20" board
-const CORNER_SIZE = 140 // ~1.94" for corner spaces
-const SIDE_SIZE = (BOARD_SIZE - 2 * CORNER_SIZE) / 9 // ~1.29" for each of 9 spaces per side
-
-// Sprite sizes - increased to take advantage of container size
-const PROPERTY_SPRITE_SIZE = 55
-const COLLAGE_SPRITE_SIZE = 50
-
-const styles = StyleSheet.create({
+const createStyles = (
+  scale: (value: number) => number,
+  tileWidth: number,
+  tileHeight: number
+) => StyleSheet.create({
   page: {
-    padding: 12,
     backgroundColor: '#fff',
   },
   tileContainer: {
-    width: TILE_WIDTH,
-    height: TILE_HEIGHT,
+    width: tileWidth,
+    height: tileHeight,
     position: 'relative',
     overflow: 'hidden',
-    borderWidth: 1,
+    borderWidth: scale(1),
     borderColor: '#ccc',
   },
   tileLabel: {
     position: 'absolute',
-    bottom: 3,
-    right: 5,
-    fontSize: 6,
+    bottom: scale(3),
+    right: scale(5),
+    fontSize: scale(6),
     color: '#666',
   },
   cutLine: {
@@ -49,42 +44,36 @@ const styles = StyleSheet.create({
   },
   space: {
     position: 'absolute',
-    borderWidth: 2,
+    borderWidth: scale(2),
     borderColor: colors.black,
     backgroundColor: colors.white,
     overflow: 'hidden',
   },
   propertyHeader: {
-    height: 22,
+    height: scale(22),
     position: 'relative',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  typeIcon: {
-    fontSize: 7,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
-    textShadow: '0 1px 1px rgba(0,0,0,0.8)',
-  },
   propertyBody: {
     flex: 1,
-    padding: 3,
+    padding: scale(3),
     alignItems: 'center',
     justifyContent: 'center',
   },
   propertyName: {
-    fontSize: 8,
+    fontSize: scale(8),
     fontWeight: 'bold',
     textAlign: 'center',
   },
   propertyPrice: {
-    fontSize: 7,
+    fontSize: scale(7),
     textAlign: 'center',
-    marginTop: 2,
+    marginTop: scale(2),
   },
   pokemonSprite: {
-    width: PROPERTY_SPRITE_SIZE,
-    height: PROPERTY_SPRITE_SIZE,
+    width: scale(55),
+    height: scale(55),
     objectFit: 'contain',
   },
   spaceImage: {
@@ -107,34 +96,33 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 6,
+    padding: scale(6),
     position: 'relative',
-    overflow: 'visible',
   },
   innerSquareBorder: {
     position: 'absolute',
-    bottom: 4,
-    right: 4,
+    bottom: scale(4),
+    right: scale(4),
     width: '50%',
     height: '50%',
-    borderWidth: 2,
+    borderWidth: scale(2),
     borderColor: colors.black,
     zIndex: 10,
   },
   innerSquareBorderTopRight: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: scale(4),
+    right: scale(4),
     width: '50%',
     height: '50%',
-    borderWidth: 2,
+    borderWidth: scale(2),
     borderColor: colors.black,
     zIndex: 10,
   },
   innerSquareContent: {
     position: 'absolute',
-    bottom: 4,
-    right: 4,
+    bottom: scale(4),
+    right: scale(4),
     width: '50%',
     height: '50%',
     overflow: 'hidden',
@@ -142,8 +130,8 @@ const styles = StyleSheet.create({
   },
   innerSquareContentTopRight: {
     position: 'absolute',
-    top: 4,
-    right: 4,
+    top: scale(4),
+    right: scale(4),
     width: '50%',
     height: '50%',
     overflow: 'hidden',
@@ -151,20 +139,20 @@ const styles = StyleSheet.create({
   },
   outerSquareText: {
     position: 'absolute',
-    top: 4,
-    left: 4,
+    top: scale(4),
+    left: scale(4),
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingHorizontal: 3,
-    paddingVertical: 2,
+    paddingHorizontal: scale(3),
+    paddingVertical: scale(2),
     zIndex: 20,
   },
   outerSquareTextBottomLeft: {
     position: 'absolute',
-    bottom: 4,
-    left: 4,
+    bottom: scale(4),
+    left: scale(4),
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingHorizontal: 3,
-    paddingVertical: 2,
+    paddingHorizontal: scale(3),
+    paddingVertical: scale(2),
     zIndex: 20,
   },
   cornerImage: {
@@ -177,14 +165,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   cornerTitle: {
-    fontSize: 10,
+    fontSize: scale(10),
     fontWeight: 'bold',
     textAlign: 'center',
   },
   cornerLabel: {
-    fontSize: 8,
+    fontSize: scale(8),
     textAlign: 'center',
-    marginTop: 3,
+    marginTop: scale(3),
   },
   textOverlay: {
     position: 'absolute',
@@ -192,24 +180,24 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.9)',
-    paddingHorizontal: 4,
-    paddingVertical: 3,
+    paddingHorizontal: scale(4),
+    paddingVertical: scale(3),
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 22,
+    minHeight: scale(22),
     width: '100%',
   },
   overlayText: {
     color: '#FFFFFF',
-    fontSize: 8,
+    fontSize: scale(8),
     fontWeight: 'bold',
     textAlign: 'center',
   },
   overlaySubtext: {
     color: '#FFFFFF',
-    fontSize: 6,
+    fontSize: scale(6),
     textAlign: 'center',
-    marginTop: 1,
+    marginTop: scale(1),
   },
   // Pokeball center styles
   pokeballTop: {
@@ -223,12 +211,12 @@ const styles = StyleSheet.create({
   pokeballBand: {
     position: 'absolute',
     backgroundColor: '#1F2937',
-    height: 28,
+    height: scale(28),
   },
   pokeballButton: {
     position: 'absolute',
     backgroundColor: '#FFFFFF',
-    borderWidth: 6,
+    borderWidth: scale(6),
     borderColor: '#1F2937',
     borderRadius: 999,
     alignItems: 'center',
@@ -236,60 +224,60 @@ const styles = StyleSheet.create({
   },
   // Pokemon collage
   collageSprite: {
-    width: COLLAGE_SPRITE_SIZE,
-    height: COLLAGE_SPRITE_SIZE,
+    width: scale(50),
+    height: scale(50),
     objectFit: 'contain',
   },
   collageLabel: {
-    fontSize: 6,
+    fontSize: scale(6),
     color: '#FFFFFF',
     backgroundColor: 'rgba(0,0,0,0.5)',
     textAlign: 'center',
-    paddingHorizontal: 3,
-    paddingVertical: 1,
-    borderRadius: 2,
+    paddingHorizontal: scale(3),
+    paddingVertical: scale(1),
+    borderRadius: scale(2),
   },
   // Rules
   rulesContainer: {
     position: 'absolute',
     alignItems: 'center',
     flexDirection: 'row',
-    gap: 20,
+    gap: scale(20),
   },
   cardPlaceholder: {
-    width: 60,
-    height: 90,
-    borderWidth: 2,
+    width: scale(72),
+    height: scale(42),
+    borderWidth: scale(2),
     borderStyle: 'dashed',
     borderColor: '#9CA3AF',
-    borderRadius: 4,
+    borderRadius: scale(4),
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardPlaceholderText: {
-    fontSize: 6,
+    fontSize: scale(6),
     color: '#6B7280',
     textAlign: 'center',
   },
   rulesTitle: {
-    fontSize: 16,
+    fontSize: scale(16),
     fontWeight: 'bold',
     color: '#DC2626',
     textAlign: 'center',
-    marginBottom: 10,
+    marginBottom: scale(10),
   },
   rulesText: {
-    fontSize: 11,
+    fontSize: scale(11),
     color: '#374151',
     textAlign: 'center',
-    marginBottom: 5,
+    marginBottom: scale(5),
   },
   rulesBold: {
     fontWeight: 'bold',
   },
   centerTitle: {
     position: 'absolute',
-    fontSize: 22,
+    fontSize: scale(22),
     fontWeight: 'bold',
     color: '#FFFFFF',
     textAlign: 'center',
@@ -310,36 +298,9 @@ const colorMap: Record<string, string> = {
 interface BoardTilePageProps {
   spaces: BoardSpace[]
   paperSize: PaperSize
+  boardSize: BoardSize
   tileRow: number // 0-2
   tileCol: number // 0-1
-}
-
-function getSpacePosition(index: number): { x: number; y: number; width: number; height: number } {
-  const boardRight = BOARD_SIZE - CORNER_SIZE
-  const boardBottom = BOARD_SIZE - CORNER_SIZE
-
-  if (index === 0) {
-    return { x: boardRight, y: boardBottom, width: CORNER_SIZE, height: CORNER_SIZE }
-  } else if (index >= 1 && index <= 9) {
-    const pos = 9 - index
-    return { x: CORNER_SIZE + pos * SIDE_SIZE, y: boardBottom, width: SIDE_SIZE, height: CORNER_SIZE }
-  } else if (index === 10) {
-    return { x: 0, y: boardBottom, width: CORNER_SIZE, height: CORNER_SIZE }
-  } else if (index >= 11 && index <= 19) {
-    const pos = 19 - index
-    return { x: 0, y: CORNER_SIZE + pos * SIDE_SIZE, width: CORNER_SIZE, height: SIDE_SIZE }
-  } else if (index === 20) {
-    return { x: 0, y: 0, width: CORNER_SIZE, height: CORNER_SIZE }
-  } else if (index >= 21 && index <= 29) {
-    const pos = index - 21
-    return { x: CORNER_SIZE + pos * SIDE_SIZE, y: 0, width: SIDE_SIZE, height: CORNER_SIZE }
-  } else if (index === 30) {
-    return { x: boardRight, y: 0, width: CORNER_SIZE, height: CORNER_SIZE }
-  } else if (index >= 31 && index <= 39) {
-    const pos = index - 31
-    return { x: boardRight, y: CORNER_SIZE + pos * SIDE_SIZE, width: CORNER_SIZE, height: SIDE_SIZE }
-  }
-  return { x: 0, y: 0, width: 0, height: 0 }
 }
 
 // Calculate half-circle positions for Pokemon collage
@@ -369,219 +330,292 @@ function getCollagePositions(count: number, centerX: number, centerY: number, ra
   return positions
 }
 
-function SpaceContent({ space }: { space: BoardSpace }) {
+export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }: BoardTilePageProps) {
+  const boardSizeIn = BOARD_SIZE_INCHES[boardSize]
+  const boardScale = boardSizeIn / BASE_BOARD_SIZE_IN
+  const scale = (value: number) => value * boardScale
+
+  const boardSizePoints = boardSizeIn * POINTS_PER_INCH
+  const cornerSize = BASE_CORNER_SIZE_IN * boardScale * POINTS_PER_INCH
+  const sideSize = BASE_SIDE_SIZE_IN * boardScale * POINTS_PER_INCH
+  const tileWidth = boardSizePoints / TILE_COLS
+  const tileHeight = boardSizePoints / TILE_ROWS
+  const collageSpriteSize = scale(50)
+  const typeIconSize = scale(16)
+  const propertyCoinSize = scale(8)
+  const overlayCoinSize = scale(6)
+  const overlayGap = scale(2)
+  const overlayMargin = scale(1)
+  const rulesCoinSize = scale(6)
+  const rulesInlineGap = scale(1)
+  const centerBandHalfHeight = scale(14)
+  const centerButtonRadius = scale(40)
+  const centerButtonOffset = scale(36)
+  const centerButtonSize = scale(72)
+  const centerButtonInnerSize = scale(28)
+  const centerButtonInnerRadius = scale(14)
+  const collageRadiusPadding = scale(50)
+  const rulesOffsetX = scale(60)
+  const rulesOffsetY = scale(35)
+  const rulesWidth = scale(600)
+  const headerMarginBottom = scale(3)
+  const headerTitleFont = scale(9)
+  const headerSubtitleFont = scale(6)
+  const footerFontSize = scale(5)
+  const footerMarginTop = scale(3)
+  const tileLabelCutLineWidth = scale(1)
+
+  const pageDimensions = PAPER_DIMENSIONS[paperSize]
+  const pageWidth = pageDimensions.height
+  const basePadding = scale(12)
+  const paddingHorizontal = Math.max(0, Math.min(basePadding, (pageWidth - tileWidth) / 2))
+
+  const styles = createStyles(scale, tileWidth, tileHeight)
+  const tileX = tileCol * tileWidth
+  const tileY = tileRow * tileHeight
+  const tileNumber = tileRow * TILE_COLS + tileCol + 1
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
-  if (space.type === 'property') {
-    const bgColor = colorMap[space.color] || colors.brown
-    const primaryType = space.pokemon ? getPrimaryType(space.pokemon.types) : null
-    return (
-      <View style={{ flex: 1 }}>
-        <View style={[styles.propertyHeader, { backgroundColor: bgColor }]}>
-          {primaryType && (
-            <TypeIconPDF type={primaryType} size={10} />
-          )}
-        </View>
-        <View style={styles.propertyBody}>
-          {space.pokemon?.sprite && (
-            <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
-          )}
-          <Text style={styles.propertyName}>
-            {space.pokemon ? capitalize(space.pokemon.name) : '???'}
-          </Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-            <PokeCoinPDF size={8} />
-            <Text style={styles.propertyPrice}>{space.price}</Text>
-          </View>
-        </View>
-      </View>
-    )
+  const getSpacePosition = (index: number): { x: number; y: number; width: number; height: number } => {
+    const boardRight = boardSizePoints - cornerSize
+    const boardBottom = boardSizePoints - cornerSize
+
+    if (index === 0) {
+      return { x: boardRight, y: boardBottom, width: cornerSize, height: cornerSize }
+    } else if (index >= 1 && index <= 9) {
+      const pos = 9 - index
+      return { x: cornerSize + pos * sideSize, y: boardBottom, width: sideSize, height: cornerSize }
+    } else if (index === 10) {
+      return { x: 0, y: boardBottom, width: cornerSize, height: cornerSize }
+    } else if (index >= 11 && index <= 19) {
+      const pos = 19 - index
+      return { x: 0, y: cornerSize + pos * sideSize, width: cornerSize, height: sideSize }
+    } else if (index === 20) {
+      return { x: 0, y: 0, width: cornerSize, height: cornerSize }
+    } else if (index >= 21 && index <= 29) {
+      const pos = index - 21
+      return { x: cornerSize + pos * sideSize, y: 0, width: sideSize, height: cornerSize }
+    } else if (index === 30) {
+      return { x: boardRight, y: 0, width: cornerSize, height: cornerSize }
+    } else if (index >= 31 && index <= 39) {
+      const pos = index - 31
+      return { x: boardRight, y: cornerSize + pos * sideSize, width: cornerSize, height: sideSize }
+    }
+    return { x: 0, y: 0, width: 0, height: 0 }
   }
 
-  if (space.type === 'gym') {
-    const gymImage = getGymImage(space.name)
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#E8E8E8' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {gymImage && (
-            <PDFImage src={gymImage} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>{space.name}</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
-              <PokeCoinPDF size={6} />
-              <Text style={styles.overlaySubtext}>{space.price}</Text>
+  const SpaceContent = ({ space }: { space: BoardSpace }) => {
+    if (space.type === 'property') {
+      const bgColor = colorMap[space.color] || colors.brown
+      const primaryType = space.pokemon ? getPrimaryType(space.pokemon.types) : null
+      return (
+        <View style={{ flex: 1 }}>
+          <View style={[styles.propertyHeader, { backgroundColor: bgColor }]}>
+            {primaryType && (
+              <View style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                borderRadius: 999,
+                padding: scale(1),
+              }}>
+                <TypeIconPDF type={primaryType} size={typeIconSize} />
+              </View>
+            )}
+          </View>
+          <View style={styles.propertyBody}>
+            {space.pokemon?.sprite && (
+              <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
+            )}
+            <Text style={styles.propertyName}>
+              {space.pokemon ? capitalize(space.pokemon.name) : '???'}
+            </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: overlayGap }}>
+              <PokeCoinPDF size={propertyCoinSize} />
+              <Text style={styles.propertyPrice}>{space.price}</Text>
             </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'item-bag') {
-    const sprite = getSpaceSprite('item-bag')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#BBDEFB' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>ITEM BAG</Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  if (space.type === 'professor-oak') {
-    const sprite = getSpaceSprite('professor-oak')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#C8E6C9' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>PROF. OAK</Text>
-          </View>
-        </View>
-      </View>
-    )
-  }
-
-  if (space.type === 'grunt-ambush') {
-    const sprite = getSpaceSprite('grunt-ambush')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>GRUNT AMBUSH</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
-              <Text style={styles.overlaySubtext}>Pay </Text>
-              <PokeCoinPDF size={6} />
-              <Text style={styles.overlaySubtext}>{space.amount}</Text>
+    if (space.type === 'gym') {
+      const gymImage = getGymImage(space.name)
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#E8E8E8' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {gymImage && (
+              <PDFImage src={gymImage} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>{space.name}</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: overlayGap, marginTop: overlayMargin }}>
+                <PokeCoinPDF size={overlayCoinSize} />
+                <Text style={styles.overlaySubtext}>{space.price}</Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'giovanni') {
-    const sprite = getSpaceSprite('giovanni')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>GIOVANNI</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
-              <Text style={styles.overlaySubtext}>Pay </Text>
-              <PokeCoinPDF size={6} />
-              <Text style={styles.overlaySubtext}>{space.amount}+</Text>
+    if (space.type === 'item-bag') {
+      const sprite = getSpaceSprite('item-bag')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#BBDEFB' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>ITEM BAG</Text>
             </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'go') {
-    const sprite = getSpaceSprite('go')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>GO</Text>
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2, marginTop: 1 }}>
-              <Text style={styles.overlaySubtext}>Collect </Text>
-              <PokeCoinPDF size={6} />
-              <Text style={styles.overlaySubtext}>200</Text>
+    if (space.type === 'professor-oak') {
+      const sprite = getSpaceSprite('professor-oak')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#C8E6C9' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>PROF. OAK</Text>
             </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'jail') {
-    const sprite = getSpaceSprite('jail')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#FFE0B2' }]}>
-        {/* Outer square - "Just Visiting" text at top-left (outer corner) */}
-        <View style={styles.outerSquareText}>
-          <Text style={styles.overlaySubtext}>Just Visiting</Text>
-        </View>
-        
-        {/* Inner square border - aligned to bottom-right (inner corner toward center) */}
-        <View style={styles.innerSquareBorder} />
-        
-        {/* Inner square content - image and "Team Rocket Hideout" */}
-        <View style={styles.innerSquareContent}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>TEAM ROCKET</Text>
-            <Text style={styles.overlaySubtext}>HIDEOUT</Text>
+    if (space.type === 'grunt-ambush') {
+      const sprite = getSpaceSprite('grunt-ambush')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>GRUNT AMBUSH</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: overlayGap, marginTop: overlayMargin }}>
+                <Text style={styles.overlaySubtext}>Pay </Text>
+                <PokeCoinPDF size={overlayCoinSize} />
+                <Text style={styles.overlaySubtext}>{space.amount}</Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'free-parking') {
-    const sprite = getSpaceSprite('free-parking')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#FFF9C4' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>FREE PARKING</Text>
+    if (space.type === 'giovanni') {
+      const sprite = getSpaceSprite('giovanni')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>GIOVANNI</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: overlayGap, marginTop: overlayMargin }}>
+                <Text style={styles.overlaySubtext}>Pay </Text>
+                <PokeCoinPDF size={overlayCoinSize} />
+                <Text style={styles.overlaySubtext}>{space.amount}+</Text>
+              </View>
+            </View>
           </View>
         </View>
-      </View>
-    )
-  }
+      )
+    }
 
-  if (space.type === 'go-to-jail') {
-    const sprite = getSpaceSprite('go-to-jail')
-    return (
-      <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
-        <View style={{ position: 'relative', width: '100%', height: '100%' }}>
-          {sprite && (
-            <PDFImage src={sprite} style={styles.cornerImage} />
-          )}
-          <View style={styles.textOverlay}>
-            <Text style={styles.overlayText}>GO TO HIDEOUT</Text>
+    if (space.type === 'go') {
+      const sprite = getSpaceSprite('go')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#FFCDD2' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>GO</Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: overlayGap, marginTop: overlayMargin }}>
+                <Text style={styles.overlaySubtext}>Collect </Text>
+                <PokeCoinPDF size={overlayCoinSize} />
+                <Text style={styles.overlaySubtext}>200</Text>
+              </View>
+            </View>
           </View>
         </View>
+      )
+    }
+
+    if (space.type === 'jail') {
+      const sprite = getSpaceSprite('jail')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#FFE0B2' }]}>
+          {/* Outer square - "Just Visiting" text at top-left (outer corner) */}
+          <View style={styles.outerSquareText}>
+            <Text style={styles.overlaySubtext}>Just Visiting</Text>
+          </View>
+          
+          {/* Inner square border - aligned to bottom-right (inner corner toward center) */}
+          <View style={styles.innerSquareBorder} />
+          
+          {/* Inner square content - image and "Team Rocket Hideout" */}
+          <View style={styles.innerSquareContent}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>TEAM ROCKET</Text>
+              <Text style={styles.overlaySubtext}>HIDEOUT</Text>
+            </View>
+          </View>
+        </View>
+      )
+    }
+
+    if (space.type === 'free-parking') {
+      const sprite = getSpaceSprite('free-parking')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#FFF9C4' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>FREE PARKING</Text>
+            </View>
+          </View>
+        </View>
+      )
+    }
+
+    if (space.type === 'go-to-jail') {
+      const sprite = getSpaceSprite('go-to-jail')
+      return (
+        <View style={[styles.cornerCell, { backgroundColor: '#E1BEE7' }]}>
+          <View style={{ position: 'relative', width: '100%', height: '100%' }}>
+            {sprite && (
+              <PDFImage src={sprite} style={styles.cornerImage} />
+            )}
+            <View style={styles.textOverlay}>
+              <Text style={styles.overlayText}>GO TO HIDEOUT</Text>
+            </View>
+          </View>
+        </View>
+      )
+    }
+
+    return (
+      <View style={[styles.cornerCell]}>
+        <Text style={styles.propertyName}>???</Text>
       </View>
     )
   }
-
-  return (
-    <View style={[styles.cornerCell]}>
-      <Text style={styles.propertyName}>???</Text>
-    </View>
-  )
-}
-
-export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTilePageProps) {
-  const tileX = tileCol * TILE_WIDTH
-  const tileY = tileRow * TILE_HEIGHT
-  const tileNumber = tileRow * TILE_COLS + tileCol + 1
 
   // Get Pokemon for collage
   const pokemon: Pokemon[] = spaces
@@ -593,8 +627,8 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
     const pos = getSpacePosition(index)
     const spaceRight = pos.x + pos.width
     const spaceBottom = pos.y + pos.height
-    const tileRight = tileX + TILE_WIDTH
-    const tileBottom = tileY + TILE_HEIGHT
+    const tileRight = tileX + tileWidth
+    const tileBottom = tileY + tileHeight
 
     if (pos.x < tileRight && spaceRight > tileX && pos.y < tileBottom && spaceBottom > tileY) {
       return { space, pos, index }
@@ -603,41 +637,90 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
   }).filter(Boolean) as { space: BoardSpace; pos: ReturnType<typeof getSpacePosition>; index: number }[]
 
   // Center area bounds
-  const centerStart = CORNER_SIZE
-  const centerEnd = BOARD_SIZE - CORNER_SIZE
-  const centerMidY = BOARD_SIZE / 2
+  const centerStart = cornerSize
+  const centerEnd = boardSizePoints - cornerSize
+  const centerMidY = (centerStart + centerEnd) / 2
 
   // Check what parts of center are visible
-  const showCenter = tileX < centerEnd && tileX + TILE_WIDTH > centerStart &&
-                     tileY < centerEnd && tileY + TILE_HEIGHT > centerStart
+  const showCenter = tileX < centerEnd && tileX + tileWidth > centerStart &&
+                     tileY < centerEnd && tileY + tileHeight > centerStart
 
-  // Only show rules on the bottom-left center tile (tile 5, row=2, col=0)
-  // which contains most of the bottom-white section
-  const showRules = tileRow === 2 && tileCol === 0
+  // Calculate rules container bounds (absolute position on board)
+  // Rules are in the bottom half of the center area
+  // Position rules starting from the middle of the center area (bottom half)
+  const rulesContainerLeft = centerStart + rulesOffsetX
+  const rulesContainerTop = centerMidY + rulesOffsetY // Start from middle of center area
+  const rulesContainerRight = rulesContainerLeft + rulesWidth
+  // Estimate height based on content (title + text lines + padding)
+  // More accurate height: title (16) + title margin (10) + 7 text lines (11 each + 5 margin) + bottom padding (20)
+  const estimatedRulesHeight = scale(16 + 10 + (11 + 5) * 7 + 20)
+  const rulesContainerBottom = rulesContainerTop + estimatedRulesHeight
+  
+  // Check if rules container overlaps with current tile
+  const rulesOverlapsTile = rulesContainerLeft < tileX + tileWidth && 
+                            rulesContainerRight > tileX &&
+                            rulesContainerTop < tileY + tileHeight &&
+                            rulesContainerBottom > tileY
+  
+  // Show rules on any bottom row tile (row=2) where it overlaps
+  // Fallback: always show on bottom-left tile (row=2, col=0) if center is visible
+  const showRules = tileRow === 2 && showCenter && (rulesOverlapsTile || (tileCol === 0))
+
+  // Calculate visible portion of rules container on this tile (if showing rules)
+  let visibleRulesLeft = 0
+  let visibleRulesRight = 0
+  let visibleRulesTop = 0
+  let visibleRulesBottom = 0
+  let visibleRulesWidth = 0
+  let visibleRulesHeight = 0
+  let visibleRulesLeftOffset = 0
+  let visibleRulesTopOffset = 0
+  
+  if (showRules) {
+    if (rulesOverlapsTile) {
+      // Normal case: calculate visible portion
+      visibleRulesLeft = Math.max(rulesContainerLeft, tileX)
+      visibleRulesRight = Math.min(rulesContainerRight, tileX + tileWidth)
+      visibleRulesTop = Math.max(rulesContainerTop, tileY)
+      visibleRulesBottom = Math.min(rulesContainerBottom, tileY + tileHeight)
+      visibleRulesWidth = Math.max(0, visibleRulesRight - visibleRulesLeft)
+      visibleRulesHeight = Math.max(0, visibleRulesBottom - visibleRulesTop)
+      visibleRulesLeftOffset = visibleRulesLeft - rulesContainerLeft
+      visibleRulesTopOffset = visibleRulesTop - rulesContainerTop
+    } else {
+      // Fallback case: show full rules container on bottom-left tile
+      // Position relative to tile
+      visibleRulesLeft = rulesContainerLeft - tileX
+      visibleRulesTop = rulesContainerTop - tileY
+      // Use full container dimensions, but clip to tile bounds
+      visibleRulesWidth = Math.min(rulesWidth, tileWidth - Math.max(0, visibleRulesLeft))
+      visibleRulesHeight = Math.min(estimatedRulesHeight, tileHeight - Math.max(0, visibleRulesTop))
+      visibleRulesLeftOffset = 0
+      visibleRulesTopOffset = 0
+    }
+  }
 
   // Only show title on top center tiles (row 0)
   const showTitle = tileRow === 0 && showCenter
 
   // Collage positions for Pokemon (in top half of center)
-  const collageRadius = (centerEnd - centerStart) / 2 - 50
-  const collageCenterX = BOARD_SIZE / 2
+  const collageRadius = (centerEnd - centerStart) / 2 - collageRadiusPadding
+  const collageCenterX = boardSizePoints / 2
   const collageCenterY = centerStart + (centerMidY - centerStart) * 0.55
   const collagePositions = getCollagePositions(pokemon.length, collageCenterX, collageCenterY, collageRadius)
-
-  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
   return (
     <Page
       size={paperSize.toUpperCase() as 'LETTER' | 'A4'}
       orientation="landscape"
-      style={styles.page}
+      style={[styles.page, { paddingHorizontal, paddingVertical: basePadding }]}
     >
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 3 }}>
-        <Text style={{ fontSize: 9, fontWeight: 'bold' }}>
-          Poke-Poly Board - Tile {tileNumber}/6
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: headerMarginBottom }}>
+        <Text style={{ fontSize: headerTitleFont, fontWeight: 'bold' }}>
+          Poke-Poly Board - Tile {tileNumber}/9
         </Text>
-        <Text style={{ fontSize: 6, color: '#666' }}>
-          Align edges & tape together • Final size: 20" × 20"
+        <Text style={{ fontSize: headerSubtitleFont, color: '#666' }}>
+          Align edges & tape together • Final size: {boardSizeIn}" × {boardSizeIn}"
         </Text>
       </View>
 
@@ -652,8 +735,8 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                 {
                   left: Math.max(0, centerStart - tileX),
                   top: Math.max(0, centerStart - tileY),
-                  width: Math.min(TILE_WIDTH, centerEnd - tileX) - Math.max(0, centerStart - tileX),
-                  height: Math.max(0, Math.min(centerMidY - tileY, TILE_HEIGHT) - Math.max(0, centerStart - tileY)),
+                  width: Math.min(tileWidth, centerEnd - tileX) - Math.max(0, centerStart - tileX),
+                  height: Math.max(0, Math.min(centerMidY - tileY, tileHeight) - Math.max(0, centerStart - tileY)),
                 },
               ]}
             />
@@ -665,41 +748,41 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                 {
                   left: Math.max(0, centerStart - tileX),
                   top: Math.max(0, centerMidY - tileY),
-                  width: Math.min(TILE_WIDTH, centerEnd - tileX) - Math.max(0, centerStart - tileX),
-                  height: Math.max(0, Math.min(centerEnd - tileY, TILE_HEIGHT) - Math.max(0, centerMidY - tileY)),
+                  width: Math.min(tileWidth, centerEnd - tileX) - Math.max(0, centerStart - tileX),
+                  height: Math.max(0, Math.min(centerEnd - tileY, tileHeight) - Math.max(0, centerMidY - tileY)),
                 },
               ]}
             />
 
             {/* Center band */}
-            {tileY < centerMidY + 14 && tileY + TILE_HEIGHT > centerMidY - 14 && (
+            {tileY < centerMidY + centerBandHalfHeight && tileY + tileHeight > centerMidY - centerBandHalfHeight && (
               <View
                 style={[
                   styles.pokeballBand,
                   {
                     left: Math.max(0, centerStart - tileX),
-                    top: Math.max(0, centerMidY - 14 - tileY),
-                    width: Math.min(TILE_WIDTH, centerEnd - tileX) - Math.max(0, centerStart - tileX),
+                    top: Math.max(0, centerMidY - centerBandHalfHeight - tileY),
+                    width: Math.min(tileWidth, centerEnd - tileX) - Math.max(0, centerStart - tileX),
                   },
                 ]}
               />
             )}
 
             {/* Center button */}
-            {tileX < BOARD_SIZE / 2 + 40 && tileX + TILE_WIDTH > BOARD_SIZE / 2 - 40 &&
-             tileY < centerMidY + 40 && tileY + TILE_HEIGHT > centerMidY - 40 && (
+            {tileX < boardSizePoints / 2 + centerButtonRadius && tileX + tileWidth > boardSizePoints / 2 - centerButtonRadius &&
+             tileY < centerMidY + centerButtonRadius && tileY + tileHeight > centerMidY - centerButtonRadius && (
               <View
                 style={[
                   styles.pokeballButton,
                   {
-                    left: BOARD_SIZE / 2 - 36 - tileX,
-                    top: centerMidY - 36 - tileY,
-                    width: 72,
-                    height: 72,
+                    left: boardSizePoints / 2 - centerButtonOffset - tileX,
+                    top: centerMidY - centerButtonOffset - tileY,
+                    width: centerButtonSize,
+                    height: centerButtonSize,
                   },
                 ]}
               >
-                <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: '#D1D5DB' }} />
+                <View style={{ width: centerButtonInnerSize, height: centerButtonInnerSize, borderRadius: centerButtonInnerRadius, backgroundColor: '#D1D5DB' }} />
               </View>
             )}
 
@@ -710,12 +793,12 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                   styles.centerTitle,
                   {
                     left: Math.max(0, centerStart - tileX),
-                    top: Math.max(10, centerStart + 20 - tileY),
-                    width: Math.min(TILE_WIDTH, centerEnd - tileX) - Math.max(0, centerStart - tileX),
+                    top: Math.max(scale(10), centerStart + scale(20) - tileY),
+                    width: Math.min(tileWidth, centerEnd - tileX) - Math.max(0, centerStart - tileX),
                   },
                 ]}
               >
-                MASTER LEAGUE
+                POKE-POLY
               </Text>
             )}
 
@@ -724,13 +807,13 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
               const pos = collagePositions[idx]
               if (!pos) return null
 
-              const halfSprite = COLLAGE_SPRITE_SIZE / 2
+              const halfSprite = collageSpriteSize / 2
               const spriteX = pos.x - halfSprite - tileX
               const spriteY = pos.y - halfSprite - tileY
 
               // Only render if visible in this tile
-              if (spriteX < -COLLAGE_SPRITE_SIZE || spriteX > TILE_WIDTH ||
-                  spriteY < -COLLAGE_SPRITE_SIZE || spriteY > TILE_HEIGHT) {
+              if (spriteX < -collageSpriteSize || spriteX > tileWidth ||
+                  spriteY < -collageSpriteSize || spriteY > tileHeight) {
                 return null
               }
 
@@ -741,7 +824,7 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
                     position: 'absolute',
                     left: spriteX,
                     top: spriteY,
-                    width: COLLAGE_SPRITE_SIZE,
+                    width: collageSpriteSize,
                     alignItems: 'center',
                   }}
                 >
@@ -751,90 +834,105 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
               )
             })}
 
-            {/* Quick Rules - only on bottom-left tile */}
+            {/* Quick Rules - split across bottom tiles (row=2) */}
             {showRules && (
               <View
                 style={[
                   styles.rulesContainer,
                   {
-                    left: Math.max(30, centerStart + 60 - tileX),
-                    top: Math.max(20, centerMidY + 35 - tileY),
-                    width: Math.min(600, centerEnd - centerStart - 120),
+                    left: visibleRulesLeft - tileX,
+                    top: visibleRulesTop - tileY,
+                    width: visibleRulesWidth,
+                    height: visibleRulesHeight,
+                    overflow: 'hidden',
                   },
                 ]}
               >
-                {/* Left card placeholder */}
-                <View style={styles.cardPlaceholder}>
-                  <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
-                </View>
-                
-                {/* Center rules text */}
-                <View style={{ flex: 1, alignItems: 'center' }}>
-                  <Text style={styles.rulesTitle}>QUICK RULES</Text>
-                  <Text style={styles.rulesText}>
-                  <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Setup:</Text> Each player starts with{' '}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
-                      <PokeCoinPDF size={6} />
-                      <Text>1500</Text>
-                    </View>{' '}
-                    on GO.
+                {/* Offset the content to show the correct portion */}
+                <View
+                  style={{
+                    position: 'absolute',
+                    left: -visibleRulesLeftOffset,
+                    top: -visibleRulesTopOffset,
+                    width: rulesWidth,
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    gap: scale(20),
+                  }}
+                >
+                  {/* Left card placeholder */}
+                  <View style={styles.cardPlaceholder}>
+                    <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                  </View>
+                  
+                  {/* Center rules text */}
+                  <View style={{ flex: 1, alignItems: 'center' }}>
+                    <Text style={styles.rulesTitle}>QUICK RULES</Text>
+                    <Text style={styles.rulesText}>
+                    <Text style={styles.rulesText}>
+                      <Text style={styles.rulesBold}>Setup:</Text> Each player starts with{' '}
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
+                        <PokeCoinPDF size={rulesCoinSize} />
+                        <Text>1500</Text>
+                      </View>{' '}
+                      on GO.
+                    </Text>
+                    <Text style={styles.rulesBold}> Play:</Text> Roll dice, move clockwise.
                   </Text>
-                  <Text style={styles.rulesBold}> Play:</Text> Roll dice, move clockwise.
-                </Text>
-                <Text style={styles.rulesText}>
-                  <Text style={styles.rulesBold}>Buy:</Text> Land on unowned property? Buy it!
-                  <Text style={styles.rulesBold}> Rent:</Text> Others land on yours? Collect rent!
-                </Text>
-                <Text style={styles.rulesText}>
-                  <Text style={styles.rulesBold}>Build:</Text> Own all of a color → add Berries (houses). 4 Berries = 1 Evolution Stone (hotel).
-                </Text>
-                <Text style={styles.rulesText}>
                   <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Jail:</Text> Pay{' '}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
-                      <PokeCoinPDF size={6} />
-                      <Text>50</Text>
-                    </View>{' '}
-                    or roll doubles.{' '}
-                    <Text style={styles.rulesBold}>Gyms:</Text> Rent ={' '}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
-                      <PokeCoinPDF size={6} />
-                      <Text>25</Text>
-                    </View>{' '}
-                    × gyms owned.
+                    <Text style={styles.rulesBold}>Buy:</Text> Land on unowned property? Buy it!
+                    <Text style={styles.rulesBold}> Rent:</Text> Others land on yours? Collect rent!
                   </Text>
-                  <Text style={styles.rulesBold}> Free Parking:</Text> Collect the pot!
-                </Text>
-                <Text style={styles.rulesText}>
-                  <Text style={styles.rulesBold}>Win:</Text> Last player with money wins!
                   <Text style={styles.rulesText}>
-                    <Text style={styles.rulesBold}>Start </Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}>
-                      <PokeCoinPDF size={6} />
-                      <Text>1500</Text>
-                    </View>
-                    <Text>: </Text>
-                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>500</Text></View>
-                    {' • '}
-                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>100</Text></View>
-                    {' • '}
-                    2×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>50</Text></View>
-                    {' • '}
-                    6×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>20</Text></View>
-                    {' • '}
-                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>10</Text></View>
-                    {' • '}
-                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>5</Text></View>
-                    {' • '}
-                    5×<View style={{ flexDirection: 'row', alignItems: 'center', display: 'inline-flex', gap: 1 }}><PokeCoinPDF size={6} /><Text>1</Text></View>
+                    <Text style={styles.rulesBold}>Build:</Text> Own all of a color → add Gym Badges (houses). 4 Gym Badges = 1 League Badge (hotel).
                   </Text>
-                </Text>
-                </View>
-                
-                {/* Right card placeholder */}
-                <View style={styles.cardPlaceholder}>
-                  <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                  <Text style={styles.rulesText}>
+                    <Text style={styles.rulesText}>
+                      <Text style={styles.rulesBold}>Jail:</Text> Pay{' '}
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
+                        <PokeCoinPDF size={rulesCoinSize} />
+                        <Text>50</Text>
+                      </View>{' '}
+                      or roll doubles.{' '}
+                      <Text style={styles.rulesBold}>Gyms:</Text> Rent ={' '}
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
+                        <PokeCoinPDF size={rulesCoinSize} />
+                        <Text>25</Text>
+                      </View>{' '}
+                      × gyms owned.
+                    </Text>
+                    <Text style={styles.rulesBold}> Free Parking:</Text> Collect the pot!
+                  </Text>
+                  <Text style={styles.rulesText}>
+                    <Text style={styles.rulesBold}>Win:</Text> Last player with money wins!
+                    <Text style={styles.rulesText}>
+                      <Text style={styles.rulesBold}>Start </Text>
+                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}>
+                        <PokeCoinPDF size={rulesCoinSize} />
+                        <Text>1500</Text>
+                      </View>
+                      <Text>: </Text>
+                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>500</Text></View>
+                      {' • '}
+                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>100</Text></View>
+                      {' • '}
+                      2×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>50</Text></View>
+                      {' • '}
+                      6×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>20</Text></View>
+                      {' • '}
+                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>10</Text></View>
+                      {' • '}
+                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>5</Text></View>
+                      {' • '}
+                      5×<View style={{ flexDirection: 'row', alignItems: 'center', gap: rulesInlineGap }}><PokeCoinPDF size={rulesCoinSize} /><Text>1</Text></View>
+                    </Text>
+                  </Text>
+                  </View>
+                  
+                  {/* Right card placeholder */}
+                  <View style={styles.cardPlaceholder}>
+                    <Text style={styles.cardPlaceholderText}>Card{'\n'}Place</Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -861,22 +959,22 @@ export function BoardTilePage({ spaces, paperSize, tileRow, tileCol }: BoardTile
 
         {/* Cut/alignment lines */}
         {tileCol > 0 && (
-          <View style={[styles.cutLine, { left: 0, top: 0, bottom: 0, borderLeftWidth: 1 }]} />
+          <View style={[styles.cutLine, { left: 0, top: 0, bottom: 0, borderLeftWidth: tileLabelCutLineWidth }]} />
         )}
         {tileCol < TILE_COLS - 1 && (
-          <View style={[styles.cutLine, { right: 0, top: 0, bottom: 0, borderRightWidth: 1 }]} />
+          <View style={[styles.cutLine, { right: 0, top: 0, bottom: 0, borderRightWidth: tileLabelCutLineWidth }]} />
         )}
         {tileRow > 0 && (
-          <View style={[styles.cutLine, { left: 0, right: 0, top: 0, borderTopWidth: 1 }]} />
+          <View style={[styles.cutLine, { left: 0, right: 0, top: 0, borderTopWidth: tileLabelCutLineWidth }]} />
         )}
         {tileRow < TILE_ROWS - 1 && (
-          <View style={[styles.cutLine, { left: 0, right: 0, bottom: 0, borderBottomWidth: 1 }]} />
+          <View style={[styles.cutLine, { left: 0, right: 0, bottom: 0, borderBottomWidth: tileLabelCutLineWidth }]} />
         )}
 
         <Text style={styles.tileLabel}>Tile {tileNumber}</Text>
       </View>
 
-      <Text style={{ fontSize: 5, marginTop: 3, color: '#666', textAlign: 'center' }}>
+      <Text style={{ fontSize: footerFontSize, marginTop: footerMarginTop, color: '#666', textAlign: 'center' }}>
         Print at 100% scale. Cut along dashed lines. Tape edges together.
       </Text>
     </Page>

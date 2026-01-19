@@ -1,6 +1,9 @@
-import { Page, View, Text, StyleSheet } from '@react-pdf/renderer'
+import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
 import type { PaperSize } from '@/types'
 import { baseStyles, colors } from './styles'
+
+const GYM_BADGE_IMAGE = '/images/gym-badge.png'
+const LEAGUE_BADGE_IMAGE = '/images/league-badge.png'
 
 const styles = StyleSheet.create({
   section: {
@@ -50,21 +53,17 @@ const styles = StyleSheet.create({
   houseGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 4,
+    gap: 2,
   },
-  house: {
-    width: 15,
-    height: 20,
-    backgroundColor: '#4CAF50',
-    borderWidth: 1,
-    borderColor: colors.black,
+  badgeImage: {
+    width: 40,
+    height: 40,
+    objectFit: 'contain',
   },
-  hotel: {
-    width: 20,
-    height: 25,
-    backgroundColor: '#F44336',
-    borderWidth: 1,
-    borderColor: colors.black,
+  leagueBadgeImage: {
+    width: 48,
+    height: 48,
+    objectFit: 'contain',
   },
 })
 
@@ -100,20 +99,20 @@ export function TokensRulesPage({ paperSize }: TokensRulesPageProps) {
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>BERRIES (Houses) - 32 pieces</Text>
+            <Text style={styles.sectionTitle}>Gym Badges (Houses) - 64 pieces</Text>
             <View style={styles.houseGrid}>
-              {Array(16).fill(0).map((_, i) => (
-                <View key={i} style={styles.house} />
+              {Array(64).fill(0).map((_, i) => (
+                <PDFImage key={i} src={GYM_BADGE_IMAGE} style={styles.badgeImage} />
               ))}
             </View>
-            <Text style={[styles.rulesText, { marginTop: 4 }]}>Cut and fold for 3D effect</Text>
+            <Text style={[styles.rulesText, { marginTop: 4 }]}>Cut out badges</Text>
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>EVOLUTION STONES (Hotels) - 12 pieces</Text>
+            <Text style={styles.sectionTitle}>League Badges (Hotels) - 24 pieces</Text>
             <View style={styles.houseGrid}>
-              {Array(12).fill(0).map((_, i) => (
-                <View key={i} style={styles.hotel} />
+              {Array(24).fill(0).map((_, i) => (
+                <PDFImage key={i} src={LEAGUE_BADGE_IMAGE} style={styles.leagueBadgeImage} />
               ))}
             </View>
           </View>
@@ -138,9 +137,9 @@ export function TokensRulesPage({ paperSize }: TokensRulesPageProps) {
               Buy unowned Pokemon properties you land on. Collect rent when others land on yours.
             </Text>
 
-            <Text style={styles.rulesBold}>Berries & Evolution Stones:</Text>
+            <Text style={styles.rulesBold}>Gym Badges & League Badges:</Text>
             <Text style={styles.rulesText}>
-              Own all Pokemon properties of a color to build. 4 Berries = 1 Evolution Stone.
+              Own all Pokemon properties of a color to build. 4 Gym Badges = 1 League Badge.
             </Text>
 
             <Text style={styles.rulesBold}>Team Rocket Hideout (Jail):</Text>

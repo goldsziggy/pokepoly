@@ -1,7 +1,6 @@
 import { Document } from '@react-pdf/renderer'
 import type { PaperSize, BoardSpace, PropertySpace, GymSpace, CardSize } from '@/types'
-import { CARD_SIZE_MULTIPLIERS } from '@/types/board'
-import { PropertyDeedsPage } from './PropertyDeedsPage'
+import { PropertyDeedsPage, getDeedItemsPerPage } from './PropertyDeedsPage'
 
 interface DeedsOnlyDocumentProps {
   spaces: BoardSpace[]
@@ -19,9 +18,7 @@ export function DeedsOnlyDocument({ spaces, paperSize, cardSize }: DeedsOnlyDocu
   )
 
   const totalItems = properties.length + gyms.length
-  const multiplier = CARD_SIZE_MULTIPLIERS[cardSize]
-  const baseItemsPerPage = 10
-  const itemsPerPage = Math.max(1, Math.floor(baseItemsPerPage / multiplier))
+  const itemsPerPage = getDeedItemsPerPage(paperSize, cardSize)
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   return (

@@ -5,16 +5,17 @@ import { MoneyPages } from './MoneyPages'
 interface MoneyOnlyDocumentProps {
   paperSize: PaperSize
   cardSize: CardSize
+  players: number
 }
 
-export function MoneyOnlyDocument({ paperSize, cardSize }: MoneyOnlyDocumentProps) {
+export function MoneyOnlyDocument({ paperSize, cardSize, players }: MoneyOnlyDocumentProps) {
   return (
     <Document
       title="Poke-Poly: The Master League - Money"
       author="Poke-Poly Generator"
       subject="Printable Poke Coin Money Sheets"
     >
-      <MoneyPages paperSize={paperSize} cardSize={cardSize} />
+      <MoneyPages paperSize={paperSize} cardSize={cardSize} players={players} />
     </Document>
   )
 }

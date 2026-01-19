@@ -1,6 +1,6 @@
 import seedrandom from 'seedrandom'
 import type { Pokemon, Region } from '@/types'
-import { TIER_COLORS, type BSTTier, type BoardColor } from '@/types/board'
+import { type BSTTier, type BoardColor } from '@/types/board'
 import { getEvolutionFamily } from '@/data/evolutionFamilies'
 import { getPrimaryType } from '@/lib/typeIcons'
 
@@ -89,10 +89,35 @@ export function randomizeBoard(
 ): BoardAssignment {
   const rng = seedrandom(config.seed)
 
+  // Log input state
+  console.log('[Randomizer] Input state:', {
+    availablePokemonCount: availablePokemon.length,
+    selectedRegions: config.regions,
+    availablePokemonRegions: [...new Set(availablePokemon.map(p => p.region))],
+    regionCounts: Object.fromEntries(
+      [...new Set(availablePokemon.map(p => p.region))].map(region => [
+        region,
+        availablePokemon.filter(p => p.region === region).length
+      ])
+    ),
+  })
+
   // Filter by selected regions
   const filteredPokemon = availablePokemon.filter(p =>
     config.regions.length === 0 || config.regions.includes(p.region)
   )
+
+  console.log('[Randomizer] After region filter:', {
+    filteredCount: filteredPokemon.length,
+    filteredRegions: [...new Set(filteredPokemon.map(p => p.region))],
+    filteredRegionCounts: Object.fromEntries(
+      [...new Set(filteredPokemon.map(p => p.region))].map(region => [
+        region,
+        filteredPokemon.filter(p => p.region === region).length
+      ])
+    ),
+    sampleIds: filteredPokemon.slice(0, 5).map(p => ({ id: p.id, name: p.name, region: p.region })),
+  })
 
   // Create slots based on board layout
   const properties: BoardSlot[] = []
@@ -121,10 +146,42 @@ export function randomizeBoard(
     }
   }
 
+  // Track types already assigned to colors for diversity
+  const usedTypes = new Set<string>()
+  
+  // Count favorites by type to handle cases where we have too many favorites of one type
+  // This helps us determine if we need to allow type reuse
+  const favoritesByType = new Map<string, Pokemon[]>()
+  for (const fav of config.favorites) {
+    const primaryType = getPrimaryType(fav.types)
+    if (primaryType) {
+      if (!favoritesByType.has(primaryType)) {
+        favoritesByType.set(primaryType, [])
+      }
+      favoritesByType.get(primaryType)!.push(fav)
+    }
+  }
+  
+  // Pre-calculate which types might need to be reused due to too many favorites
+  // A type needs reuse if it has more favorites than the largest color group can hold
+  const maxColorGroupSize = Math.max(...BOARD_LAYOUT.map(l => l.count))
+  const typesRequiringReuse = new Set<string>()
+  for (const [type, favs] of favoritesByType) {
+    if (favs.length > maxColorGroupSize) {
+      typesRequiringReuse.add(type)
+    }
+  }
+
   // Fill each color group
   for (const { color, count } of BOARD_LAYOUT) {
     // Get available Pokémon (excluding already used)
     const available = filteredPokemon.filter(p => !usedFavoriteIds.has(p.id))
+    
+    console.log(`[Randomizer] Processing color group "${color}" (need ${count}):`, {
+      availableCount: available.length,
+      availableRegions: [...new Set(available.map(p => p.region))],
+      usedFavoriteIdsCount: usedFavoriteIds.size,
+    })
 
     // Get favorites for this color
     const favoritesForThisColor = favoritesByColor.get(color) || []
@@ -139,9 +196,18 @@ export function randomizeBoard(
     if (config.typeColorMapping && config.typeColorMapping[color] !== null) {
       // Use explicit type-to-color mapping (only if not null)
       targetType = config.typeColorMapping[color]!
+      usedTypes.add(targetType)
     } else if (favoritesToUse.length > 0) {
       // Use the primary type of the first favorite
       targetType = getPrimaryType(favoritesToUse[0].types)
+      if (targetType) {
+        // Only mark as used if this type doesn't require reuse
+        // (i.e., if we don't have too many favorites of this type)
+        if (!typesRequiringReuse.has(targetType)) {
+          usedTypes.add(targetType)
+        }
+        // If it requires reuse, we allow it to be used in multiple colors
+      }
     } else {
       // If no favorites, we'll determine type from available Pokemon
       // Count types in available Pokemon
@@ -152,18 +218,79 @@ export function randomizeBoard(
           typeCounts.set(primaryType, (typeCounts.get(primaryType) || 0) + 1)
         }
       }
-      // Find the type with the most Pokemon that can fill this color group
-      let maxCount = 0
-      const slotsNeeded = count
+      
+      // Prioritize types that haven't been used yet (for diversity)
+      const unusedTypes: Array<[string, number]> = []
+      const usedTypesList: Array<[string, number]> = []
+      
       for (const [type, typeCount] of typeCounts) {
+        if (usedTypes.has(type)) {
+          usedTypesList.push([type, typeCount])
+        } else {
+          unusedTypes.push([type, typeCount])
+        }
+      }
+      
+      const slotsNeeded = count
+      
+      // First, try to find an unused type that can fill this color group
+      let maxCount = 0
+      for (const [type, typeCount] of unusedTypes) {
         if (typeCount >= slotsNeeded && typeCount > maxCount) {
           maxCount = typeCount
           targetType = type
         }
       }
-      // If no type has enough, pick the most common type
-      if (!targetType && typeCounts.size > 0) {
-        targetType = Array.from(typeCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+      
+      // If no unused type has enough, check if any unused type exists (even if not enough)
+      if (!targetType && unusedTypes.length > 0) {
+        // Sort by count descending and pick the most common unused type
+        unusedTypes.sort((a, b) => b[1] - a[1])
+        targetType = unusedTypes[0][0]
+      }
+      
+      // If still no type (all types used or not enough Pokemon), allow reusing types
+      // but only if necessary (e.g., too many favorites of one type, or we've exhausted unique types)
+      if (!targetType) {
+        // First, check if any type requiring reuse is available and not yet used in this iteration
+        // (types requiring reuse can be used multiple times)
+        for (const [type, typeCount] of usedTypesList) {
+          if (typesRequiringReuse.has(type) && typeCount >= slotsNeeded) {
+            targetType = type
+            // Don't mark as used since it can be reused
+            break
+          }
+        }
+        
+        // If still no type, check unused types that require reuse
+        for (const [type, typeCount] of unusedTypes) {
+          if (typesRequiringReuse.has(type) && typeCount >= slotsNeeded) {
+            targetType = type
+            // Don't mark as used since it can be reused
+            break
+          }
+        }
+        
+        // If we've exhausted all unique types and don't have types requiring reuse,
+        // we need to reuse a type. Prefer types that require reuse, otherwise pick the most common.
+        if (!targetType) {
+          if (usedTypesList.length > 0) {
+            // Sort by count descending
+            usedTypesList.sort((a, b) => b[1] - a[1])
+            targetType = usedTypesList[0][0]
+            // Mark as used since we're reusing it (but it's okay, we've exhausted unique types)
+            usedTypes.add(targetType)
+          } else if (typeCounts.size > 0) {
+            // Last resort: pick the most common type overall
+            targetType = Array.from(typeCounts.entries()).sort((a, b) => b[1] - a[1])[0][0]
+            usedTypes.add(targetType)
+          }
+        }
+      } else {
+        // Mark type as used if we selected one (unless it requires reuse)
+        if (targetType && !typesRequiringReuse.has(targetType)) {
+          usedTypes.add(targetType)
+        }
       }
     }
 
@@ -171,6 +298,18 @@ export function randomizeBoard(
     const typeFilteredAvailable = targetType
       ? available.filter(p => getPrimaryType(p.types) === targetType)
       : available
+
+    console.log(`[Randomizer] Color "${color}" type filtering:`, {
+      targetType,
+      typeFilteredCount: typeFilteredAvailable.length,
+      typeFilteredRegions: [...new Set(typeFilteredAvailable.map(p => p.region))],
+      typeFilteredRegionCounts: Object.fromEntries(
+        [...new Set(typeFilteredAvailable.map(p => p.region))].map(region => [
+          region,
+          typeFilteredAvailable.filter(p => p.region === region).length
+        ])
+      ),
+    })
 
     // Fill remaining slots, preferring evolution family members of favorites
     const remaining = count - favoritesToUse.length
@@ -265,7 +404,6 @@ export function randomizeBoard(
     const selectedTypes = new Set(selectedPokemon.map(p => getPrimaryType(p.types)).filter(Boolean))
     if (selectedTypes.size > 1 && targetType) {
       // If we have mixed types, prioritize the target type
-      const targetTypePokemon = selectedPokemon.filter(p => getPrimaryType(p.types) === targetType)
       const otherTypePokemon = selectedPokemon.filter(p => getPrimaryType(p.types) !== targetType)
       
       // Try to replace other types with target type if possible
@@ -291,13 +429,33 @@ export function randomizeBoard(
     // Group the selected Pokemon by evolution family for adjacent placement
     const groupedByFamily = groupByEvolutionFamily(selectedPokemon, rng)
 
+    // Sort by BST so higher BST Pokemon go to higher-priced property slots
+    // Higher index = higher price, so sort ascending by BST
+    const sortedByBST = [...groupedByFamily].sort((a, b) => (a.bst || 0) - (b.bst || 0))
+
     for (let i = 0; i < count; i++) {
       properties.push({
         color,
-        pokemon: groupedByFamily[i],
+        pokemon: sortedByBST[i],
       })
     }
+
+    console.log(`[Randomizer] Color "${color}" final selection:`, {
+      selectedCount: sortedByBST.length,
+      selectedPokemon: sortedByBST.map(p => ({ id: p.id, name: p.name, region: p.region })),
+    })
   }
+
+  console.log('[Randomizer] Final board assignment:', {
+    totalProperties: properties.length,
+    propertiesByRegion: Object.fromEntries(
+      [...new Set(properties.map(p => p.pokemon?.region).filter(Boolean))].map(region => [
+        region,
+        properties.filter(p => p.pokemon?.region === region).length
+      ])
+    ),
+    allSelectedRegions: [...new Set(properties.map(p => p.pokemon?.region).filter(Boolean))],
+  })
 
   return {
     properties,

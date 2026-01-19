@@ -23,9 +23,9 @@ export const PROFESSOR_OAK_CARDS: ProfessorOakCard[] = [
   },
   {
     id: 3,
-    name: 'Evolution Stone',
+    name: 'League Badge',
     description: 'Your Pokémon is ready to evolve!',
-    effect: 'Immediately upgrade 4 Berries into an Evolution Stone (Hotel) on one property.',
+    effect: 'Immediately upgrade 4 Gym Badges into an League Badge (Hotel) on one property.',
   },
   {
     id: 4,
@@ -67,7 +67,7 @@ export const PROFESSOR_OAK_CARDS: ProfessorOakCard[] = [
     id: 10,
     name: 'Daycare Service',
     description: 'Leave your Pokémon at daycare.',
-    effect: 'Pay ₽25 per Berry and ₽100 per Evolution Stone you own.',
+    effect: 'Pay ₽25 per Gym Badge and ₽100 per League Badge you own.',
   },
   {
     id: 11,
@@ -91,7 +91,7 @@ export const PROFESSOR_OAK_CARDS: ProfessorOakCard[] = [
     id: 14,
     name: 'Move Tutor',
     description: 'Learn a rare move.',
-    effect: 'Pay ₽75 to upgrade one property (add 1 Berry for free).',
+    effect: 'Pay ₽75 to upgrade one property (add 1 Gym Badge for free).',
   },
   {
     id: 15,

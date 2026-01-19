@@ -1,37 +1,43 @@
 import { Page, View, Text, StyleSheet } from '@react-pdf/renderer'
 import type { PaperSize, CardSize } from '@/types'
 import { CARD_SIZE_MULTIPLIERS, PAPER_DIMENSIONS } from '@/types/board'
-import { baseStyles, moneyStyles, colors } from './styles'
+import { baseStyles, colors } from './styles'
 import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 
 const DENOMINATIONS = [
-  { value: 500, color: '#FF9800', textColor: colors.white },
-  { value: 100, color: '#9C27B0', textColor: colors.white },
-  { value: 50, color: '#2196F3', textColor: colors.white },
-  { value: 20, color: '#4CAF50', textColor: colors.white },
-  { value: 10, color: '#FFEB3B', textColor: colors.black },
-  { value: 5, color: '#E91E63', textColor: colors.white },
-  { value: 1, color: '#FFFFFF', textColor: colors.black },
+  { value: 500, color: '#FF9800', textColor: colors.white, count: 2 },
+  { value: 100, color: '#9C27B0', textColor: colors.white, count: 2 },
+  { value: 50, color: '#2196F3', textColor: colors.white, count: 2 },
+  { value: 20, color: '#4CAF50', textColor: colors.white, count: 6 },
+  { value: 10, color: '#FFEB3B', textColor: colors.black, count: 5 },
+  { value: 5, color: '#E91E63', textColor: colors.white, count: 5 },
+  { value: 1, color: '#FFFFFF', textColor: colors.black, count: 5 },
 ]
+
+const BILL_BASE_WIDTH = 180
+const BILL_BASE_HEIGHT = 78
+const LEGACY_BILL_HEIGHT = 70
+const BILL_CONTENT_SCALE_RATIO = BILL_BASE_HEIGHT / LEGACY_BILL_HEIGHT
+const BASE_PADDING = 8
+const BASE_MARGIN = 4
+const BASE_TITLE_FONT = 5
+const BASE_VALUE_FONT = 16
+const BASE_LABEL_FONT = 5
+const BASE_CORNER_FONT = 6
+const BASE_COIN_SIZE = 20
+const BASE_CORNER_COIN_SIZE = 5
+const SAFETY_BUFFER = 4
 
 interface MoneyPageProps {
   paperSize: PaperSize
   cardSize: CardSize
   pageNumber: number
+  players: number
 }
 
 function getMoneyStyles(cardSize: CardSize) {
-  const multiplier = CARD_SIZE_MULTIPLIERS[cardSize]
-  const baseWidth = 180
-  const baseHeight = 70
-  const basePadding = 8
-  const baseMargin = 4
-  const baseTitleFont = 5
-  const baseValueFont = 16
-  const baseLabelFont = 5
-  const baseCornerFont = 6
-  const baseCoinSize = 20
-  const baseCornerCoinSize = 5
+  const sizeScale = CARD_SIZE_MULTIPLIERS[cardSize]
+  const contentScale = sizeScale * BILL_CONTENT_SCALE_RATIO
 
   return StyleSheet.create({
     grid: {
@@ -41,12 +47,12 @@ function getMoneyStyles(cardSize: CardSize) {
       alignContent: 'flex-start',
     },
     bill: {
-      width: baseWidth * multiplier,
-      height: baseHeight * multiplier,
+      width: BILL_BASE_WIDTH * sizeScale,
+      height: BILL_BASE_HEIGHT * sizeScale,
       borderWidth: 2,
       borderColor: colors.black,
-      margin: baseMargin * multiplier,
-      padding: basePadding * multiplier,
+      margin: BASE_MARGIN * contentScale,
+      padding: BASE_PADDING * contentScale,
       position: 'relative',
     },
     billInner: {
@@ -58,29 +64,26 @@ function getMoneyStyles(cardSize: CardSize) {
       justifyContent: 'center',
     },
     billTitle: {
-      fontSize: baseTitleFont * multiplier,
-      marginBottom: 2 * multiplier,
+      fontSize: BASE_TITLE_FONT * contentScale,
+      marginBottom: 2 * contentScale,
     },
     billValue: {
-      fontSize: baseValueFont * multiplier,
+      fontSize: BASE_VALUE_FONT * contentScale,
       fontWeight: 'bold',
     },
     billLabel: {
-      fontSize: baseLabelFont * multiplier,
-      marginTop: 2 * multiplier,
+      fontSize: BASE_LABEL_FONT * contentScale,
+      marginTop: 2 * contentScale,
     },
     cornerValue: {
       position: 'absolute',
-      fontSize: baseCornerFont * multiplier,
+      fontSize: BASE_CORNER_FONT * contentScale,
     },
-    coinSize: baseCoinSize * multiplier,
-    cornerCoinSize: baseCornerCoinSize * multiplier,
   })
 }
 
-function calculateItemsPerPage(
+export function getMoneyItemsPerPage(
   paperSize: PaperSize,
-  cardSize: CardSize,
   itemWidth: number,
   itemHeight: number,
   itemMargin: number
@@ -89,8 +92,8 @@ function calculateItemsPerPage(
   const pageWidth = PAPER_DIMENSIONS[paperSize].width
   const pagePadding = 36 * 2 // top + bottom
   const titleHeight = 40 // approximate title + subtitle height
-  const availableHeight = pageHeight - pagePadding - titleHeight
-  const availableWidth = pageWidth - pagePadding
+  const availableHeight = pageHeight - pagePadding - titleHeight - SAFETY_BUFFER
+  const availableWidth = pageWidth - pagePadding - SAFETY_BUFFER
 
   const itemTotalWidth = itemWidth + itemMargin * 2
   const itemTotalHeight = itemHeight + itemMargin * 2
@@ -101,36 +104,31 @@ function calculateItemsPerPage(
   return Math.max(1, itemsPerRow * rowsPerPage)
 }
 
-function getAllBills() {
+export function getMoneyBills(players: number) {
+  const normalizedPlayers = Number.isFinite(players) ? Math.max(1, Math.floor(players)) : 1
   const bills: Array<{ value: number; color: string; textColor: string }> = []
-  // Page 1: P500, P100, P50, P20 (3 of each)
-  DENOMINATIONS.slice(0, 4).forEach((denom) => {
-    for (let i = 0; i < 3; i++) {
-      bills.push(denom)
-    }
-  })
-  // Page 2: P10, P5, P1 (4 of each)
-  DENOMINATIONS.slice(4).forEach((denom) => {
-    for (let i = 0; i < 4; i++) {
+  DENOMINATIONS.forEach((denom) => {
+    const total = denom.count * normalizedPlayers
+    for (let i = 0; i < total; i++) {
       bills.push(denom)
     }
   })
   return bills
 }
 
-export function MoneyPage({ paperSize, cardSize, pageNumber }: MoneyPageProps) {
+export function MoneyPage({ paperSize, cardSize, pageNumber, players }: MoneyPageProps) {
   const styles = getMoneyStyles(cardSize)
-  const multiplier = CARD_SIZE_MULTIPLIERS[cardSize]
-  const baseWidth = 180
-  const baseHeight = 70
-  const baseMargin = 4
+  const sizeScale = CARD_SIZE_MULTIPLIERS[cardSize]
+  const contentScale = sizeScale * BILL_CONTENT_SCALE_RATIO
+  const coinSize = BASE_COIN_SIZE * contentScale
+  const cornerCoinSize = BASE_CORNER_COIN_SIZE * contentScale
 
-  const itemWidth = baseWidth * multiplier
-  const itemHeight = baseHeight * multiplier
-  const itemMargin = baseMargin * multiplier
+  const itemWidth = BILL_BASE_WIDTH * sizeScale
+  const itemHeight = BILL_BASE_HEIGHT * sizeScale
+  const itemMargin = BASE_MARGIN * contentScale
 
-  const allBills = getAllBills()
-  const itemsPerPage = calculateItemsPerPage(paperSize, cardSize, itemWidth, itemHeight, itemMargin)
+  const allBills = getMoneyBills(players)
+  const itemsPerPage = getMoneyItemsPerPage(paperSize, itemWidth, itemHeight, itemMargin)
   const startIndex = pageNumber * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, allBills.length)
   const pageBills = allBills.slice(startIndex, endIndex)
@@ -150,13 +148,14 @@ export function MoneyPage({ paperSize, cardSize, pageNumber }: MoneyPageProps) {
             key={`${startIndex + index}-${bill.value}`}
             style={[styles.bill, { backgroundColor: bill.color }]}
             break={false}
+            wrap={false}
           >
             <View style={styles.billInner}>
               <Text style={[styles.billTitle, { color: bill.textColor }]}>
                 POKE COIN
               </Text>
-              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 * multiplier }}>
-                <PokeCoinPDF size={styles.coinSize} />
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 * contentScale }}>
+                <PokeCoinPDF size={coinSize} />
                 <Text style={[styles.billValue, { color: bill.textColor }]}>
                   {bill.value}
                 </Text>
@@ -165,20 +164,20 @@ export function MoneyPage({ paperSize, cardSize, pageNumber }: MoneyPageProps) {
                 THE MASTER LEAGUE
               </Text>
             </View>
-            <View style={{ position: 'absolute', top: 4 * multiplier, left: 4 * multiplier, flexDirection: 'row', alignItems: 'center', gap: 1 * multiplier }}>
-              <PokeCoinPDF size={styles.cornerCoinSize} />
+            <View style={{ position: 'absolute', top: 4 * contentScale, left: 4 * contentScale, flexDirection: 'row', alignItems: 'center', gap: 1 * contentScale }}>
+              <PokeCoinPDF size={cornerCoinSize} />
               <Text style={[styles.cornerValue, { color: bill.textColor }]}>{bill.value}</Text>
             </View>
-            <View style={{ position: 'absolute', top: 4 * multiplier, right: 4 * multiplier, flexDirection: 'row', alignItems: 'center', gap: 1 * multiplier }}>
-              <PokeCoinPDF size={styles.cornerCoinSize} />
+            <View style={{ position: 'absolute', top: 4 * contentScale, right: 4 * contentScale, flexDirection: 'row', alignItems: 'center', gap: 1 * contentScale }}>
+              <PokeCoinPDF size={cornerCoinSize} />
               <Text style={[styles.cornerValue, { color: bill.textColor }]}>{bill.value}</Text>
             </View>
-            <View style={{ position: 'absolute', bottom: 4 * multiplier, left: 4 * multiplier, flexDirection: 'row', alignItems: 'center', gap: 1 * multiplier }}>
-              <PokeCoinPDF size={styles.cornerCoinSize} />
+            <View style={{ position: 'absolute', bottom: 4 * contentScale, left: 4 * contentScale, flexDirection: 'row', alignItems: 'center', gap: 1 * contentScale }}>
+              <PokeCoinPDF size={cornerCoinSize} />
               <Text style={[styles.cornerValue, { color: bill.textColor }]}>{bill.value}</Text>
             </View>
-            <View style={{ position: 'absolute', bottom: 4 * multiplier, right: 4 * multiplier, flexDirection: 'row', alignItems: 'center', gap: 1 * multiplier }}>
-              <PokeCoinPDF size={styles.cornerCoinSize} />
+            <View style={{ position: 'absolute', bottom: 4 * contentScale, right: 4 * contentScale, flexDirection: 'row', alignItems: 'center', gap: 1 * contentScale }}>
+              <PokeCoinPDF size={cornerCoinSize} />
               <Text style={[styles.cornerValue, { color: bill.textColor }]}>{bill.value}</Text>
             </View>
           </View>

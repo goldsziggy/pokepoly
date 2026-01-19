@@ -1,6 +1,6 @@
-import { Card, Button } from '@/components/ui'
+import { Card, Button, Input } from '@/components/ui'
 import { BoardPreview } from '@/components/board'
-import { ShareButton, GeneratePdfButton, CardSizeSelector, PaperSizeSelector } from '@/components/configurator'
+import { ShareButton, GeneratePdfButton, CardSizeSelector, PaperSizeSelector, BoardSizeSelector } from '@/components/configurator'
 import { useBoardStore } from '@/store'
 
 interface BoardResultProps {
@@ -9,7 +9,7 @@ interface BoardResultProps {
 }
 
 export function BoardResult({ onRestart, onBack }: BoardResultProps) {
-  const { boardSpaces, seed, newRandomSeed } = useBoardStore()
+  const { boardSpaces, seed, newRandomSeed, players, setPlayers } = useBoardStore()
 
   return (
     <div className="space-y-6">
@@ -33,9 +33,23 @@ export function BoardResult({ onRestart, onBack }: BoardResultProps) {
           </div>
 
           <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <BoardSizeSelector />
               <CardSizeSelector />
               <PaperSizeSelector />
+            </div>
+            <div className="space-y-2">
+              <label className="font-pixel text-[9px] text-gray-700">Players</label>
+              <Input
+                type="number"
+                min={1}
+                step={1}
+                value={players}
+                onChange={(event) => {
+                  const next = parseInt(event.target.value, 10)
+                  setPlayers(Number.isNaN(next) ? 1 : next)
+                }}
+              />
             </div>
             <ShareButton />
             <GeneratePdfButton />

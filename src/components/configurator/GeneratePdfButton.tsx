@@ -2,10 +2,17 @@ import { useState, useCallback } from 'react'
 import { pdf } from '@react-pdf/renderer'
 import { Button, Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
-import { BoardDocument, type PrintMaterial } from '@/pdf'
+import {
+  BoardDocument,
+  getDeedItemsPerPage,
+  getItemBagCardsPageCount,
+  getProfessorOakCardsPageCount,
+  getMoneyPageCount,
+  type PrintMaterial,
+} from '@/pdf'
 
 export function GeneratePdfButton() {
-  const { boardSpaces, paperSize, cardSize, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
+  const { boardSpaces, paperSize, cardSize, boardSize, players, isPdfGenerating, setIsPdfGenerating } = useBoardStore()
   const [progress, setProgress] = useState('')
   const [selectedMaterials, setSelectedMaterials] = useState<PrintMaterial[]>(['board', 'deeds', 'cards', 'money', 'tokens-rules'])
 
@@ -33,7 +40,16 @@ export function GeneratePdfButton() {
 
     try {
       // Create the PDF document
-      const doc = <BoardDocument spaces={boardSpaces} paperSize={paperSize} cardSize={cardSize} materials={selectedMaterials} />
+      const doc = (
+        <BoardDocument
+          spaces={boardSpaces}
+          paperSize={paperSize}
+          cardSize={cardSize}
+          boardSize={boardSize}
+          players={players}
+          materials={selectedMaterials}
+        />
+      )
 
       // Generate the blob with error handling
       setProgress('Rendering pages...')
@@ -63,7 +79,7 @@ export function GeneratePdfButton() {
     } finally {
       setIsPdfGenerating(false)
     }
-  }, [boardSpaces, paperSize, cardSize, selectedMaterials, setIsPdfGenerating])
+  }, [boardSpaces, paperSize, cardSize, boardSize, players, selectedMaterials, setIsPdfGenerating])
 
   const materialLabels: Record<PrintMaterial, string> = {
     'board': 'Board',
@@ -72,6 +88,28 @@ export function GeneratePdfButton() {
     'money': 'Money',
     'tokens-rules': 'Tokens & Rules'
   }
+
+  const propertiesCount = boardSpaces.filter(space => space.type === 'property').length
+  const gymsCount = boardSpaces.filter(space => space.type === 'gym').length
+  const deedsTotal = propertiesCount + gymsCount
+  const deedsItemsPerPage = getDeedItemsPerPage(paperSize, cardSize)
+  const deedPages = deedsTotal > 0 ? Math.ceil(deedsTotal / deedsItemsPerPage) : 0
+
+  const itemBagPages = getItemBagCardsPageCount(paperSize, cardSize)
+  const professorOakPages = getProfessorOakCardsPageCount(paperSize, cardSize)
+  const cardsPages = itemBagPages + professorOakPages
+  const moneyPages = getMoneyPageCount(paperSize, cardSize, players)
+
+  const pageCounts: Record<PrintMaterial, number> = {
+    'board': 9,
+    'deeds': deedPages,
+    'cards': cardsPages,
+    'money': moneyPages,
+    'tokens-rules': 1,
+  }
+
+  const estimatedPages = selectedMaterials.reduce((total, material) => total + pageCounts[material], 0)
+  const pageBreakdown = selectedMaterials.map((material) => `${materialLabels[material]}: ${pageCounts[material]}`).join(' • ')
 
   return (
     <div className="space-y-3">
@@ -93,6 +131,17 @@ export function GeneratePdfButton() {
             <span className="font-pixel text-[9px] text-gray-700">{materialLabels[material]}</span>
           </label>
         ))}
+      </div>
+
+      <div className="space-y-1">
+        <p className="font-pixel text-[8px] text-gray-500">
+          Estimated pages: {estimatedPages}
+        </p>
+        {pageBreakdown && (
+          <p className="font-pixel text-[7px] text-gray-400">
+            {pageBreakdown}
+          </p>
+        )}
       </div>
 
       <Button

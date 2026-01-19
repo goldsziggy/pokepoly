@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Card, Button, Spinner } from '@/components/ui'
+import { Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
 import { Step1ModeSelection } from './Step1ModeSelection'
 import { Step2FavoriteSelection } from './Step2FavoriteSelection'
 import { Step3TypeAssignment } from './Step3TypeAssignment'
 import { BoardResult } from './BoardResult'
+import type { Pokemon } from '@/types'
 
 export type QuestionnaireMode = 'random' | 'customized' | null
 
@@ -13,11 +14,11 @@ export function Questionnaire() {
   const [mode, setMode] = useState<QuestionnaireMode>(null)
   const { isGenerating } = useBoardStore()
 
-  const handleModeSelect = (selectedMode: QuestionnaireMode) => {
+  const handleModeSelect = (selectedMode: QuestionnaireMode, pokemon?: Pokemon[]) => {
     setMode(selectedMode)
     if (selectedMode === 'random') {
-      // Generate random board immediately
-      useBoardStore.getState().generateRandomBoard()
+      // Generate random board immediately with the Pokemon data to avoid race condition
+      useBoardStore.getState().generateRandomBoard(pokemon)
       setStep(4)
     } else {
       setStep(2)

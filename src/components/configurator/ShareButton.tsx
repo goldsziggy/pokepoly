@@ -3,7 +3,7 @@ import { Button } from '@/components/ui'
 import { useUrlState } from '@/hooks'
 
 export function ShareButton() {
-  const { copyShareableUrl, getShareableUrl } = useUrlState()
+  const { copyShareableUrl } = useUrlState()
   const [copied, setCopied] = useState(false)
 
   const handleShare = async () => {

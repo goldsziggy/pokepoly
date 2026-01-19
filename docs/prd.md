@@ -29,7 +29,7 @@ Sample Item Bag Cards:
 
     Full Restore: "Heal your team." Get out of Team Rocket Hideout (Jail) free.
 
-    Rare Candy: "Boost your Pokémon’s level." Add 1 Berry (House) to any property you own for free.
+    Rare Candy: "Boost your Pokémon’s level." Add 1 Gym Badge (House) to any property you own for free.
 
     Amulet Coin: "Double your prize money." Collect ₽200 from the bank.
 
@@ -66,7 +66,7 @@ Professor Oak cards focus on the Research and Movement of the Trainer.
 Card Title	Description
 New Research Site	Advance to the nearest Gym (Railroad).
 Wild Encounter	Move forward to the next unowned property. You may buy it or auction it.
-Evolution Stone	"Your Pokémon is ready to evolve!" Immediately upgrade 4 Berries into an Evolution Stone (Hotel).
+League Badge	"Your Pokémon is ready to evolve!" Immediately upgrade 4 Gym Badges into an League Badge (Hotel).
 Teleport (Abra)	Move to any space on the board. Do not pass GO.
 5. Winning the Game
 

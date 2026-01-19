@@ -78,8 +78,8 @@ src/
 | Gyms (Railroads) | 4 gyms + 2 utilities |
 | Item Bag deck | 16 unique cards |
 | Professor Oak deck | 16 unique cards |
-| Berries (Houses) | Building mechanism |
-| Evolution Stones (Hotels) | 4 Berries = 1 Stone |
+| Gym Badges (Houses) | Building mechanism |
+| League Badges (Hotels) | 4 Gym Badges = 1 League Badge |
 
 ## Color Tier System
 

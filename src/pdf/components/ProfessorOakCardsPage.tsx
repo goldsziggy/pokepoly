@@ -2,7 +2,7 @@ import { Page, View, Text, StyleSheet } from '@react-pdf/renderer'
 import type { PaperSize, CardSize } from '@/types'
 import { CARD_SIZE_MULTIPLIERS, PAPER_DIMENSIONS } from '@/types/board'
 import { PROFESSOR_OAK_CARDS } from '@/lib/cards'
-import { baseStyles, cardStyles, colors } from './styles'
+import { baseStyles, colors } from './styles'
 import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 
 interface ProfessorOakCardsPageProps {
@@ -11,9 +11,20 @@ interface ProfessorOakCardsPageProps {
   pageNumber?: number
 }
 
+const CARD_BASE_WIDTH = 144
+const CARD_BASE_HEIGHT = 84
+const LEGACY_CARD_HEIGHT = 100
+const CARD_CONTENT_SCALE_RATIO = CARD_BASE_HEIGHT / LEGACY_CARD_HEIGHT
+const BASE_PADDING = 6
+const BASE_MARGIN = 4
+const BASE_HEADER_FONT = 6
+const BASE_TITLE_FONT = 7
+const BASE_DESC_FONT = 5
+const BASE_EFFECT_FONT = 5
+const SAFETY_BUFFER = 4
+
 function calculateItemsPerPage(
   paperSize: PaperSize,
-  cardSize: CardSize,
   itemWidth: number,
   itemHeight: number,
   itemMargin: number
@@ -22,8 +33,8 @@ function calculateItemsPerPage(
   const pageWidth = PAPER_DIMENSIONS[paperSize].width
   const pagePadding = 36 * 2 // top + bottom
   const titleHeight = 40 // approximate title + subtitle height
-  const availableHeight = pageHeight - pagePadding - titleHeight
-  const availableWidth = pageWidth - pagePadding
+  const availableHeight = pageHeight - pagePadding - titleHeight - SAFETY_BUFFER
+  const availableWidth = pageWidth - pagePadding - SAFETY_BUFFER
 
   const itemTotalWidth = itemWidth + itemMargin * 2
   const itemTotalHeight = itemHeight + itemMargin * 2
@@ -35,15 +46,8 @@ function calculateItemsPerPage(
 }
 
 function getCardStyles(cardSize: CardSize) {
-  const multiplier = CARD_SIZE_MULTIPLIERS[cardSize]
-  const baseWidth = 180
-  const baseHeight = 100
-  const basePadding = 6
-  const baseMargin = 4
-  const baseHeaderFont = 6
-  const baseTitleFont = 7
-  const baseDescFont = 5
-  const baseEffectFont = 5
+  const sizeScale = CARD_SIZE_MULTIPLIERS[cardSize]
+  const contentScale = sizeScale * CARD_CONTENT_SCALE_RATIO
 
   return StyleSheet.create({
     grid: {
@@ -53,40 +57,40 @@ function getCardStyles(cardSize: CardSize) {
       alignContent: 'flex-start',
     },
     card: {
-      width: baseWidth * multiplier,
-      height: baseHeight * multiplier,
+      width: CARD_BASE_WIDTH * sizeScale,
+      height: CARD_BASE_HEIGHT * sizeScale,
       borderWidth: 2,
       borderColor: '#388E3C',
       backgroundColor: '#E8F5E9',
-      padding: basePadding * multiplier,
-      margin: baseMargin * multiplier,
+      padding: BASE_PADDING * contentScale,
+      margin: BASE_MARGIN * contentScale,
     },
     cardHeader: {
       backgroundColor: '#388E3C',
-      margin: -basePadding * multiplier,
-      marginBottom: 4 * multiplier,
-      padding: 4 * multiplier,
+      margin: -BASE_PADDING * contentScale,
+      marginBottom: 4 * contentScale,
+      padding: 4 * contentScale,
     },
     headerText: {
-      fontSize: baseHeaderFont * multiplier,
+      fontSize: BASE_HEADER_FONT * contentScale,
       color: colors.white,
       textAlign: 'center',
       fontWeight: 'bold',
     },
     cardTitle: {
-      fontSize: baseTitleFont * multiplier,
+      fontSize: BASE_TITLE_FONT * contentScale,
       textAlign: 'center',
-      marginBottom: 4 * multiplier,
+      marginBottom: 4 * contentScale,
       fontWeight: 'bold',
     },
     cardDescription: {
-      fontSize: baseDescFont * multiplier,
+      fontSize: BASE_DESC_FONT * contentScale,
       textAlign: 'center',
-      marginBottom: 4 * multiplier,
+      marginBottom: 4 * contentScale,
       fontStyle: 'normal',
     },
     cardEffect: {
-      fontSize: baseEffectFont * multiplier,
+      fontSize: BASE_EFFECT_FONT * contentScale,
       textAlign: 'center',
     },
     effectRow: {
@@ -96,7 +100,7 @@ function getCardStyles(cardSize: CardSize) {
       flexWrap: 'wrap',
     },
     effectText: {
-      fontSize: baseEffectFont * multiplier,
+      fontSize: BASE_EFFECT_FONT * contentScale,
     },
   })
 }
@@ -148,16 +152,14 @@ function renderEffectWithCoins(effect: string, coinSize: number, textStyle: any)
 
 export function ProfessorOakCardsPage({ paperSize, cardSize, pageNumber = 0 }: ProfessorOakCardsPageProps) {
   const styles = getCardStyles(cardSize)
-  const multiplier = CARD_SIZE_MULTIPLIERS[cardSize]
-  const baseWidth = 180
-  const baseHeight = 100
-  const baseMargin = 4
+  const sizeScale = CARD_SIZE_MULTIPLIERS[cardSize]
+  const contentScale = sizeScale * CARD_CONTENT_SCALE_RATIO
 
-  const itemWidth = baseWidth * multiplier
-  const itemHeight = baseHeight * multiplier
-  const itemMargin = baseMargin * multiplier
+  const itemWidth = CARD_BASE_WIDTH * sizeScale
+  const itemHeight = CARD_BASE_HEIGHT * sizeScale
+  const itemMargin = BASE_MARGIN * contentScale
 
-  const itemsPerPage = calculateItemsPerPage(paperSize, cardSize, itemWidth, itemHeight, itemMargin)
+  const itemsPerPage = calculateItemsPerPage(paperSize, itemWidth, itemHeight, itemMargin)
   const startIndex = pageNumber * itemsPerPage
   const endIndex = Math.min(startIndex + itemsPerPage, PROFESSOR_OAK_CARDS.length)
   const pageCards = PROFESSOR_OAK_CARDS.slice(startIndex, endIndex)
@@ -172,13 +174,13 @@ export function ProfessorOakCardsPage({ paperSize, cardSize, pageNumber = 0 }: P
       <Text style={baseStyles.subtitle}>Cut along the lines</Text>
       <View style={styles.grid}>
         {pageCards.map((card) => (
-          <View key={card.id} style={styles.card} break={false}>
+          <View key={card.id} style={styles.card} break={false} wrap={false}>
             <View style={styles.cardHeader}>
               <Text style={styles.headerText}>PROFESSOR OAK</Text>
             </View>
             <Text style={styles.cardTitle}>{card.name}</Text>
             <Text style={styles.cardDescription}>"{card.description}"</Text>
-            {renderEffectWithCoins(card.effect, 6 * multiplier, styles.cardEffect)}
+            {renderEffectWithCoins(card.effect, 6 * contentScale, styles.cardEffect)}
           </View>
         ))}
       </View>

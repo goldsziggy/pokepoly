@@ -96,7 +96,7 @@ function BoardCenter() {
 
         {/* Title */}
         <div className="absolute bottom-3 left-0 right-0 text-center">
-          <div className="text-[16px] font-pixel text-white font-bold drop-shadow-lg">MASTER LEAGUE</div>
+          <div className="text-[16px] font-pixel text-white font-bold drop-shadow-lg">POKE-POLY</div>
         </div>
       </div>
 
@@ -104,7 +104,7 @@ function BoardCenter() {
       <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gray-100 flex flex-col items-center justify-center px-8">
         <div className="flex items-center justify-center gap-4 w-full max-w-[600px] mx-auto">
           {/* Left card outline */}
-          <div className="flex-shrink-0 w-24 h-32 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
+          <div className="flex-shrink-0 w-24 h-14 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
             <span className="text-[8px] font-pixel text-gray-500 text-center">Card<br/>Place</span>
           </div>
           
@@ -114,7 +114,7 @@ function BoardCenter() {
             <div className="space-y-1 text-[10px] font-pixel text-gray-800 leading-relaxed">
               <div><span className="font-bold">Setup:</span> Each player starts with <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />1500</span> on GO. <span className="font-bold">Play:</span> Roll dice, move clockwise.</div>
               <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it! <span className="font-bold">Rent:</span> Others land on yours? Collect!</div>
-              <div><span className="font-bold">Build:</span> Own all of a color → add Berries. 4 Berries = 1 Evolution Stone.</div>
+              <div><span className="font-bold">Build:</span> Own all of a color → add Gym Badges. 4 Gym Badges = 1 League Badge.</div>
               <div><span className="font-bold">Jail:</span> Pay <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />50</span> or roll doubles. <span className="font-bold">Gyms:</span> Rent = <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />25</span> × owned.</div>
               <div><span className="font-bold">Free Parking:</span> Collect Grunt Ambush, Giovanni & card fees!</div>
               <div><span className="font-bold">Win:</span> Last player with money! <span className="font-bold">Start:</span> 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />500</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />100</span> • 2×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />50</span> • 6×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />20</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />10</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />5</span> • 5×<span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />1</span></div>
@@ -122,7 +122,7 @@ function BoardCenter() {
           </div>
           
           {/* Right card outline */}
-          <div className="flex-shrink-0 w-24 h-32 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
+          <div className="flex-shrink-0 w-24 h-14 border-2 border-dashed border-gray-400 rounded flex items-center justify-center">
             <span className="text-[8px] font-pixel text-gray-500 text-center">Card<br/>Place</span>
           </div>
         </div>
@@ -417,7 +417,8 @@ export function BoardPreview() {
 
   const gridSize = 11
   const regularCellSize = 70
-  const cornerCellSize = 95
+  const cornerToSideRatio = 2.5 / 1.5
+  const cornerCellSize = Math.round(regularCellSize * cornerToSideRatio)
 
   const getGridPosition = (index: number): { row: number; col: number } | null => {
     // Handle corners first

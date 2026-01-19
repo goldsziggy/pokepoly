@@ -21,8 +21,8 @@ const GYM_IMAGES: Record<string, string> = {
   'Cerulean Gym': '/images/cerulean.jpg',
   'Vermilion Gym': '/images/vermillion.jpg',
   'Celadon Gym': '/images/celadon.png',
-  'Power Plant': '/images/pewter.png', // Fallback to pewter if no specific image
-  'Poké Mart': '/images/celadon.png', // Fallback to celadon if no specific image
+  'Power Plant': '/images/power-plant.png',
+  'Poké Mart': '/images/pokemart.png',
 }
 
 export function getSpaceSprite(spaceType: string): string | null {

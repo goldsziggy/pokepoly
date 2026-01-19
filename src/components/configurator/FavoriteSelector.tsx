@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { Input, Button, Badge } from '@/components/ui'
+import { Input } from '@/components/ui'
 import { useBoardStore } from '@/store'
 import { usePokemonSearch } from '@/hooks'
 import type { Pokemon } from '@/types'

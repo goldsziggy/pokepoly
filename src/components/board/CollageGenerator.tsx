@@ -55,7 +55,6 @@ function calculateHeroGroupPositions(
   count: number,
   containerWidth: number,
   containerHeight: number,
-  spriteSize: number
 ): { x: number; y: number; scale: number }[] {
   const positions: { x: number; y: number; scale: number }[] = []
 
@@ -111,8 +110,6 @@ function calculateHeroGroupPositions(
 
 function calculateBoxSurroundPositions(
   count: number,
-  centerX: number,
-  centerY: number,
   width: number,
   height: number,
   spriteSize: number
@@ -203,9 +200,9 @@ export function CollageGenerator({ size = 500, spriteSize = 48, showOnBoard = fa
   if (layoutMode === 'circle' || layoutMode === 'half-circle') {
     positions = calculateCirclePositions(pokemon.length, centerX, centerY, radius, layoutMode)
   } else if (layoutMode === 'hero-group') {
-    positions = calculateHeroGroupPositions(pokemon.length, size, size, spriteSize)
+    positions = calculateHeroGroupPositions(pokemon.length, size, size)
   } else if (layoutMode === 'box-surround') {
-    positions = calculateBoxSurroundPositions(pokemon.length, centerX, centerY, size, size, spriteSize)
+    positions = calculateBoxSurroundPositions(pokemon.length, size, size, spriteSize)
   }
 
   const collageContent = (
@@ -297,7 +294,6 @@ export function CollageGenerator({ size = 500, spriteSize = 48, showOnBoard = fa
       {overlayOnBoard ? (
         <CollageOnBoard
           pokemon={pokemon}
-          positions={positions}
           spriteSize={spriteSize}
           layoutMode={layoutMode}
         />
@@ -321,12 +317,10 @@ export function CollageGenerator({ size = 500, spriteSize = 48, showOnBoard = fa
 // Component to render collage overlaid on the game board
 function CollageOnBoard({
   pokemon,
-  positions,
   spriteSize,
   layoutMode,
 }: {
   pokemon: Pokemon[]
-  positions: { x: number; y: number; scale?: number }[]
   spriteSize: number
   layoutMode: LayoutMode
 }) {
@@ -334,8 +328,8 @@ function CollageOnBoard({
 
   // Board dimensions matching BoardPreview
   const regularCellSize = 70
-  const cornerCellSize = 90
-  const boardSize = cornerCellSize * 2 + regularCellSize * 9 // 810px
+  const cornerCellSize = Math.round(regularCellSize * (2.5 / 1.5))
+  const boardSize = cornerCellSize * 2 + regularCellSize * 9
 
   // Recalculate positions for the board center area
   const centerAreaSize = regularCellSize * 9 // 630px - the inner board area
@@ -350,9 +344,9 @@ function CollageOnBoard({
   if (layoutMode === 'circle' || layoutMode === 'half-circle') {
     boardPositions = calculateCirclePositions(pokemon.length, centerX, centerY, radius, layoutMode)
   } else if (layoutMode === 'hero-group') {
-    boardPositions = calculateHeroGroupPositions(pokemon.length, centerAreaSize, centerAreaSize, spriteSize)
+    boardPositions = calculateHeroGroupPositions(pokemon.length, centerAreaSize, centerAreaSize)
   } else if (layoutMode === 'box-surround') {
-    boardPositions = calculateBoxSurroundPositions(pokemon.length, centerX, centerY, centerAreaSize, centerAreaSize, spriteSize)
+    boardPositions = calculateBoxSurroundPositions(pokemon.length, centerAreaSize, centerAreaSize, spriteSize)
   }
 
   return (

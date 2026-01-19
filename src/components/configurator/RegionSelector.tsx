@@ -1,6 +1,6 @@
 import { Checkbox } from '@/components/ui'
 import { useBoardStore } from '@/store'
-import { REGIONS, REGION_LABELS, type Region } from '@/types'
+import { REGIONS, REGION_LABELS } from '@/types'
 
 export function RegionSelector() {
   const { selectedRegions, toggleRegion } = useBoardStore()

@@ -1,7 +1,7 @@
 import { Document } from '@react-pdf/renderer'
-import type { PaperSize, BoardSpace, PropertySpace, GymSpace, CardSize } from '@/types'
+import type { PaperSize, BoardSpace, PropertySpace, GymSpace, CardSize, BoardSize } from '@/types'
 import { BoardTilePage } from './BoardTilePage'
-import { PropertyDeedsPage } from './PropertyDeedsPage'
+import { PropertyDeedsPage, getDeedItemsPerPage } from './PropertyDeedsPage'
 import { ItemBagCardsPages } from './ItemBagCardsPages'
 import { ProfessorOakCardsPages } from './ProfessorOakCardsPages'
 import { MoneyPages } from './MoneyPages'
@@ -20,10 +20,12 @@ interface BoardDocumentProps {
   spaces: BoardSpace[]
   paperSize: PaperSize
   cardSize: CardSize
+  boardSize: BoardSize
+  players: number
   materials?: PrintMaterial[]
 }
 
-export function BoardDocument({ spaces, paperSize, cardSize, materials }: BoardDocumentProps) {
+export function BoardDocument({ spaces, paperSize, cardSize, boardSize, players, materials }: BoardDocumentProps) {
   const includeAll = !materials || materials.length === 0
   const includeBoard = includeAll || materials.includes('board')
   const includeDeeds = includeAll || materials.includes('deeds')
@@ -40,26 +42,28 @@ export function BoardDocument({ spaces, paperSize, cardSize, materials }: BoardD
     (space): space is GymSpace => space.type === 'gym'
   )
 
-  // Calculate total pages needed (22 properties + 6 gyms = 28 items, 10 per page = 3 pages)
   const totalItems = properties.length + gyms.length
-  const itemsPerPage = 10
+  const itemsPerPage = getDeedItemsPerPage(paperSize, cardSize)
   const totalPages = Math.ceil(totalItems / itemsPerPage)
 
   return (
     <Document
-      title="Poke-Poly: The Master League - Game Kit"
+      title="Poke-Poly - Game Kit"
       author="Poke-Poly Generator"
-      subject="Printable Pokemon Monopoly Game - 20x20 inch board"
+      subject="Printable Pokemon Monopoly Game Board"
     >
       {includeBoard && (
         <>
-          {/* Board Tiles (6 landscape pages for 20"x20" board - 2 cols × 3 rows) */}
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={0} tileCol={0} />
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={0} tileCol={1} />
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={1} tileCol={0} />
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={1} tileCol={1} />
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={2} tileCol={0} />
-          <BoardTilePage spaces={spaces} paperSize={paperSize} tileRow={2} tileCol={1} />
+          {/* Board Tiles (9 landscape pages - 3 cols × 3 rows) */}
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={0} tileCol={0} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={0} tileCol={1} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={0} tileCol={2} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={1} tileCol={0} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={1} tileCol={1} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={1} tileCol={2} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={2} tileCol={0} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={2} tileCol={1} />
+          <BoardTilePage spaces={spaces} paperSize={paperSize} boardSize={boardSize} tileRow={2} tileCol={2} />
         </>
       )}
 
@@ -85,7 +89,7 @@ export function BoardDocument({ spaces, paperSize, cardSize, materials }: BoardD
       {includeMoney && (
         <>
           {/* Money Sheets - dynamically generate pages */}
-          <MoneyPages paperSize={paperSize} cardSize={cardSize} />
+          <MoneyPages paperSize={paperSize} cardSize={cardSize} players={players} />
         </>
       )}
 

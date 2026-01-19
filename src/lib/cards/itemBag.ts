@@ -19,7 +19,7 @@ export const ITEM_BAG_CARDS: ItemBagCard[] = [
     id: 2,
     name: 'Rare Candy',
     description: "Boost your Pokémon's level.",
-    effect: 'Add 1 Berry (House) to any property you own for free.',
+    effect: 'Add 1 Gym Badge (House) to any property you own for free.',
   },
   {
     id: 3,
@@ -83,7 +83,7 @@ export const ITEM_BAG_CARDS: ItemBagCard[] = [
   },
   {
     id: 13,
-    name: 'Berry Juice',
+    name: 'Gym Badge Juice',
     description: 'A refreshing drink.',
     effect: 'Collect ₽45 from the bank.',
   },

@@ -19,15 +19,15 @@ export const PAGE_DIMENSIONS: Record<PaperSize, PageDimensions> = {
   },
 }
 
-// Board dimensions for a full-size 20" x 20" board
+// Board dimensions for a small 18.5" x 18.5" board
 // Split into 2x3 grid (6 landscape tiles) for printing
 export const BOARD_DIMENSIONS = {
-  totalSize: 1440,    // 20" at 72 DPI
+  totalSize: 1332,    // 18.5" at 72 DPI
   tileCols: 2,        // 2 columns
   tileRows: 3,        // 3 rows
-  tileWidth: 720,     // 10" at 72 DPI (each tile width)
-  tileHeight: 480,    // 6.67" at 72 DPI (each tile height)
+  tileWidth: 666,     // 9.25" at 72 DPI (each tile width)
+  tileHeight: 444,    // 6.17" at 72 DPI (each tile height)
   totalPages: 6,      // 2x3 = 6 landscape pages
-  cornerSize: 130,    // ~1.8" for corner spaces
-  sideSpaceSize: 131, // ~1.82" for side spaces (9 per side)
+  cornerSize: 180,    // 2.5" for corner spaces
+  sideSpaceSize: 108, // 1.5" for side spaces (9 per side)
 }
