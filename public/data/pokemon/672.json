@@ -1,0 +1,11 @@
+{
+  "id": 672,
+  "name": "skiddo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/672.png",
+  "bst": 350,
+  "types": [
+    "grass"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 672
+}

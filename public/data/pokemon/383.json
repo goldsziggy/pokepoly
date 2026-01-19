@@ -1,0 +1,11 @@
+{
+  "id": 383,
+  "name": "groudon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/383.png",
+  "bst": 670,
+  "types": [
+    "ground"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 383
+}

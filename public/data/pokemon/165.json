@@ -1,0 +1,12 @@
+{
+  "id": 165,
+  "name": "ledyba",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/165.png",
+  "bst": 265,
+  "types": [
+    "bug",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 165
+}

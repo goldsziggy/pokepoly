@@ -1,0 +1,12 @@
+{
+  "id": 991,
+  "name": "iron-bundle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/991.png",
+  "bst": 570,
+  "types": [
+    "ice",
+    "water"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 991
+}

@@ -1,0 +1,12 @@
+{
+  "id": 788,
+  "name": "tapu-fini",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/788.png",
+  "bst": 570,
+  "types": [
+    "water",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 788
+}

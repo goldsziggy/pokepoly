@@ -1,0 +1,11 @@
+{
+  "id": 856,
+  "name": "hatenna",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/856.png",
+  "bst": 265,
+  "types": [
+    "psychic"
+  ],
+  "region": "galar",
+  "evolutionFamily": 856
+}

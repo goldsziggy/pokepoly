@@ -1,0 +1,11 @@
+{
+  "id": 669,
+  "name": "flabebe",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/669.png",
+  "bst": 303,
+  "types": [
+    "fairy"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 669
+}

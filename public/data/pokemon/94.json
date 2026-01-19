@@ -1,0 +1,12 @@
+{
+  "id": 94,
+  "name": "gengar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+  "bst": 500,
+  "types": [
+    "ghost",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 92
+}

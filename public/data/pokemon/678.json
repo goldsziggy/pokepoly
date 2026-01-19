@@ -1,0 +1,11 @@
+{
+  "id": 678,
+  "name": "meowstic-male",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/678.png",
+  "bst": 466,
+  "types": [
+    "psychic"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 678
+}

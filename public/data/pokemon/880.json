@@ -1,0 +1,12 @@
+{
+  "id": 880,
+  "name": "dracozolt",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/880.png",
+  "bst": 505,
+  "types": [
+    "electric",
+    "dragon"
+  ],
+  "region": "galar",
+  "evolutionFamily": 880
+}

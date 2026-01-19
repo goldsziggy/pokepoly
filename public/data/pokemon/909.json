@@ -1,0 +1,11 @@
+{
+  "id": 909,
+  "name": "fuecoco",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/909.png",
+  "bst": 310,
+  "types": [
+    "fire"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 909
+}

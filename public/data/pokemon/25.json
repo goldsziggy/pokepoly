@@ -1,0 +1,11 @@
+{
+  "id": 25,
+  "name": "pikachu",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+  "bst": 320,
+  "types": [
+    "electric"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 25
+}

@@ -1,0 +1,12 @@
+{
+  "id": 591,
+  "name": "amoonguss",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/591.png",
+  "bst": 464,
+  "types": [
+    "grass",
+    "poison"
+  ],
+  "region": "unova",
+  "evolutionFamily": 591
+}

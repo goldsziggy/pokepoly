@@ -1,0 +1,12 @@
+{
+  "id": 82,
+  "name": "magneton",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png",
+  "bst": 465,
+  "types": [
+    "electric",
+    "steel"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 81
+}

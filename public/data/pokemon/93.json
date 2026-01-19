@@ -1,0 +1,12 @@
+{
+  "id": 93,
+  "name": "haunter",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png",
+  "bst": 405,
+  "types": [
+    "ghost",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 92
+}

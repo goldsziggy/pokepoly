@@ -1,0 +1,12 @@
+{
+  "id": 195,
+  "name": "quagsire",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/195.png",
+  "bst": 430,
+  "types": [
+    "water",
+    "ground"
+  ],
+  "region": "johto",
+  "evolutionFamily": 194
+}

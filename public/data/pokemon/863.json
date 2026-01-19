@@ -1,0 +1,11 @@
+{
+  "id": 863,
+  "name": "perrserker",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/863.png",
+  "bst": 440,
+  "types": [
+    "steel"
+  ],
+  "region": "galar",
+  "evolutionFamily": 863
+}

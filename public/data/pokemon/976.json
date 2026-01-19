@@ -1,0 +1,12 @@
+{
+  "id": 976,
+  "name": "veluza",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/976.png",
+  "bst": 478,
+  "types": [
+    "water",
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 976
+}

@@ -1,0 +1,11 @@
+{
+  "id": 871,
+  "name": "pincurchin",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/871.png",
+  "bst": 435,
+  "types": [
+    "electric"
+  ],
+  "region": "galar",
+  "evolutionFamily": 871
+}

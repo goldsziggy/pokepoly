@@ -1,0 +1,12 @@
+{
+  "id": 872,
+  "name": "snom",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/872.png",
+  "bst": 185,
+  "types": [
+    "ice",
+    "bug"
+  ],
+  "region": "galar",
+  "evolutionFamily": 872
+}

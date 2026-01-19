@@ -1,0 +1,11 @@
+{
+  "id": 32,
+  "name": "nidoran-m",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png",
+  "bst": 273,
+  "types": [
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 32
+}

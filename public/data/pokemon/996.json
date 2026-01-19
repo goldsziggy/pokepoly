@@ -1,0 +1,12 @@
+{
+  "id": 996,
+  "name": "frigibax",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/996.png",
+  "bst": 320,
+  "types": [
+    "dragon",
+    "ice"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 996
+}

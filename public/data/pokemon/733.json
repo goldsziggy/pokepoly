@@ -1,0 +1,12 @@
+{
+  "id": 733,
+  "name": "toucannon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/733.png",
+  "bst": 485,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "alola",
+  "evolutionFamily": 733
+}

@@ -1,0 +1,11 @@
+{
+  "id": 288,
+  "name": "vigoroth",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/288.png",
+  "bst": 440,
+  "types": [
+    "normal"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 287
+}

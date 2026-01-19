@@ -1,0 +1,11 @@
+{
+  "id": 716,
+  "name": "xerneas",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/716.png",
+  "bst": 680,
+  "types": [
+    "fairy"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 716
+}

@@ -1,0 +1,12 @@
+{
+  "id": 798,
+  "name": "kartana",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/798.png",
+  "bst": 570,
+  "types": [
+    "grass",
+    "steel"
+  ],
+  "region": "alola",
+  "evolutionFamily": 798
+}

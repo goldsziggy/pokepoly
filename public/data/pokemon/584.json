@@ -1,0 +1,11 @@
+{
+  "id": 584,
+  "name": "vanilluxe",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/584.png",
+  "bst": 535,
+  "types": [
+    "ice"
+  ],
+  "region": "unova",
+  "evolutionFamily": 584
+}

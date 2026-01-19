@@ -1,0 +1,12 @@
+{
+  "id": 708,
+  "name": "phantump",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/708.png",
+  "bst": 309,
+  "types": [
+    "ghost",
+    "grass"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 708
+}

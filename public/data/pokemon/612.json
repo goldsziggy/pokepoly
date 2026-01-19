@@ -1,0 +1,11 @@
+{
+  "id": 612,
+  "name": "haxorus",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/612.png",
+  "bst": 540,
+  "types": [
+    "dragon"
+  ],
+  "region": "unova",
+  "evolutionFamily": 612
+}

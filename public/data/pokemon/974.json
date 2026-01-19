@@ -1,0 +1,11 @@
+{
+  "id": 974,
+  "name": "cetoddle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/974.png",
+  "bst": 334,
+  "types": [
+    "ice"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 974
+}

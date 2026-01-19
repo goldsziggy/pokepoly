@@ -1,0 +1,12 @@
+{
+  "id": 597,
+  "name": "ferroseed",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/597.png",
+  "bst": 305,
+  "types": [
+    "grass",
+    "steel"
+  ],
+  "region": "unova",
+  "evolutionFamily": 597
+}

@@ -1,0 +1,12 @@
+{
+  "id": 585,
+  "name": "deerling",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/585.png",
+  "bst": 335,
+  "types": [
+    "normal",
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 585
+}

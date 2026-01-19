@@ -1,0 +1,11 @@
+{
+  "id": 815,
+  "name": "cinderace",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/815.png",
+  "bst": 530,
+  "types": [
+    "fire"
+  ],
+  "region": "galar",
+  "evolutionFamily": 815
+}

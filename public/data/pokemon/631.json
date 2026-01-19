@@ -1,0 +1,11 @@
+{
+  "id": 631,
+  "name": "heatmor",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/631.png",
+  "bst": 484,
+  "types": [
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 631
+}

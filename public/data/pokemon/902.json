@@ -1,0 +1,12 @@
+{
+  "id": 902,
+  "name": "basculegion-male",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/902.png",
+  "bst": 530,
+  "types": [
+    "water",
+    "ghost"
+  ],
+  "region": "galar",
+  "evolutionFamily": 902
+}

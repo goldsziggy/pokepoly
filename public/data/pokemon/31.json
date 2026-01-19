@@ -1,0 +1,12 @@
+{
+  "id": 31,
+  "name": "nidoqueen",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png",
+  "bst": 505,
+  "types": [
+    "poison",
+    "ground"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 29
+}

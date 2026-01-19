@@ -1,0 +1,12 @@
+{
+  "id": 885,
+  "name": "dreepy",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/885.png",
+  "bst": 270,
+  "types": [
+    "dragon",
+    "ghost"
+  ],
+  "region": "galar",
+  "evolutionFamily": 885
+}

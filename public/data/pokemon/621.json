@@ -1,0 +1,11 @@
+{
+  "id": 621,
+  "name": "druddigon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/621.png",
+  "bst": 485,
+  "types": [
+    "dragon"
+  ],
+  "region": "unova",
+  "evolutionFamily": 621
+}

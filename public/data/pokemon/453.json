@@ -1,0 +1,12 @@
+{
+  "id": 453,
+  "name": "croagunk",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/453.png",
+  "bst": 300,
+  "types": [
+    "poison",
+    "fighting"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 453
+}

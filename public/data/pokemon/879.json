@@ -1,0 +1,11 @@
+{
+  "id": 879,
+  "name": "copperajah",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/879.png",
+  "bst": 500,
+  "types": [
+    "steel"
+  ],
+  "region": "galar",
+  "evolutionFamily": 879
+}

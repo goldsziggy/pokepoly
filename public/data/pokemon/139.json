@@ -1,0 +1,12 @@
+{
+  "id": 139,
+  "name": "omastar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/139.png",
+  "bst": 495,
+  "types": [
+    "rock",
+    "water"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 138
+}

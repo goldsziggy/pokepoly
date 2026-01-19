@@ -1,0 +1,12 @@
+{
+  "id": 247,
+  "name": "pupitar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/247.png",
+  "bst": 410,
+  "types": [
+    "rock",
+    "ground"
+  ],
+  "region": "johto",
+  "evolutionFamily": 246
+}

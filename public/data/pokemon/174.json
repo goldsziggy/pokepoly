@@ -1,0 +1,12 @@
+{
+  "id": 174,
+  "name": "igglybuff",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/174.png",
+  "bst": 210,
+  "types": [
+    "normal",
+    "fairy"
+  ],
+  "region": "johto",
+  "evolutionFamily": 39
+}

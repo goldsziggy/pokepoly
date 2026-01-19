@@ -1,0 +1,11 @@
+{
+  "id": 641,
+  "name": "tornadus-incarnate",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/641.png",
+  "bst": 580,
+  "types": [
+    "flying"
+  ],
+  "region": "unova",
+  "evolutionFamily": 641
+}

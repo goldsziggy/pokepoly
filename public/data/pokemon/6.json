@@ -1,0 +1,12 @@
+{
+  "id": 6,
+  "name": "charizard",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+  "bst": 534,
+  "types": [
+    "fire",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 4
+}

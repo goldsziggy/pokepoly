@@ -1,0 +1,11 @@
+{
+  "id": 554,
+  "name": "darumaka",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/554.png",
+  "bst": 315,
+  "types": [
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 554
+}

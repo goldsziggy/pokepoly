@@ -1,0 +1,11 @@
+{
+  "id": 835,
+  "name": "yamper",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/835.png",
+  "bst": 270,
+  "types": [
+    "electric"
+  ],
+  "region": "galar",
+  "evolutionFamily": 835
+}

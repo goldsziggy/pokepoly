@@ -1,0 +1,11 @@
+{
+  "id": 571,
+  "name": "zoroark",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/571.png",
+  "bst": 510,
+  "types": [
+    "dark"
+  ],
+  "region": "unova",
+  "evolutionFamily": 571
+}

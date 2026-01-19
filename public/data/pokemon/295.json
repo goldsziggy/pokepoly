@@ -1,0 +1,11 @@
+{
+  "id": 295,
+  "name": "exploud",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/295.png",
+  "bst": 490,
+  "types": [
+    "normal"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 293
+}

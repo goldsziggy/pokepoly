@@ -1,0 +1,12 @@
+{
+  "id": 1005,
+  "name": "roaring-moon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1005.png",
+  "bst": 590,
+  "types": [
+    "dragon",
+    "dark"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1005
+}

@@ -1,0 +1,11 @@
+{
+  "id": 390,
+  "name": "chimchar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/390.png",
+  "bst": 309,
+  "types": [
+    "fire"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 390
+}

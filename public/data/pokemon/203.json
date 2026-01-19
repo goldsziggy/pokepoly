@@ -1,0 +1,12 @@
+{
+  "id": 203,
+  "name": "girafarig",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/203.png",
+  "bst": 455,
+  "types": [
+    "normal",
+    "psychic"
+  ],
+  "region": "johto",
+  "evolutionFamily": 203
+}

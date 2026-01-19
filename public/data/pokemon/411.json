@@ -1,0 +1,12 @@
+{
+  "id": 411,
+  "name": "bastiodon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/411.png",
+  "bst": 495,
+  "types": [
+    "rock",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 411
+}

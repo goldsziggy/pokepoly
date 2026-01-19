@@ -1,0 +1,11 @@
+{
+  "id": 650,
+  "name": "chespin",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/650.png",
+  "bst": 313,
+  "types": [
+    "grass"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 650
+}

@@ -1,0 +1,11 @@
+{
+  "id": 386,
+  "name": "deoxys-normal",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/386.png",
+  "bst": 600,
+  "types": [
+    "psychic"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 386
+}

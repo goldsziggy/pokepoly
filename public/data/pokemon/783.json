@@ -1,0 +1,12 @@
+{
+  "id": 783,
+  "name": "hakamo-o",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/783.png",
+  "bst": 420,
+  "types": [
+    "dragon",
+    "fighting"
+  ],
+  "region": "alola",
+  "evolutionFamily": 783
+}

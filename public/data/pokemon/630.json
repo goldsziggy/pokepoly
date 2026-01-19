@@ -1,0 +1,12 @@
+{
+  "id": 630,
+  "name": "mandibuzz",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/630.png",
+  "bst": 510,
+  "types": [
+    "dark",
+    "flying"
+  ],
+  "region": "unova",
+  "evolutionFamily": 630
+}

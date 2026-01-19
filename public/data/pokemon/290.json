@@ -1,0 +1,12 @@
+{
+  "id": 290,
+  "name": "nincada",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/290.png",
+  "bst": 266,
+  "types": [
+    "bug",
+    "ground"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 290
+}

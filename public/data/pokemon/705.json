@@ -1,0 +1,11 @@
+{
+  "id": 705,
+  "name": "sliggoo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/705.png",
+  "bst": 452,
+  "types": [
+    "dragon"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 705
+}

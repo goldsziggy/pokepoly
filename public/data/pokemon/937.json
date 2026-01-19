@@ -1,0 +1,12 @@
+{
+  "id": 937,
+  "name": "ceruledge",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/937.png",
+  "bst": 525,
+  "types": [
+    "fire",
+    "ghost"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 937
+}

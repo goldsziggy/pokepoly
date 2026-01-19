@@ -1,0 +1,11 @@
+{
+  "id": 525,
+  "name": "boldore",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/525.png",
+  "bst": 390,
+  "types": [
+    "rock"
+  ],
+  "region": "unova",
+  "evolutionFamily": 525
+}

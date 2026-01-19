@@ -1,0 +1,12 @@
+{
+  "id": 787,
+  "name": "tapu-bulu",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/787.png",
+  "bst": 570,
+  "types": [
+    "grass",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 787
+}

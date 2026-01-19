@@ -1,0 +1,12 @@
+{
+  "id": 130,
+  "name": "gyarados",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png",
+  "bst": 540,
+  "types": [
+    "water",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 129
+}

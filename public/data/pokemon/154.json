@@ -1,0 +1,11 @@
+{
+  "id": 154,
+  "name": "meganium",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/154.png",
+  "bst": 525,
+  "types": [
+    "grass"
+  ],
+  "region": "johto",
+  "evolutionFamily": 152
+}

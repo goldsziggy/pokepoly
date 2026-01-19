@@ -1,0 +1,11 @@
+{
+  "id": 773,
+  "name": "silvally",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/773.png",
+  "bst": 570,
+  "types": [
+    "normal"
+  ],
+  "region": "alola",
+  "evolutionFamily": 773
+}

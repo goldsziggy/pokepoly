@@ -1,0 +1,11 @@
+{
+  "id": 126,
+  "name": "magmar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png",
+  "bst": 495,
+  "types": [
+    "fire"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 126
+}

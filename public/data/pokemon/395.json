@@ -1,0 +1,12 @@
+{
+  "id": 395,
+  "name": "empoleon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/395.png",
+  "bst": 530,
+  "types": [
+    "water",
+    "steel"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 395
+}

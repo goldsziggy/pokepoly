@@ -1,0 +1,12 @@
+{
+  "id": 487,
+  "name": "giratina-altered",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/487.png",
+  "bst": 680,
+  "types": [
+    "ghost",
+    "dragon"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 487
+}

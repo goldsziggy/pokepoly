@@ -1,0 +1,11 @@
+{
+  "id": 202,
+  "name": "wobbuffet",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/202.png",
+  "bst": 405,
+  "types": [
+    "psychic"
+  ],
+  "region": "johto",
+  "evolutionFamily": 202
+}

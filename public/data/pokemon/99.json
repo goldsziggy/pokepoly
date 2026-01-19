@@ -1,0 +1,11 @@
+{
+  "id": 99,
+  "name": "kingler",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/99.png",
+  "bst": 475,
+  "types": [
+    "water"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 98
+}

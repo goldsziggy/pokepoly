@@ -1,0 +1,12 @@
+{
+  "id": 647,
+  "name": "keldeo-ordinary",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/647.png",
+  "bst": 580,
+  "types": [
+    "water",
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 647
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1010,
+  "name": "iron-leaves",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1010.png",
+  "bst": 590,
+  "types": [
+    "grass",
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1010
+}

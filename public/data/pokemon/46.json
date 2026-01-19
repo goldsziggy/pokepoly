@@ -1,0 +1,12 @@
+{
+  "id": 46,
+  "name": "paras",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png",
+  "bst": 285,
+  "types": [
+    "bug",
+    "grass"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 46
+}

@@ -1,0 +1,11 @@
+{
+  "id": 321,
+  "name": "wailord",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/321.png",
+  "bst": 500,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 320
+}

@@ -1,0 +1,11 @@
+{
+  "id": 956,
+  "name": "espathra",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/956.png",
+  "bst": 481,
+  "types": [
+    "psychic"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 956
+}

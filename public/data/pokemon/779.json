@@ -1,0 +1,12 @@
+{
+  "id": 779,
+  "name": "bruxish",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/779.png",
+  "bst": 475,
+  "types": [
+    "water",
+    "psychic"
+  ],
+  "region": "alola",
+  "evolutionFamily": 779
+}

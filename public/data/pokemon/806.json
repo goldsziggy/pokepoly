@@ -1,0 +1,12 @@
+{
+  "id": 806,
+  "name": "blacephalon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/806.png",
+  "bst": 570,
+  "types": [
+    "fire",
+    "ghost"
+  ],
+  "region": "alola",
+  "evolutionFamily": 806
+}

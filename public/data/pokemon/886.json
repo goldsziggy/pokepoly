@@ -1,0 +1,12 @@
+{
+  "id": 886,
+  "name": "drakloak",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/886.png",
+  "bst": 410,
+  "types": [
+    "dragon",
+    "ghost"
+  ],
+  "region": "galar",
+  "evolutionFamily": 886
+}

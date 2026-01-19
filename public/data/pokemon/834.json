@@ -1,0 +1,12 @@
+{
+  "id": 834,
+  "name": "drednaw",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/834.png",
+  "bst": 485,
+  "types": [
+    "water",
+    "rock"
+  ],
+  "region": "galar",
+  "evolutionFamily": 834
+}

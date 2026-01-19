@@ -1,0 +1,12 @@
+{
+  "id": 730,
+  "name": "primarina",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/730.png",
+  "bst": 530,
+  "types": [
+    "water",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 730
+}

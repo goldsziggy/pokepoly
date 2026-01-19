@@ -1,0 +1,11 @@
+{
+  "id": 463,
+  "name": "lickilicky",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/463.png",
+  "bst": 515,
+  "types": [
+    "normal"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 463
+}

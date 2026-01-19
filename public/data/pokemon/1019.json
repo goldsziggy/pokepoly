@@ -1,0 +1,12 @@
+{
+  "id": 1019,
+  "name": "hydrapple",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1019.png",
+  "bst": 540,
+  "types": [
+    "grass",
+    "dragon"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1019
+}

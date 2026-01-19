@@ -1,0 +1,11 @@
+{
+  "id": 706,
+  "name": "goodra",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/706.png",
+  "bst": 600,
+  "types": [
+    "dragon"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 706
+}

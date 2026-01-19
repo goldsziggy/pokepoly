@@ -1,0 +1,12 @@
+{
+  "id": 178,
+  "name": "xatu",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/178.png",
+  "bst": 470,
+  "types": [
+    "psychic",
+    "flying"
+  ],
+  "region": "johto",
+  "evolutionFamily": 177
+}

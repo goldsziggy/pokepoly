@@ -1,0 +1,12 @@
+{
+  "id": 668,
+  "name": "pyroar",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/668.png",
+  "bst": 507,
+  "types": [
+    "fire",
+    "normal"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 668
+}

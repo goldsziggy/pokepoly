@@ -1,0 +1,11 @@
+{
+  "id": 134,
+  "name": "vaporeon",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
+  "bst": 525,
+  "types": [
+    "water"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 133
+}

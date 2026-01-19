@@ -1,0 +1,12 @@
+{
+  "id": 655,
+  "name": "delphox",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/655.png",
+  "bst": 534,
+  "types": [
+    "fire",
+    "psychic"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 655
+}

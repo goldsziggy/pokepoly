@@ -1,0 +1,11 @@
+{
+  "id": 115,
+  "name": "kangaskhan",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png",
+  "bst": 490,
+  "types": [
+    "normal"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 115
+}

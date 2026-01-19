@@ -1,0 +1,12 @@
+{
+  "id": 858,
+  "name": "hatterene",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/858.png",
+  "bst": 510,
+  "types": [
+    "psychic",
+    "fairy"
+  ],
+  "region": "galar",
+  "evolutionFamily": 858
+}

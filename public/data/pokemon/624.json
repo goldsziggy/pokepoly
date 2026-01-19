@@ -1,0 +1,12 @@
+{
+  "id": 624,
+  "name": "pawniard",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/624.png",
+  "bst": 340,
+  "types": [
+    "dark",
+    "steel"
+  ],
+  "region": "unova",
+  "evolutionFamily": 624
+}

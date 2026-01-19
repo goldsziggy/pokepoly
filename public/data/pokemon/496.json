@@ -1,0 +1,11 @@
+{
+  "id": 496,
+  "name": "servine",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/496.png",
+  "bst": 413,
+  "types": [
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 496
+}

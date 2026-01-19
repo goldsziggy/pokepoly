@@ -1,0 +1,11 @@
+{
+  "id": 789,
+  "name": "cosmog",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/789.png",
+  "bst": 200,
+  "types": [
+    "psychic"
+  ],
+  "region": "alola",
+  "evolutionFamily": 789
+}

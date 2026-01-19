@@ -1,0 +1,11 @@
+{
+  "id": 523,
+  "name": "zebstrika",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/523.png",
+  "bst": 497,
+  "types": [
+    "electric"
+  ],
+  "region": "unova",
+  "evolutionFamily": 523
+}

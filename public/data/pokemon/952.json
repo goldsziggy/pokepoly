@@ -1,0 +1,12 @@
+{
+  "id": 952,
+  "name": "scovillain",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/952.png",
+  "bst": 486,
+  "types": [
+    "grass",
+    "fire"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 952
+}

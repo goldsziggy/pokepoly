@@ -1,0 +1,12 @@
+{
+  "id": 743,
+  "name": "ribombee",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/743.png",
+  "bst": 464,
+  "types": [
+    "bug",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 743
+}

@@ -1,0 +1,11 @@
+{
+  "id": 432,
+  "name": "purugly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/432.png",
+  "bst": 452,
+  "types": [
+    "normal"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 432
+}

@@ -1,0 +1,11 @@
+{
+  "id": 511,
+  "name": "pansage",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/511.png",
+  "bst": 316,
+  "types": [
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 511
+}

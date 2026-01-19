@@ -1,0 +1,12 @@
+{
+  "id": 698,
+  "name": "amaura",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/698.png",
+  "bst": 362,
+  "types": [
+    "rock",
+    "ice"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 698
+}

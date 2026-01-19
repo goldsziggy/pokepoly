@@ -1,0 +1,11 @@
+{
+  "id": 865,
+  "name": "sirfetchd",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/865.png",
+  "bst": 507,
+  "types": [
+    "fighting"
+  ],
+  "region": "galar",
+  "evolutionFamily": 865
+}

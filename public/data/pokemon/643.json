@@ -1,0 +1,12 @@
+{
+  "id": 643,
+  "name": "reshiram",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/643.png",
+  "bst": 680,
+  "types": [
+    "dragon",
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 643
+}

@@ -1,0 +1,11 @@
+{
+  "id": 309,
+  "name": "electrike",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/309.png",
+  "bst": 295,
+  "types": [
+    "electric"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 309
+}

@@ -1,0 +1,11 @@
+{
+  "id": 539,
+  "name": "sawk",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/539.png",
+  "bst": 465,
+  "types": [
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 539
+}

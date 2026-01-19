@@ -1,0 +1,12 @@
+{
+  "id": 272,
+  "name": "ludicolo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/272.png",
+  "bst": 480,
+  "types": [
+    "water",
+    "grass"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 270
+}

@@ -1,0 +1,12 @@
+{
+  "id": 208,
+  "name": "steelix",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/208.png",
+  "bst": 510,
+  "types": [
+    "steel",
+    "ground"
+  ],
+  "region": "johto",
+  "evolutionFamily": 95
+}

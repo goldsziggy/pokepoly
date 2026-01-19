@@ -1,0 +1,11 @@
+{
+  "id": 161,
+  "name": "sentret",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/161.png",
+  "bst": 215,
+  "types": [
+    "normal"
+  ],
+  "region": "johto",
+  "evolutionFamily": 161
+}

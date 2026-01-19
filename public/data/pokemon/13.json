@@ -1,0 +1,12 @@
+{
+  "id": 13,
+  "name": "weedle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png",
+  "bst": 195,
+  "types": [
+    "bug",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 13
+}

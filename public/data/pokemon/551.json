@@ -1,0 +1,12 @@
+{
+  "id": 551,
+  "name": "sandile",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/551.png",
+  "bst": 292,
+  "types": [
+    "ground",
+    "dark"
+  ],
+  "region": "unova",
+  "evolutionFamily": 551
+}

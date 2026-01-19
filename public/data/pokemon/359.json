@@ -1,0 +1,11 @@
+{
+  "id": 359,
+  "name": "absol",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/359.png",
+  "bst": 465,
+  "types": [
+    "dark"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 359
+}

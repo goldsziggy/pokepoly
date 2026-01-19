@@ -1,0 +1,11 @@
+{
+  "id": 301,
+  "name": "delcatty",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/301.png",
+  "bst": 400,
+  "types": [
+    "normal"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 300
+}

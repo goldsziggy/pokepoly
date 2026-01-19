@@ -1,0 +1,12 @@
+{
+  "id": 42,
+  "name": "golbat",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png",
+  "bst": 455,
+  "types": [
+    "poison",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 41
+}

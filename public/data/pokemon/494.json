@@ -1,0 +1,12 @@
+{
+  "id": 494,
+  "name": "victini",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/494.png",
+  "bst": 600,
+  "types": [
+    "psychic",
+    "fire"
+  ],
+  "region": "unova",
+  "evolutionFamily": 494
+}

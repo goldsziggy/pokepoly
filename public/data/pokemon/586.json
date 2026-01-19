@@ -1,0 +1,12 @@
+{
+  "id": 586,
+  "name": "sawsbuck",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/586.png",
+  "bst": 475,
+  "types": [
+    "normal",
+    "grass"
+  ],
+  "region": "unova",
+  "evolutionFamily": 586
+}

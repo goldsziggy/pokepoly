@@ -1,0 +1,12 @@
+{
+  "id": 625,
+  "name": "bisharp",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/625.png",
+  "bst": 490,
+  "types": [
+    "dark",
+    "steel"
+  ],
+  "region": "unova",
+  "evolutionFamily": 625
+}

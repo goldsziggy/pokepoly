@@ -1,0 +1,12 @@
+{
+  "id": 396,
+  "name": "starly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/396.png",
+  "bst": 245,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 396
+}

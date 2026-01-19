@@ -1,0 +1,11 @@
+{
+  "id": 516,
+  "name": "simipour",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/516.png",
+  "bst": 498,
+  "types": [
+    "water"
+  ],
+  "region": "unova",
+  "evolutionFamily": 516
+}

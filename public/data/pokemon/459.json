@@ -1,0 +1,12 @@
+{
+  "id": 459,
+  "name": "snover",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/459.png",
+  "bst": 334,
+  "types": [
+    "grass",
+    "ice"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 459
+}

@@ -1,0 +1,12 @@
+{
+  "id": 270,
+  "name": "lotad",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/270.png",
+  "bst": 220,
+  "types": [
+    "water",
+    "grass"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 270
+}

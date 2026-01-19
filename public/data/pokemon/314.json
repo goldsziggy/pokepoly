@@ -1,0 +1,11 @@
+{
+  "id": 314,
+  "name": "illumise",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/314.png",
+  "bst": 430,
+  "types": [
+    "bug"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 314
+}

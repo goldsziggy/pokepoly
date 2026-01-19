@@ -1,0 +1,11 @@
+{
+  "id": 836,
+  "name": "boltund",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/836.png",
+  "bst": 490,
+  "types": [
+    "electric"
+  ],
+  "region": "galar",
+  "evolutionFamily": 836
+}

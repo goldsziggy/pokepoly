@@ -1,0 +1,12 @@
+{
+  "id": 499,
+  "name": "pignite",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/499.png",
+  "bst": 418,
+  "types": [
+    "fire",
+    "fighting"
+  ],
+  "region": "unova",
+  "evolutionFamily": 499
+}

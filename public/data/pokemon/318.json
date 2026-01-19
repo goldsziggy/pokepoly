@@ -1,0 +1,12 @@
+{
+  "id": 318,
+  "name": "carvanha",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/318.png",
+  "bst": 305,
+  "types": [
+    "water",
+    "dark"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 318
+}

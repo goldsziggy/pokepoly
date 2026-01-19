@@ -1,0 +1,11 @@
+{
+  "id": 409,
+  "name": "rampardos",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/409.png",
+  "bst": 495,
+  "types": [
+    "rock"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 409
+}

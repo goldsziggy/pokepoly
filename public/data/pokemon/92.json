@@ -1,0 +1,12 @@
+{
+  "id": 92,
+  "name": "gastly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/92.png",
+  "bst": 310,
+  "types": [
+    "ghost",
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 92
+}

@@ -1,0 +1,11 @@
+{
+  "id": 864,
+  "name": "cursola",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/864.png",
+  "bst": 510,
+  "types": [
+    "ghost"
+  ],
+  "region": "galar",
+  "evolutionFamily": 864
+}

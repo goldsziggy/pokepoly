@@ -1,0 +1,12 @@
+{
+  "id": 740,
+  "name": "crabominable",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/740.png",
+  "bst": 478,
+  "types": [
+    "fighting",
+    "ice"
+  ],
+  "region": "alola",
+  "evolutionFamily": 740
+}

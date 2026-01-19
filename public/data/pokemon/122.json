@@ -1,0 +1,12 @@
+{
+  "id": 122,
+  "name": "mr-mime",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png",
+  "bst": 460,
+  "types": [
+    "psychic",
+    "fairy"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 122
+}

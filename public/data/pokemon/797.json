@@ -1,0 +1,12 @@
+{
+  "id": 797,
+  "name": "celesteela",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/797.png",
+  "bst": 570,
+  "types": [
+    "steel",
+    "flying"
+  ],
+  "region": "alola",
+  "evolutionFamily": 797
+}

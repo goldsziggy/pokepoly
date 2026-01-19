@@ -1,0 +1,12 @@
+{
+  "id": 644,
+  "name": "zekrom",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/644.png",
+  "bst": 680,
+  "types": [
+    "dragon",
+    "electric"
+  ],
+  "region": "unova",
+  "evolutionFamily": 644
+}

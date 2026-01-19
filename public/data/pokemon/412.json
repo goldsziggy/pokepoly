@@ -1,0 +1,11 @@
+{
+  "id": 412,
+  "name": "burmy",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/412.png",
+  "bst": 224,
+  "types": [
+    "bug"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 412
+}

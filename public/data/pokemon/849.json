@@ -1,0 +1,12 @@
+{
+  "id": 849,
+  "name": "toxtricity-amped",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/849.png",
+  "bst": 502,
+  "types": [
+    "electric",
+    "poison"
+  ],
+  "region": "galar",
+  "evolutionFamily": 849
+}

@@ -1,0 +1,11 @@
+{
+  "id": 833,
+  "name": "chewtle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/833.png",
+  "bst": 284,
+  "types": [
+    "water"
+  ],
+  "region": "galar",
+  "evolutionFamily": 833
+}

@@ -1,0 +1,12 @@
+{
+  "id": 883,
+  "name": "arctovish",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/883.png",
+  "bst": 505,
+  "types": [
+    "water",
+    "ice"
+  ],
+  "region": "galar",
+  "evolutionFamily": 883
+}

@@ -12,6 +12,7 @@ import { getEvolutionFamily } from '@/data/evolutionFamilies'
 
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2'
 const CACHE_VERSION = '2.0.0'
+const LOCAL_DATA_BASE = '/data/pokemon'
 
 interface PokeAPIResponse {
   id: number
@@ -78,11 +79,33 @@ function transformPokemonResponse(data: PokeAPIResponse): Pokemon {
   }
 }
 
+async function loadPokemonFromLocal(id: number): Promise<Pokemon | null> {
+  try {
+    const response = await fetch(`${LOCAL_DATA_BASE}/${id}.json`)
+    if (!response.ok) {
+      return null
+    }
+    const pokemon: Pokemon = await response.json()
+    return pokemon
+  } catch {
+    return null
+  }
+}
+
 export async function fetchPokemon(id: number): Promise<Pokemon> {
   // Check cache first
   const cached = await getCachedPokemon(id)
   if (cached) return cached
 
+  // Try loading from local JSON file
+  const local = await loadPokemonFromLocal(id)
+  if (local) {
+    // Cache the result for future use
+    await cachePokemon(local)
+    return local
+  }
+
+  // Fall back to API
   const response = await fetch(`${POKEAPI_BASE}/pokemon/${id}`)
   if (!response.ok) {
     throw new Error(`Failed to fetch Pokémon ${id}: ${response.statusText}`)
@@ -98,6 +121,9 @@ export async function fetchPokemon(id: number): Promise<Pokemon> {
 }
 
 export async function fetchPokemonByName(name: string): Promise<Pokemon> {
+  // Try to find by searching cached/local data first
+  // This is a fallback - we'd need to know the ID to load from local files
+  // For now, fall back to API
   const response = await fetch(`${POKEAPI_BASE}/pokemon/${name.toLowerCase()}`)
   if (!response.ok) {
     throw new Error(`Failed to fetch Pokémon ${name}: ${response.statusText}`)
@@ -136,10 +162,32 @@ export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
     }
   }
 
-  // Fetch missing ones in batches
+  // Try loading missing ones from local files first
+  const localLoadPromises = toFetch.map(async (id) => {
+    const local = await loadPokemonFromLocal(id)
+    if (local) {
+      // Cache for future use
+      await cachePokemon(local).catch(() => {})
+      return { id, pokemon: local }
+    }
+    return { id, pokemon: null }
+  })
+
+  const localResults = await Promise.all(localLoadPromises)
+  const stillToFetch: number[] = []
+  
+  for (const { id, pokemon } of localResults) {
+    if (pokemon) {
+      results.push(pokemon)
+    } else {
+      stillToFetch.push(id)
+    }
+  }
+
+  // Fetch remaining missing ones from API in batches
   const BATCH_SIZE = 20
-  for (let i = 0; i < toFetch.length; i += BATCH_SIZE) {
-    const batch = toFetch.slice(i, i + BATCH_SIZE)
+  for (let i = 0; i < stillToFetch.length; i += BATCH_SIZE) {
+    const batch = stillToFetch.slice(i, i + BATCH_SIZE)
     const fetched = await Promise.all(
       batch.map(async id => {
         try {
@@ -162,7 +210,7 @@ export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
     })
 
     // Small delay to avoid rate limiting
-    if (i + BATCH_SIZE < toFetch.length) {
+    if (i + BATCH_SIZE < stillToFetch.length) {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
   }

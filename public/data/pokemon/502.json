@@ -1,0 +1,11 @@
+{
+  "id": 502,
+  "name": "dewott",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/502.png",
+  "bst": 413,
+  "types": [
+    "water"
+  ],
+  "region": "unova",
+  "evolutionFamily": 502
+}

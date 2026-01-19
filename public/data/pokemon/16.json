@@ -1,0 +1,12 @@
+{
+  "id": 16,
+  "name": "pidgey",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png",
+  "bst": 251,
+  "types": [
+    "normal",
+    "flying"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 16
+}

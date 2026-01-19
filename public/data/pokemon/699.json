@@ -1,0 +1,12 @@
+{
+  "id": 699,
+  "name": "aurorus",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/699.png",
+  "bst": 521,
+  "types": [
+    "rock",
+    "ice"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 699
+}

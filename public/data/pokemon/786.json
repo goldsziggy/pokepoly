@@ -1,0 +1,12 @@
+{
+  "id": 786,
+  "name": "tapu-lele",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/786.png",
+  "bst": 570,
+  "types": [
+    "psychic",
+    "fairy"
+  ],
+  "region": "alola",
+  "evolutionFamily": 786
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1025,
+  "name": "pecharunt",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1025.png",
+  "bst": 600,
+  "types": [
+    "poison",
+    "ghost"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1025
+}

@@ -1,0 +1,12 @@
+{
+  "id": 825,
+  "name": "dottler",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/825.png",
+  "bst": 335,
+  "types": [
+    "bug",
+    "psychic"
+  ],
+  "region": "galar",
+  "evolutionFamily": 825
+}

@@ -1,0 +1,11 @@
+{
+  "id": 953,
+  "name": "rellor",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/953.png",
+  "bst": 270,
+  "types": [
+    "bug"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 953
+}

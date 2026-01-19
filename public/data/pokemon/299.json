@@ -1,0 +1,11 @@
+{
+  "id": 299,
+  "name": "nosepass",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/299.png",
+  "bst": 375,
+  "types": [
+    "rock"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 299
+}

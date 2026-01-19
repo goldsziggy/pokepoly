@@ -1,0 +1,12 @@
+{
+  "id": 479,
+  "name": "rotom",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/479.png",
+  "bst": 440,
+  "types": [
+    "electric",
+    "ghost"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 479
+}

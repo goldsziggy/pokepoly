@@ -1,0 +1,11 @@
+{
+  "id": 837,
+  "name": "rolycoly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/837.png",
+  "bst": 240,
+  "types": [
+    "rock"
+  ],
+  "region": "galar",
+  "evolutionFamily": 837
+}

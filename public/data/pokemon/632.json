@@ -1,0 +1,12 @@
+{
+  "id": 632,
+  "name": "durant",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/632.png",
+  "bst": 484,
+  "types": [
+    "bug",
+    "steel"
+  ],
+  "region": "unova",
+  "evolutionFamily": 632
+}

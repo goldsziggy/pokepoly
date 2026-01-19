@@ -1,0 +1,11 @@
+{
+  "id": 89,
+  "name": "muk",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png",
+  "bst": 500,
+  "types": [
+    "poison"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 88
+}

@@ -1,0 +1,11 @@
+{
+  "id": 927,
+  "name": "dachsbun",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/927.png",
+  "bst": 477,
+  "types": [
+    "fairy"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 927
+}

@@ -1,0 +1,11 @@
+{
+  "id": 942,
+  "name": "maschiff",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/942.png",
+  "bst": 340,
+  "types": [
+    "dark"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 942
+}

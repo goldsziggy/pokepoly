@@ -1,0 +1,12 @@
+{
+  "id": 256,
+  "name": "combusken",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/256.png",
+  "bst": 405,
+  "types": [
+    "fire",
+    "fighting"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 255
+}

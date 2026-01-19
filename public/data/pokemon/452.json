@@ -1,0 +1,12 @@
+{
+  "id": 452,
+  "name": "drapion",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/452.png",
+  "bst": 500,
+  "types": [
+    "poison",
+    "dark"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 452
+}

@@ -1,0 +1,11 @@
+{
+  "id": 895,
+  "name": "regidrago",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/895.png",
+  "bst": 580,
+  "types": [
+    "dragon"
+  ],
+  "region": "galar",
+  "evolutionFamily": 895
+}

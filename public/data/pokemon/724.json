@@ -1,0 +1,12 @@
+{
+  "id": 724,
+  "name": "decidueye",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/724.png",
+  "bst": 530,
+  "types": [
+    "grass",
+    "ghost"
+  ],
+  "region": "alola",
+  "evolutionFamily": 724
+}

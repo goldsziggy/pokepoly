@@ -1,0 +1,11 @@
+{
+  "id": 562,
+  "name": "yamask",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/562.png",
+  "bst": 303,
+  "types": [
+    "ghost"
+  ],
+  "region": "unova",
+  "evolutionFamily": 562
+}

@@ -1,0 +1,12 @@
+{
+  "id": 1001,
+  "name": "wo-chien",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1001.png",
+  "bst": 570,
+  "types": [
+    "dark",
+    "grass"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 1001
+}

@@ -1,0 +1,11 @@
+{
+  "id": 602,
+  "name": "tynamo",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/602.png",
+  "bst": 275,
+  "types": [
+    "electric"
+  ],
+  "region": "unova",
+  "evolutionFamily": 602
+}

@@ -1,0 +1,11 @@
+{
+  "id": 827,
+  "name": "nickit",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/827.png",
+  "bst": 245,
+  "types": [
+    "dark"
+  ],
+  "region": "galar",
+  "evolutionFamily": 827
+}

@@ -1,0 +1,11 @@
+{
+  "id": 438,
+  "name": "bonsly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/438.png",
+  "bst": 290,
+  "types": [
+    "rock"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 438
+}

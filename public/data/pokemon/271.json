@@ -1,0 +1,12 @@
+{
+  "id": 271,
+  "name": "lombre",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/271.png",
+  "bst": 340,
+  "types": [
+    "water",
+    "grass"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 270
+}

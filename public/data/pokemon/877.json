@@ -1,0 +1,12 @@
+{
+  "id": 877,
+  "name": "morpeko-full-belly",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/877.png",
+  "bst": 436,
+  "types": [
+    "electric",
+    "dark"
+  ],
+  "region": "galar",
+  "evolutionFamily": 877
+}

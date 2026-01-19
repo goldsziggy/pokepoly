@@ -1,0 +1,11 @@
+{
+  "id": 421,
+  "name": "cherrim",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/421.png",
+  "bst": 450,
+  "types": [
+    "grass"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 421
+}

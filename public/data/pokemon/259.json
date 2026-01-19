@@ -1,0 +1,12 @@
+{
+  "id": 259,
+  "name": "marshtomp",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/259.png",
+  "bst": 405,
+  "types": [
+    "water",
+    "ground"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 258
+}

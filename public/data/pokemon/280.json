@@ -1,0 +1,12 @@
+{
+  "id": 280,
+  "name": "ralts",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/280.png",
+  "bst": 198,
+  "types": [
+    "psychic",
+    "fairy"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 280
+}

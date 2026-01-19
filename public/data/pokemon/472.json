@@ -1,0 +1,12 @@
+{
+  "id": 472,
+  "name": "gliscor",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/472.png",
+  "bst": 510,
+  "types": [
+    "ground",
+    "flying"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 472
+}

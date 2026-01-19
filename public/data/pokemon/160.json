@@ -1,0 +1,11 @@
+{
+  "id": 160,
+  "name": "feraligatr",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/160.png",
+  "bst": 530,
+  "types": [
+    "water"
+  ],
+  "region": "johto",
+  "evolutionFamily": 158
+}

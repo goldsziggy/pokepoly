@@ -1,0 +1,12 @@
+{
+  "id": 468,
+  "name": "togekiss",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/468.png",
+  "bst": 545,
+  "types": [
+    "fairy",
+    "flying"
+  ],
+  "region": "sinnoh",
+  "evolutionFamily": 468
+}

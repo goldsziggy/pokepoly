@@ -1,0 +1,11 @@
+{
+  "id": 253,
+  "name": "grovyle",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/253.png",
+  "bst": 405,
+  "types": [
+    "grass"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 252
+}

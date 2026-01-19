@@ -1,0 +1,12 @@
+{
+  "id": 214,
+  "name": "heracross",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/214.png",
+  "bst": 500,
+  "types": [
+    "bug",
+    "fighting"
+  ],
+  "region": "johto",
+  "evolutionFamily": 214
+}

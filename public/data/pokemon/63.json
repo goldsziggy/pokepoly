@@ -1,0 +1,11 @@
+{
+  "id": 63,
+  "name": "abra",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png",
+  "bst": 310,
+  "types": [
+    "psychic"
+  ],
+  "region": "kanto",
+  "evolutionFamily": 63
+}

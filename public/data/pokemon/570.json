@@ -1,0 +1,11 @@
+{
+  "id": 570,
+  "name": "zorua",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/570.png",
+  "bst": 330,
+  "types": [
+    "dark"
+  ],
+  "region": "unova",
+  "evolutionFamily": 570
+}

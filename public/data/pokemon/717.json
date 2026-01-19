@@ -1,0 +1,12 @@
+{
+  "id": 717,
+  "name": "yveltal",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/717.png",
+  "bst": 680,
+  "types": [
+    "dark",
+    "flying"
+  ],
+  "region": "kalos",
+  "evolutionFamily": 717
+}

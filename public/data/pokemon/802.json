@@ -1,0 +1,12 @@
+{
+  "id": 802,
+  "name": "marshadow",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/802.png",
+  "bst": 600,
+  "types": [
+    "fighting",
+    "ghost"
+  ],
+  "region": "alola",
+  "evolutionFamily": 802
+}

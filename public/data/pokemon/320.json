@@ -1,0 +1,11 @@
+{
+  "id": 320,
+  "name": "wailmer",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/320.png",
+  "bst": 400,
+  "types": [
+    "water"
+  ],
+  "region": "hoenn",
+  "evolutionFamily": 320
+}

@@ -1,0 +1,12 @@
+{
+  "id": 994,
+  "name": "iron-moth",
+  "sprite": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/994.png",
+  "bst": 570,
+  "types": [
+    "fire",
+    "poison"
+  ],
+  "region": "paldea",
+  "evolutionFamily": 994
+}
