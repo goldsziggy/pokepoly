@@ -1,6 +1,6 @@
 import { Card, Button, Input } from '@/components/ui'
 import { BoardPreview } from '@/components/board'
-import { ShareButton, GeneratePdfButton, CardSizeSelector, PaperSizeSelector, BoardSizeSelector } from '@/components/configurator'
+import { ShareButton, GeneratePdfButton, ExportBoardImageButton, CardSizeSelector, PaperSizeSelector, BoardSizeSelector } from '@/components/configurator'
 import { useBoardStore } from '@/store'
 
 interface BoardResultProps {
@@ -53,6 +53,7 @@ export function BoardResult({ onRestart, onBack }: BoardResultProps) {
             </div>
             <ShareButton />
             <GeneratePdfButton />
+            <ExportBoardImageButton />
           </div>
         </div>
       </Card>

@@ -872,12 +872,12 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
 
                       <View style={{ height: rulesRowGap }} />
 
-                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <Text style={styles.rulesBold}>Buy:</Text>
-                        <Text style={styles.rulesText}> Land on unowned property? Buy it! </Text>
-                        <Text style={styles.rulesBold}>Rent:</Text>
-                        <Text style={styles.rulesText}> Others land on yours? Collect rent!</Text>
-                      </View>
+	                      <View style={{ flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap' }}>
+	                        <Text style={styles.rulesBold}>Buy:</Text>
+	                        <Text style={styles.rulesText}> Land on an unclaimed Pokémon? Capture it (buy)! </Text>
+	                        <Text style={styles.rulesBold}>Battle:</Text>
+	                        <Text style={styles.rulesText}> Land on a Pokémon someone owns? You lost — pay the owner.</Text>
+	                      </View>
 
                       <View style={{ height: rulesRowGap }} />
 

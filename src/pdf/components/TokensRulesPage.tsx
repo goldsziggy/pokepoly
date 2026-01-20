@@ -142,7 +142,7 @@ export function TokensRulesPage({ paperSize }: TokensRulesPageProps) {
 
             <Text style={styles.rulesBold}>Properties:</Text>
             <Text style={styles.rulesText}>
-              Buy unowned Pokemon properties you land on. Collect rent when others land on yours.
+              Land on an unclaimed Pokémon? Capture it (buy). Land on a Pokémon someone owns? You lost a battle — pay the owner the fee.
             </Text>
 
             <Text style={styles.rulesBold}>Gym Badges & League Badges:</Text>

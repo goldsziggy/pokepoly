@@ -113,7 +113,7 @@ function BoardCenter() {
             <div className="text-[14px] font-pixel text-red-600 font-bold mb-3">QUICK RULES</div>
             <div className="space-y-1 text-[10px] font-pixel text-gray-800 leading-relaxed">
               <div><span className="font-bold">Setup:</span> Each player starts with <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />1500</span> on GO. <span className="font-bold">Play:</span> Roll dice, move clockwise.</div>
-              <div><span className="font-bold">Buy:</span> Land on unowned property? Buy it! <span className="font-bold">Rent:</span> Others land on yours? Collect!</div>
+              <div><span className="font-bold">Buy:</span> Land on an unclaimed Pokémon? Capture it (buy)! <span className="font-bold">Battle:</span> If you land on a Pokémon someone owns, you lost a battle — pay them the fee.</div>
               <div><span className="font-bold">Build:</span> Own all of a color → add Gym Badges. 4 Gym Badges = 1 League Badge.</div>
               <div><span className="font-bold">Jail:</span> Pay <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />50</span> or roll doubles. <span className="font-bold">Gyms:</span> Rent = <span className="inline-flex items-center gap-0.5"><PokeCoin size={8} />25</span> × gyms owned. <span className="font-bold">Utilities:</span> Rent = 4× dice roll (or 10× if both utilities owned).</div>
               <div><span className="font-bold">Free Parking:</span> Collect Grunt Ambush, Giovanni & card fees!</div>
