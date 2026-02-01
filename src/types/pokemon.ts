@@ -18,6 +18,7 @@ export type Region =
   | 'alola'
   | 'galar'
   | 'paldea'
+  | 'palworld'
 
 export const REGIONS: Region[] = [
   'kanto',
@@ -29,6 +30,7 @@ export const REGIONS: Region[] = [
   'alola',
   'galar',
   'paldea',
+  'palworld',
 ]
 
 export const REGION_RANGES: Record<Region, [number, number]> = {
@@ -41,6 +43,7 @@ export const REGION_RANGES: Record<Region, [number, number]> = {
   alola: [722, 809],
   galar: [810, 905],
   paldea: [906, 1025],
+  palworld: [2000, 2136],
 }
 
 export const REGION_LABELS: Record<Region, string> = {
@@ -53,4 +56,5 @@ export const REGION_LABELS: Record<Region, string> = {
   alola: 'Alola (Gen 7)',
   galar: 'Galar (Gen 8)',
   paldea: 'Paldea (Gen 9)',
+  palworld: 'Palworld',
 }

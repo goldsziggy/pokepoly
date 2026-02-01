@@ -7,6 +7,7 @@
 
 export const TYPE_ABBREVIATIONS: Record<string, string> = {
   normal: 'NM',
+  neutral: 'NL',
   fire: 'FR',
   water: 'WT',
   electric: 'EL',

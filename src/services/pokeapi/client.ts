@@ -13,6 +13,12 @@ import { getEvolutionFamily } from '@/data/evolutionFamilies'
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2'
 const CACHE_VERSION = '2.0.0'
 const LOCAL_DATA_BASE = '/data/pokemon'
+const PALWORLD_DATA_URL = '/data/palworld/palworld.json'
+const PALWORLD_ID_OFFSET = 2000
+const [PALWORLD_ID_MIN, PALWORLD_ID_MAX] = (() => {
+  const [start, end] = REGION_RANGES.palworld
+  return [start, end]
+})()
 
 interface PokeAPIResponse {
   id: number
@@ -33,9 +39,18 @@ interface PokeAPIListResponse {
   results: Array<{ name: string; url: string }>
 }
 
+interface PalworldEntry {
+  id: number
+  name: string
+  key: string
+  image: string
+  types: string[]
+}
+
 const MAX_POKEDEX_ID = Math.max(...Object.values(REGION_RANGES).map(([, end]) => end))
 
 function getRegionFromId(id: number): Region {
+  if (id >= PALWORLD_ID_MIN && id <= PALWORLD_ID_MAX) return 'palworld'
   const ranges: [Region, [number, number]][] = [
     ['kanto', [1, 151]],
     ['johto', [152, 251]],
@@ -47,7 +62,6 @@ function getRegionFromId(id: number): Region {
     ['galar', [810, 905]],
     ['paldea', [906, 1025]],
   ]
-
   for (const [region, [start, end]] of ranges) {
     if (id >= start && id <= end) return region
   }
@@ -79,6 +93,36 @@ function transformPokemonResponse(data: PokeAPIResponse): Pokemon {
   }
 }
 
+function transformPalworldEntry(entry: PalworldEntry): Pokemon {
+  const id = PALWORLD_ID_OFFSET + (entry.id - 1)
+  return {
+    id,
+    name: entry.name.toLowerCase(),
+    sprite: `/images/${entry.image}`,
+    bst: 400,
+    types: entry.types.map(t => t.toLowerCase()),
+    region: 'palworld',
+    evolutionFamily: id,
+  }
+}
+
+let palworldListCache: Pokemon[] | null = null
+
+async function loadPalworldList(): Promise<Pokemon[]> {
+  if (palworldListCache) return palworldListCache
+  const response = await fetch(PALWORLD_DATA_URL)
+  if (!response.ok) {
+    throw new Error(`Failed to load Palworld data: ${response.statusText}`)
+  }
+  const data: PalworldEntry[] = await response.json()
+  palworldListCache = data.map(transformPalworldEntry)
+  return palworldListCache
+}
+
+function isPalworldId(id: number): boolean {
+  return id >= PALWORLD_ID_MIN && id <= PALWORLD_ID_MAX
+}
+
 async function loadPokemonFromLocal(id: number): Promise<Pokemon | null> {
   try {
     const response = await fetch(`${LOCAL_DATA_BASE}/${id}.json`)
@@ -96,6 +140,17 @@ export async function fetchPokemon(id: number): Promise<Pokemon> {
   // Check cache first
   const cached = await getCachedPokemon(id)
   if (cached) return cached
+
+  // Palworld: load from palworld.json
+  if (isPalworldId(id)) {
+    const list = await loadPalworldList()
+    const pal = list.find(p => p.id === id)
+    if (pal) {
+      await cachePokemon(pal)
+      return pal
+    }
+    throw new Error(`Pal not found: ${id}`)
+  }
 
   // Try loading from local JSON file
   const local = await loadPokemonFromLocal(id)
@@ -139,15 +194,25 @@ export async function fetchPokemonByName(name: string): Promise<Pokemon> {
 
 export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
   const results: Pokemon[] = []
+  const palworldIds = ids.filter(isPalworldId)
+  const pokemonIds = ids.filter(id => !isPalworldId(id))
+
+  // Resolve Palworld IDs from palworld.json
+  if (palworldIds.length > 0) {
+    const palworldList = await loadPalworldList()
+    const pals = palworldList.filter(p => palworldIds.includes(p.id))
+    results.push(...pals)
+    cacheManyPokemon(pals).catch(() => {})
+  }
+
   const toFetch: number[] = []
 
-  // Check cache for each (in parallel for better performance)
-  const cacheCheckPromises = ids.map(async (id) => {
+  // Check cache for Pokémon IDs
+  const cacheCheckPromises = pokemonIds.map(async (id) => {
     try {
       const cached = await getCachedPokemon(id)
       return { id, cached }
     } catch (error) {
-      // If cache check fails, assume not cached and fetch from API
       console.warn(`Cache check failed for Pokemon ${id}, will fetch from API:`, error)
       return { id, cached: undefined }
     }
@@ -166,7 +231,6 @@ export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
   const localLoadPromises = toFetch.map(async (id) => {
     const local = await loadPokemonFromLocal(id)
     if (local) {
-      // Cache for future use
       await cachePokemon(local).catch(() => {})
       return { id, pokemon: local }
     }
@@ -175,7 +239,7 @@ export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
 
   const localResults = await Promise.all(localLoadPromises)
   const stillToFetch: number[] = []
-  
+
   for (const { id, pokemon } of localResults) {
     if (pokemon) {
       results.push(pokemon)
@@ -203,13 +267,11 @@ export async function fetchPokemonBatch(ids: number[]): Promise<Pokemon[]> {
 
     const validPokemon = fetched.filter((p): p is Pokemon => p !== null)
     results.push(...validPokemon)
-    
-    // Cache in background (don't block on cache write)
+
     cacheManyPokemon(validPokemon).catch(error => {
       console.warn('Failed to cache Pokemon (non-critical):', error)
     })
 
-    // Small delay to avoid rate limiting
     if (i + BATCH_SIZE < stillToFetch.length) {
       await new Promise(resolve => setTimeout(resolve, 100))
     }
@@ -261,6 +323,17 @@ export async function ensureBasicPokemonCached(): Promise<void> {
       return
     }
 
+    // Pre-cache Palworld so customization search finds Pals
+    try {
+      const pals = await loadPalworldList()
+      if (pals.length > 0) {
+        await cacheManyPokemon(pals)
+        console.log(`Palworld cache: ${pals.length} Pals`)
+      }
+    } catch (e) {
+      console.warn('Pre-caching Palworld failed (non-critical):', e)
+    }
+
     await setCacheMetadata({
       lastFetch: Date.now(),
       version: CACHE_VERSION,
@@ -310,7 +383,19 @@ export async function ensureAllPokemonCached(): Promise<Pokemon[]> {
 }
 
 export async function fetchRegionPokemon(region: Region): Promise<Pokemon[]> {
-  const ranges: Record<Region, [number, number]> = {
+  if (region === 'palworld') {
+    try {
+      const pokemon = await loadPalworldList()
+      if (pokemon.length === 0) throw new Error('No Pals loaded')
+      await cacheManyPokemon(pokemon)
+      return pokemon
+    } catch (error) {
+      console.error(`Error fetching Palworld:`, error)
+      throw error
+    }
+  }
+
+  const ranges: Record<Exclude<Region, 'palworld'>, [number, number]> = {
     kanto: [1, 151],
     johto: [152, 251],
     hoenn: [252, 386],

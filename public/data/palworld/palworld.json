@@ -1,0 +1,975 @@
+[
+  {
+    "id": 1,
+    "name": "Lamball",
+    "key": "001",
+    "image": "palworld/001-Lamball.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 2,
+    "name": "Cattiva",
+    "key": "002",
+    "image": "palworld/002-Cattiva.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 3,
+    "name": "Chikipi",
+    "key": "003",
+    "image": "palworld/003-Chikipi.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 4,
+    "name": "Lifmunk",
+    "key": "004",
+    "image": "palworld/004-Lifmunk.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 5,
+    "name": "Foxparks",
+    "key": "005",
+    "image": "palworld/005-Foxparks.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 6,
+    "name": "Fuack",
+    "key": "006",
+    "image": "palworld/006-Fuack.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 7,
+    "name": "Sparkit",
+    "key": "007",
+    "image": "palworld/007-Sparkit.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 8,
+    "name": "Tanzee",
+    "key": "008",
+    "image": "palworld/008-Tanzee.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 9,
+    "name": "Rooby",
+    "key": "009",
+    "image": "palworld/009-Rooby.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 10,
+    "name": "Pengullet",
+    "key": "010",
+    "image": "palworld/010-Pengullet.webp",
+    "types": ["water", "ice"]
+  },
+  {
+    "id": 11,
+    "name": "Penking",
+    "key": "011",
+    "image": "palworld/011-Penking.webp",
+    "types": ["water", "ice"]
+  },
+  {
+    "id": 12,
+    "name": "Jolthog",
+    "key": "012",
+    "image": "palworld/012-Jolthog.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 13,
+    "name": "Gumoss",
+    "key": "013",
+    "image": "palworld/013-Gumoss.webp",
+    "types": ["grass", "ground"]
+  },
+  {
+    "id": 14,
+    "name": "Vixy",
+    "key": "014",
+    "image": "palworld/014-Vixy.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 15,
+    "name": "Hoocrates",
+    "key": "015",
+    "image": "palworld/015-Hoocrates.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 16,
+    "name": "Teafant",
+    "key": "016",
+    "image": "palworld/016-Teafant.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 17,
+    "name": "Depresso",
+    "key": "017",
+    "image": "palworld/017-Depresso.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 18,
+    "name": "Cremis",
+    "key": "018",
+    "image": "palworld/018-Cremis.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 19,
+    "name": "Daedream",
+    "key": "019",
+    "image": "palworld/019-Daedream.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 20,
+    "name": "Rushoar",
+    "key": "020",
+    "image": "palworld/020-Rushoar.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 21,
+    "name": "Nox",
+    "key": "021",
+    "image": "palworld/021-Nox.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 22,
+    "name": "Fuddler",
+    "key": "022",
+    "image": "palworld/022-Fuddler.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 23,
+    "name": "Killamari",
+    "key": "023",
+    "image": "palworld/023-Killamari.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 24,
+    "name": "Mau",
+    "key": "024",
+    "image": "palworld/024-Mau.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 25,
+    "name": "Celaray",
+    "key": "025",
+    "image": "palworld/025-Celaray.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 26,
+    "name": "Direhowl",
+    "key": "026",
+    "image": "palworld/026-Direhowl.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 27,
+    "name": "Tocotoco",
+    "key": "027",
+    "image": "palworld/027-Tocotoco.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 28,
+    "name": "Flopie",
+    "key": "028",
+    "image": "palworld/028-Flopie.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 29,
+    "name": "Mozzarina",
+    "key": "029",
+    "image": "palworld/029-Mozzarina.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 30,
+    "name": "Bristla",
+    "key": "030",
+    "image": "palworld/030-Bristla.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 31,
+    "name": "Gobfin",
+    "key": "031",
+    "image": "palworld/031-Gobfin.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 32,
+    "name": "Hangyu",
+    "key": "032",
+    "image": "palworld/032-Hangyu.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 33,
+    "name": "Mossanda",
+    "key": "033",
+    "image": "palworld/033-Mossanda.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 34,
+    "name": "Woolipop",
+    "key": "034",
+    "image": "palworld/034-Woolipop.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 35,
+    "name": "Caprity",
+    "key": "035",
+    "image": "palworld/035-Caprity.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 36,
+    "name": "Melpaca",
+    "key": "036",
+    "image": "palworld/036-Melpaca.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 37,
+    "name": "Eikthyrdeer",
+    "key": "037",
+    "image": "palworld/037-Eikthyrdeer.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 38,
+    "name": "Nitewing",
+    "key": "038",
+    "image": "palworld/038-Nitewing.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 39,
+    "name": "Ribbuny",
+    "key": "039",
+    "image": "palworld/039-Ribbuny.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 40,
+    "name": "Incineram",
+    "key": "040",
+    "image": "palworld/040-Incineram.webp",
+    "types": ["fire", "dark"]
+  },
+  {
+    "id": 41,
+    "name": "Cinnamoth",
+    "key": "041",
+    "image": "palworld/041-Cinnamoth.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 42,
+    "name": "Arsox",
+    "key": "042",
+    "image": "palworld/042-Arsox.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 43,
+    "name": "Dumud",
+    "key": "043",
+    "image": "palworld/043-Dumud.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 44,
+    "name": "Cawgnito",
+    "key": "044",
+    "image": "palworld/044-Cawgnito.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 45,
+    "name": "Leezpunk",
+    "key": "045",
+    "image": "palworld/045-Leezpunk.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 46,
+    "name": "Loupmoon",
+    "key": "046",
+    "image": "palworld/046-Loupmoon.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 47,
+    "name": "Galeclaw",
+    "key": "047",
+    "image": "palworld/047-Galeclaw.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 48,
+    "name": "Robinquill",
+    "key": "048",
+    "image": "palworld/048-Robinquill.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 49,
+    "name": "Gorirat",
+    "key": "049",
+    "image": "palworld/049-Gorirat.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 50,
+    "name": "Beegarde",
+    "key": "050",
+    "image": "palworld/050-Beegarde.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 51,
+    "name": "Elizabee",
+    "key": "051",
+    "image": "palworld/051-Elizabee.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 52,
+    "name": "Grintale",
+    "key": "052",
+    "image": "palworld/052-Grintale.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 53,
+    "name": "Swee",
+    "key": "053",
+    "image": "palworld/053-Swee.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 54,
+    "name": "Sweepa",
+    "key": "054",
+    "image": "palworld/054-Sweepa.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 55,
+    "name": "Chillet",
+    "key": "055",
+    "image": "palworld/055-Chillet.webp",
+    "types": ["ice", "dragon"]
+  },
+  {
+    "id": 56,
+    "name": "Univolt",
+    "key": "056",
+    "image": "palworld/056-Univolt.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 57,
+    "name": "Foxcicle",
+    "key": "057",
+    "image": "palworld/057-Foxcicle.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 58,
+    "name": "Pyrin",
+    "key": "058",
+    "image": "palworld/058-Pyrin.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 59,
+    "name": "Reindrix",
+    "key": "059",
+    "image": "palworld/059-Reindrix.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 60,
+    "name": "Rayhound",
+    "key": "060",
+    "image": "palworld/060-Rayhound.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 61,
+    "name": "Kitsun",
+    "key": "061",
+    "image": "palworld/061-Kitsun.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 62,
+    "name": "Dazzi",
+    "key": "062",
+    "image": "palworld/062-Dazzi.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 63,
+    "name": "Lunaris",
+    "key": "063",
+    "image": "palworld/063-Lunaris.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 64,
+    "name": "Dinossom",
+    "key": "064",
+    "image": "palworld/064-Dinossom.webp",
+    "types": ["grass", "dragon"]
+  },
+  {
+    "id": 65,
+    "name": "Surfent",
+    "key": "065",
+    "image": "palworld/065-Surfent.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 66,
+    "name": "Maraith",
+    "key": "066",
+    "image": "palworld/066-Maraith.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 67,
+    "name": "Digtoise",
+    "key": "067",
+    "image": "palworld/067-Digtoise.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 68,
+    "name": "Tombat",
+    "key": "068",
+    "image": "palworld/068-Tombat.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 69,
+    "name": "Lovander",
+    "key": "069",
+    "image": "palworld/069-Lovander.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 70,
+    "name": "Flambelle",
+    "key": "070",
+    "image": "palworld/070-Flambelle.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 71,
+    "name": "Vanwyrm",
+    "key": "071",
+    "image": "palworld/071-Vanwyrm.webp",
+    "types": ["fire", "dark"]
+  },
+  {
+    "id": 72,
+    "name": "Bushi",
+    "key": "072",
+    "image": "palworld/072-Bushi.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 73,
+    "name": "Beakon",
+    "key": "073",
+    "image": "palworld/073-Beakon.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 74,
+    "name": "Ragnahawk",
+    "key": "074",
+    "image": "palworld/074-Ragnahawk.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 75,
+    "name": "Katress",
+    "key": "075",
+    "image": "palworld/075-Katress.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 76,
+    "name": "Wixen",
+    "key": "076",
+    "image": "palworld/076-Wixen.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 77,
+    "name": "Verdash",
+    "key": "077",
+    "image": "palworld/077-Verdash.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 78,
+    "name": "Vaelet",
+    "key": "078",
+    "image": "palworld/078-Vaelet.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 79,
+    "name": "Sibelyx",
+    "key": "079",
+    "image": "palworld/079-Sibelyx.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 80,
+    "name": "Elphidran",
+    "key": "080",
+    "image": "palworld/080-Elphidran.webp",
+    "types": ["dragon"]
+  },
+  {
+    "id": 81,
+    "name": "Kelpsea",
+    "key": "081",
+    "image": "palworld/081-Kelpsea.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 82,
+    "name": "Azurobe",
+    "key": "082",
+    "image": "palworld/082-Azurobe.webp",
+    "types": ["water", "dragon"]
+  },
+  {
+    "id": 83,
+    "name": "Cryolinx",
+    "key": "083",
+    "image": "palworld/083-Cryolinx.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 84,
+    "name": "Blazehowl",
+    "key": "084",
+    "image": "palworld/084-Blazehowl.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 85,
+    "name": "Relaxaurus",
+    "key": "085",
+    "image": "palworld/085-Relaxaurus.webp",
+    "types": ["dragon", "water"]
+  },
+  {
+    "id": 86,
+    "name": "Broncherry",
+    "key": "086",
+    "image": "palworld/086-Broncherry.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 87,
+    "name": "Petallia",
+    "key": "087",
+    "image": "palworld/087-Petallia.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 88,
+    "name": "Reptyro",
+    "key": "088",
+    "image": "palworld/088-Reptyro.webp",
+    "types": ["fire", "ground"]
+  },
+  {
+    "id": 89,
+    "name": "Kingpaca",
+    "key": "089",
+    "image": "palworld/089-Kingpaca.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 90,
+    "name": "Mammorest",
+    "key": "090",
+    "image": "palworld/090-Mammorest.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 91,
+    "name": "Wumpo",
+    "key": "091",
+    "image": "palworld/091-Wumpo.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 92,
+    "name": "Warsect",
+    "key": "092",
+    "image": "palworld/092-Warsect.webp",
+    "types": ["grass", "ground"]
+  },
+  {
+    "id": 93,
+    "name": "Fenglope",
+    "key": "093",
+    "image": "palworld/093-Fenglope.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 94,
+    "name": "Felbat",
+    "key": "094",
+    "image": "palworld/094-Felbat.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 95,
+    "name": "Quivern",
+    "key": "095",
+    "image": "palworld/095-Quivern.webp",
+    "types": ["dragon"]
+  },
+  {
+    "id": 96,
+    "name": "Blazamut",
+    "key": "096",
+    "image": "palworld/096-Blazamut.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 97,
+    "name": "Helzephyr",
+    "key": "097",
+    "image": "palworld/097-Helzephyr.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 98,
+    "name": "Astegon",
+    "key": "098",
+    "image": "palworld/098-Astegon.webp",
+    "types": ["dragon", "dark"]
+  },
+  {
+    "id": 99,
+    "name": "Menasting",
+    "key": "099",
+    "image": "palworld/099-Menasting.webp",
+    "types": ["dark", "ground"]
+  },
+  {
+    "id": 100,
+    "name": "Anubis",
+    "key": "100",
+    "image": "palworld/100-Anubis.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 101,
+    "name": "Jormuntide",
+    "key": "101",
+    "image": "palworld/101-Jormuntide.webp",
+    "types": ["dragon", "water"]
+  },
+  {
+    "id": 102,
+    "name": "Suzaku",
+    "key": "102",
+    "image": "palworld/102-Suzaku.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 103,
+    "name": "Grizzbolt",
+    "key": "103",
+    "image": "palworld/103-Grizzbolt.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 104,
+    "name": "Lyleen",
+    "key": "104",
+    "image": "palworld/104-Lyleen.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 105,
+    "name": "Faleris",
+    "key": "105",
+    "image": "palworld/105-Faleris.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 106,
+    "name": "Orserk",
+    "key": "106",
+    "image": "palworld/106-Orserk.webp",
+    "types": ["dragon", "electric"]
+  },
+  {
+    "id": 107,
+    "name": "Shadowbeak",
+    "key": "107",
+    "image": "palworld/107-Shadowbeak.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 108,
+    "name": "Paladius",
+    "key": "108",
+    "image": "palworld/108-Paladius.webp",
+    "types": ["neutral"]
+  },
+  {
+    "id": 109,
+    "name": "Necromus",
+    "key": "109",
+    "image": "palworld/109-Necromus.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 110,
+    "name": "Frostallion",
+    "key": "110",
+    "image": "palworld/110-Frostallion.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 111,
+    "name": "Jetragon",
+    "key": "111",
+    "image": "palworld/111-Jetragon.webp",
+    "types": ["dragon"]
+  },
+  {
+    "id": 112,
+    "name": "Jolthog Cryst",
+    "key": "012B",
+    "image": "palworld/012B-JolthogCryst.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 113,
+    "name": "Mau Cryst",
+    "key": "024B",
+    "image": "palworld/024B-MauCryst.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 114,
+    "name": "Gobfin Ignis",
+    "key": "031B",
+    "image": "palworld/031B-GobfinIgnis.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 115,
+    "name": "Hangyu Cryst",
+    "key": "032B",
+    "image": "palworld/032B-HangyuCryst.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 116,
+    "name": "Mossanda Lux",
+    "key": "033B",
+    "image": "palworld/033B-MossandaLux.webp",
+    "types": ["electric"]
+  },
+  {
+    "id": 117,
+    "name": "Eikthyrdeer Terra",
+    "key": "037B",
+    "image": "palworld/037B-EikthyrdeerTerra.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 118,
+    "name": "Incineram Noct",
+    "key": "040B",
+    "image": "palworld/040B-IncineramNoct.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 119,
+    "name": "Leezpunk Ignis",
+    "key": "045B",
+    "image": "palworld/045B-LeezpunkIgnis.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 120,
+    "name": "Robinquill Terra",
+    "key": "048B",
+    "image": "palworld/048B-RobinquillTerra.webp",
+    "types": ["grass", "ground"]
+  },
+  {
+    "id": 121,
+    "name": "Pyrin Noct",
+    "key": "058B",
+    "image": "palworld/058B-PyrinNoct.webp",
+    "types": ["fire", "dark"]
+  },
+  {
+    "id": 122,
+    "name": "Dinossom Lux",
+    "key": "064B",
+    "image": "palworld/064B-DinossomLux.webp",
+    "types": ["electric", "dragon"]
+  },
+  {
+    "id": 123,
+    "name": "Surfent Terra",
+    "key": "065B",
+    "image": "palworld/065B-SurfentTerra.webp",
+    "types": ["ground"]
+  },
+  {
+    "id": 124,
+    "name": "Vanwyrm Cryst",
+    "key": "071B",
+    "image": "palworld/071B-VanwyrmCryst.webp",
+    "types": ["ice", "dark"]
+  },
+  {
+    "id": 125,
+    "name": "Elphidran Aqua",
+    "key": "080B",
+    "image": "palworld/080B-ElphidranAqua.webp",
+    "types": ["dragon", "water"]
+  },
+  {
+    "id": 126,
+    "name": "Kelpsea Ignis",
+    "key": "081B",
+    "image": "palworld/081B-KelpseaIgnis.webp",
+    "types": ["fire"]
+  },
+  {
+    "id": 127,
+    "name": "Blazehowl Noct",
+    "key": "084B",
+    "image": "palworld/084B-BlazehowlNoct.webp",
+    "types": ["fire", "dark"]
+  },
+  {
+    "id": 128,
+    "name": "Relaxaurus Lux",
+    "key": "085B",
+    "image": "palworld/085B-RelaxaurusLux.webp",
+    "types": ["dragon", "electric"]
+  },
+  {
+    "id": 129,
+    "name": "Broncherry Aqua",
+    "key": "086B",
+    "image": "palworld/086B-BroncherryAqua.webp",
+    "types": ["grass", "water"]
+  },
+  {
+    "id": 130,
+    "name": "Reptyro Cryst",
+    "key": "088B",
+    "image": "palworld/088B-ReptyroCryst.webp",
+    "types": ["ice", "ground"]
+  },
+  {
+    "id": 131,
+    "name": "Kingpaca Cryst",
+    "key": "089B",
+    "image": "palworld/089B-KingpacaCryst.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 132,
+    "name": "Mammorest Cryst",
+    "key": "090B",
+    "image": "palworld/090B-MammorestCryst.webp",
+    "types": ["ice"]
+  },
+  {
+    "id": 133,
+    "name": "Wumpo Botan",
+    "key": "091B",
+    "image": "palworld/091B-WumpoBotan.webp",
+    "types": ["grass"]
+  },
+  {
+    "id": 134,
+    "name": "Jormuntide Ignis",
+    "key": "101B",
+    "image": "palworld/101B-JormuntideIgnis.webp",
+    "types": ["dragon", "fire"]
+  },
+  {
+    "id": 135,
+    "name": "Suzaku Aqua",
+    "key": "102B",
+    "image": "palworld/102B-SuzakuAqua.webp",
+    "types": ["water"]
+  },
+  {
+    "id": 136,
+    "name": "Lyleen Noct",
+    "key": "104B",
+    "image": "palworld/104B-LyleenNoct.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 137,
+    "name": "Frostallion Noct",
+    "key": "110B",
+    "image": "palworld/110B-FrostallionNoct.webp",
+    "types": ["dark"]
+  },
+  {
+    "id": 138,
+    "name": "Selyne",
+    "key": "113",
+    "image": "palworld/113.png",
+    "types": ["dark", "neutral"]
+  },
+  {
+    "id": 139,
+    "name": "Bastigor",
+    "key": "139",
+    "image": "palworld/114.png",
+    "types": ["ice"]
+  }
+]
