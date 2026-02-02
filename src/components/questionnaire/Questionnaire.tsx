@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useQueryState, parseAsString, parseAsArrayOf } from 'nuqs'
 import { BuyMeACoffeeButton, Spinner } from '@/components/ui'
 import { useBoardStore } from '@/store'
 import { Step1ModeSelection } from './Step1ModeSelection'
@@ -16,6 +17,17 @@ export function Questionnaire() {
   const [showGeneratingModal, setShowGeneratingModal] = useState(false)
   const [generationComplete, setGenerationComplete] = useState(false)
   const wasGeneratingRef = useRef(false)
+  const [urlReady] = useQueryState('ready', parseAsString)
+  const [urlFavoriteIds] = useQueryState('f', parseAsArrayOf(parseAsString))
+  const hasRestoredReadyRef = useRef(false)
+
+  // When opening a shared link (URL has ready=1), jump to board-ready screen
+  useEffect(() => {
+    if (urlReady !== '1' || hasRestoredReadyRef.current) return
+    hasRestoredReadyRef.current = true
+    setMode(urlFavoriteIds && urlFavoriteIds.length > 0 ? 'customized' : 'random')
+    setStep(4)
+  }, [urlReady, urlFavoriteIds])
 
   useEffect(() => {
     if (isGenerating) {

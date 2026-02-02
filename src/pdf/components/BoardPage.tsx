@@ -1,6 +1,6 @@
 import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
 import type { PaperSize, BoardSpace } from '@/types'
-import { baseStyles, colors } from './styles'
+import { baseStyles, colors, toAbsoluteSpriteUrl } from './styles'
 import { getSpaceSprite } from '@/components/board/spaceSprites'
 import { getPrimaryType } from '@/lib/typeIcons'
 import { TypeIconPDF } from '@/types/TypeIconPDF'
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   propertyPrice: {
-    fontSize: 4,
+    fontSize: 6,
     textAlign: 'center',
     marginTop: 2,
   },
@@ -226,7 +226,7 @@ function SpaceCell({ space, orientation }: SpaceCellProps) {
         </View>
         <View style={styles.propertyBody}>
           {space.pokemon?.sprite && (
-            <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
+            <PDFImage src={toAbsoluteSpriteUrl(space.pokemon.sprite)} style={styles.pokemonSprite} />
           )}
           <Text style={styles.propertyName}>
             {space.pokemon ? capitalize(space.pokemon.name) : '???'}

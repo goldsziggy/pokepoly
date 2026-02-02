@@ -8,6 +8,9 @@ import {
   getItemBagCardsPageCount,
   getProfessorOakCardsPageCount,
   getMoneyPageCount,
+  getAbsoluteSpriteUrl,
+  setPdfSpriteResolvedMap,
+  webpUrlToPngDataUrl,
   type PrintMaterial,
 } from '@/pdf'
 
@@ -57,6 +60,33 @@ export function GeneratePdfButton() {
     setProgress('Generating PDF...')
 
     try {
+      // Collect all sprite URLs used in the document (board + deeds)
+      const spriteUrls = new Set<string>()
+      for (const space of boardSpaces) {
+        if (space.type === 'property' && space.pokemon?.sprite) spriteUrls.add(space.pokemon.sprite)
+      }
+      // Convert all Palworld (and other local) sprites to PNG data URLs for PDF reliability.
+      // react-pdf doesn't support WebP; converting everything to data URLs also fixes loading for .png.
+      const palworldSpriteUrls = [...spriteUrls]
+        .filter((url) => url.includes('/images/palworld/'))
+        .map((url) => getAbsoluteSpriteUrl(url))
+
+      if (palworldSpriteUrls.length > 0) {
+        setProgress(`Preparing images (${palworldSpriteUrls.length})...`)
+        const resolvedMap = new Map<string, string>()
+        await Promise.all(
+          palworldSpriteUrls.map(async (absoluteUrl) => {
+            try {
+              const dataUrl = await webpUrlToPngDataUrl(absoluteUrl)
+              resolvedMap.set(absoluteUrl, dataUrl)
+            } catch (e) {
+              console.warn('Failed to convert image for PDF:', absoluteUrl, e)
+            }
+          })
+        )
+        setPdfSpriteResolvedMap(resolvedMap)
+      }
+
       // Create the PDF document
       const doc = (
         <BoardDocument
@@ -95,6 +125,7 @@ export function GeneratePdfButton() {
       alert(`Failed to generate PDF: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`)
       setProgress('')
     } finally {
+      setPdfSpriteResolvedMap(null)
       setIsPdfGenerating(false)
     }
   }, [boardSpaces, paperSize, cardSize, boardSize, players, selectedMaterials, setIsPdfGenerating])

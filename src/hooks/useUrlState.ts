@@ -36,11 +36,13 @@ export function useUrlState(options: UrlStateOptions = {}) {
   const [urlSeed, setUrlSeed] = useQueryState('s', parseAsSeed)
   const [urlBoardSize, setUrlBoardSize] = useQueryState('b', parseAsBoardSize)
   const [urlCardSize, setUrlCardSize] = useQueryState('c', parseAsCardSize)
+  const restoringInFlightRef = useRef(false)
 
-  // Restore state from URL on mount
+  // Restore state from URL on mount (and when URL params hydrate, e.g. favorites)
   useEffect(() => {
     if (!options.restoreOnMount) return
     if (didRestoreRef.current) return
+    if (restoringInFlightRef.current) return
 
     // If the URL has no recognized params yet, don't restore anything.
     // (nuqs can hydrate after first render in some deployments.)
@@ -54,67 +56,80 @@ export function useUrlState(options: UrlStateOptions = {}) {
 
     if (!hasAnyParam) return
 
-    // Prevent duplicate restores while async work is in-flight.
-    didRestoreRef.current = true
+    restoringInFlightRef.current = true
 
     const restoreFromUrl = async () => {
-      const updates: Partial<{
-        regions: Region[]
-        favorites: Pokemon[]
-        paperSize: PaperSize
-        boardSize: BoardSize
-        cardSize: CardSize
-        seed: string
-      }> = {}
+      try {
+        const updates: Partial<{
+          regions: Region[]
+          favorites: Pokemon[]
+          paperSize: PaperSize
+          boardSize: BoardSize
+          cardSize: CardSize
+          seed: string
+        }> = {}
 
-      // Parse regions (only if param exists)
-      if (urlRegions && urlRegions.length > 0) {
-        const regions = urlRegions.filter((r): r is Region => REGIONS.includes(r as Region))
-        if (regions.length > 0) updates.regions = regions
-      }
-
-      // Parse paper size (only if param exists and valid)
-      if (urlPaperSize) {
-        const paperSize = (urlPaperSize === 'a4' ? 'a4' : urlPaperSize === 'letter' ? 'letter' : null) as PaperSize | null
-        if (paperSize) updates.paperSize = paperSize
-      }
-
-      // Parse board size (only if param exists and valid)
-      if (urlBoardSize) {
-        const validBoardSizes: BoardSize[] = ['small', 'medium', 'large']
-        if (validBoardSizes.includes(urlBoardSize as BoardSize)) {
-          updates.boardSize = urlBoardSize as BoardSize
+        // Parse regions (only if param exists)
+        if (urlRegions && urlRegions.length > 0) {
+          // Normalize: nuqs may return array of strings or single comma-separated string
+          const raw = urlRegions.flatMap(s => (typeof s === 'string' && s.includes(',') ? s.split(',') : [s]))
+          const regions = raw.filter((r): r is Region => REGIONS.includes(r as Region))
+          if (regions.length > 0) updates.regions = regions
         }
-      }
 
-      // Parse card size (only if param exists and valid)
-      if (urlCardSize) {
-        const validCardSizes: CardSize[] = ['small', 'medium', 'large']
-        if (validCardSizes.includes(urlCardSize as CardSize)) {
-          updates.cardSize = urlCardSize as CardSize
+        // Parse paper size (only if param exists and valid)
+        if (urlPaperSize) {
+          const paperSize = (urlPaperSize === 'a4' ? 'a4' : urlPaperSize === 'letter' ? 'letter' : null) as PaperSize | null
+          if (paperSize) updates.paperSize = paperSize
         }
-      }
 
-      // Parse seed (only if param exists)
-      if (urlSeed) updates.seed = urlSeed
-
-      // Fetch favorite Pokémon if IDs are provided
-      let favorites: Pokemon[] = []
-      if (urlFavoriteIds && urlFavoriteIds.length > 0) {
-        const ids = urlFavoriteIds.map(id => parseInt(id, 10)).filter(id => !isNaN(id))
-        if (ids.length > 0) {
-          try {
-            favorites = await fetchPokemonBatch(ids)
-          } catch (error) {
-            console.error('Failed to fetch favorites from URL:', error)
+        // Parse board size (only if param exists and valid)
+        if (urlBoardSize) {
+          const validBoardSizes: BoardSize[] = ['small', 'medium', 'large']
+          if (validBoardSizes.includes(urlBoardSize as BoardSize)) {
+            updates.boardSize = urlBoardSize as BoardSize
           }
         }
-      }
 
-      if (favorites.length > 0) updates.favorites = favorites
+        // Parse card size (only if param exists and valid)
+        if (urlCardSize) {
+          const validCardSizes: CardSize[] = ['small', 'medium', 'large']
+          if (validCardSizes.includes(urlCardSize as CardSize)) {
+            updates.cardSize = urlCardSize as CardSize
+          }
+        }
 
-      if (Object.keys(updates).length > 0) {
-        restoreState(updates)
+        // Parse seed (only if param exists)
+        if (urlSeed) updates.seed = urlSeed
+
+        // Fetch favorite Pokémon/Pals if IDs are provided
+        // Normalize: nuqs may return array of strings or single comma-separated string
+        let favorites: Pokemon[] = []
+        if (urlFavoriteIds && urlFavoriteIds.length > 0) {
+          const raw = urlFavoriteIds.flatMap(s => (typeof s === 'string' && s.includes(',') ? s.split(',') : [s]))
+          const ids = raw.map(s => parseInt(String(s).trim(), 10)).filter(id => !isNaN(id))
+          if (ids.length > 0) {
+            try {
+              favorites = await fetchPokemonBatch(ids)
+            } catch (error) {
+              console.error('Failed to fetch favorites from URL:', error)
+            }
+          }
+        }
+
+        if (favorites.length > 0) updates.favorites = favorites
+
+        if (Object.keys(updates).length > 0) {
+          restoreState(updates)
+        }
+
+        // Only mark "fully restored" when we had favorite IDs in the URL, so we don't block
+        // a second run when nuqs hydrates f=... after the first run (which had empty favorites).
+        if (urlFavoriteIds && urlFavoriteIds.length > 0) {
+          didRestoreRef.current = true
+        }
+      } finally {
+        restoringInFlightRef.current = false
       }
     }
 
@@ -153,6 +168,7 @@ export function useUrlState(options: UrlStateOptions = {}) {
     if (seed) {
       params.set('s', seed)
     }
+    params.set('ready', '1')
 
     // Prefer Vite BASE_URL so subpath deployments (GitHub/GitLab Pages) share correct links.
     const basePath = (import.meta as ImportMeta & { env?: { BASE_URL?: string } }).env?.BASE_URL || window.location.pathname

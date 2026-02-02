@@ -43,7 +43,7 @@ export const REGION_RANGES: Record<Region, [number, number]> = {
   alola: [722, 809],
   galar: [810, 905],
   paldea: [906, 1025],
-  palworld: [2000, 2136],
+  palworld: [2000, 2138],
 }
 
 export const REGION_LABELS: Record<Region, string> = {

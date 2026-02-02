@@ -1,6 +1,6 @@
 import { Page, View, Text, StyleSheet, Image as PDFImage } from '@react-pdf/renderer'
 import type { PaperSize, BoardSpace, Pokemon, BoardSize } from '@/types'
-import { colors } from './styles'
+import { colors, toAbsoluteSpriteUrl } from './styles'
 import { getSpaceSprite, getGymImage } from '@/components/board/spaceSprites'
 import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 import { getPrimaryType } from '@/lib/typeIcons'
@@ -67,7 +67,7 @@ const createStyles = (
     textAlign: 'center',
   },
   propertyPrice: {
-    fontSize: scale(7),
+    fontSize: scale(10),
     textAlign: 'center',
     marginTop: scale(2),
   },
@@ -344,7 +344,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
   const tileHeight = boardSizePoints / TILE_ROWS
   const collageSpriteSize = scale(50)
   const typeIconSize = scale(16)
-  const propertyCoinSize = scale(8)
+  const propertyCoinSize = scale(12)
   const overlayCoinSize = scale(6)
   const overlayGap = scale(2)
   const overlayMargin = scale(1)
@@ -425,7 +425,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
           </View>
           <View style={styles.propertyBody}>
             {space.pokemon?.sprite && (
-              <PDFImage src={space.pokemon.sprite} style={styles.pokemonSprite} />
+              <PDFImage src={toAbsoluteSpriteUrl(space.pokemon.sprite)} style={styles.pokemonSprite} />
             )}
             <Text style={styles.propertyName}>
               {space.pokemon ? capitalize(space.pokemon.name) : '???'}
@@ -816,7 +816,7 @@ export function BoardTilePage({ spaces, paperSize, boardSize, tileRow, tileCol }
                     alignItems: 'center',
                   }}
                 >
-                  <PDFImage src={poke.sprite} style={styles.collageSprite} />
+                  <PDFImage src={toAbsoluteSpriteUrl(poke.sprite)} style={styles.collageSprite} />
                   <Text style={styles.collageLabel}>{capitalize(poke.name)}</Text>
                 </View>
               )

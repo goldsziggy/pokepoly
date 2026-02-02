@@ -34,6 +34,151 @@ const BOARD_LAYOUT: { color: BoardColor; count: number }[] = [
   { color: 'darkblue', count: 2 },     // Dark Blue (2)
 ]
 
+const COLOR_SLOT_COUNTS: Record<BoardColor, number> = BOARD_LAYOUT.reduce(
+  (acc, { color, count }) => {
+    acc[color] = count
+    return acc
+  },
+  {} as Record<BoardColor, number>
+)
+
+const COLORS_BY_CAPACITY_DESC: BoardColor[] = [...BOARD_LAYOUT]
+  .slice()
+  .sort((a, b) => b.count - a.count)
+  .map(e => e.color)
+
+function emptyTypeColorMapping(): Record<BoardColor, string | null> {
+  return {
+    brown: null,
+    lightblue: null,
+    pink: null,
+    orange: null,
+    red: null,
+    yellow: null,
+    green: null,
+    darkblue: null,
+  }
+}
+
+function resolveTypeColorMappingForFavorites(
+  mapping: RandomizerConfig['typeColorMapping'],
+  favorites: Pokemon[]
+): Record<BoardColor, string | null> | undefined {
+  if (!favorites || favorites.length === 0) return mapping ? { ...mapping } : undefined
+
+  const favoriteTypes = new Map<string, number>()
+  for (const fav of favorites) {
+    const primaryType = getPrimaryType(fav.types)
+    if (!primaryType) continue
+    favoriteTypes.set(primaryType, (favoriteTypes.get(primaryType) || 0) + 1)
+  }
+  if (favoriteTypes.size === 0) return mapping ? { ...mapping } : undefined
+
+  const resolved = mapping ? { ...mapping } : emptyTypeColorMapping()
+
+  // If no mapping is provided, allocate colors to favorite types so every favorite fits.
+  if (!mapping) {
+    const colors = [...COLORS_BY_CAPACITY_DESC]
+    const typesByCount = Array.from(favoriteTypes.entries()).sort((a, b) => b[1] - a[1])
+
+    for (const [type, count] of typesByCount) {
+      let remaining = count
+      while (remaining > 0 && colors.length > 0) {
+        const color = colors.shift()!
+        resolved[color] = type
+        remaining -= COLOR_SLOT_COUNTS[color]
+      }
+    }
+
+    return resolved
+  }
+
+  // If a mapping exists, keep explicit assignments, but use any null colors to duplicate
+  // types that have more favorites than their currently-assigned capacity.
+  const nullColors = COLORS_BY_CAPACITY_DESC.filter(color => resolved[color] === null)
+
+  for (const [type, count] of favoriteTypes) {
+    const assignedCapacity = (Object.entries(resolved) as Array<[BoardColor, string | null]>)
+      .filter(([, t]) => t === type)
+      .reduce((sum, [color]) => sum + COLOR_SLOT_COUNTS[color], 0)
+
+    let remaining = count - assignedCapacity
+    while (remaining > 0 && nullColors.length > 0) {
+      const color = nullColors.shift()!
+      resolved[color] = type
+      remaining -= COLOR_SLOT_COUNTS[color]
+    }
+  }
+
+  return resolved
+}
+
+function distributeFavoritesToColors(
+  favorites: Pokemon[],
+  typeColorMapping: Record<BoardColor, string | null> | undefined
+): Map<BoardColor, Pokemon[]> {
+  const byColor = new Map<BoardColor, Pokemon[]>()
+  for (const { color } of BOARD_LAYOUT) byColor.set(color, [])
+
+  if (!favorites || favorites.length === 0) return byColor
+
+  const favoritesByType = new Map<string, Pokemon[]>()
+  const overflow: Pokemon[] = []
+
+  for (const fav of favorites) {
+    const primaryType = getPrimaryType(fav.types)
+    if (!primaryType) {
+      overflow.push(fav)
+      continue
+    }
+    if (!favoritesByType.has(primaryType)) favoritesByType.set(primaryType, [])
+    favoritesByType.get(primaryType)!.push(fav)
+  }
+
+  if (typeColorMapping) {
+    const colorsByType = new Map<string, BoardColor[]>()
+    for (const [color, type] of Object.entries(typeColorMapping) as Array<[BoardColor, string | null]>) {
+      if (!type) continue
+      if (!colorsByType.has(type)) colorsByType.set(type, [])
+      colorsByType.get(type)!.push(color)
+    }
+
+    // Distribute favorites into all colors that share their type, honoring each color's capacity.
+    for (const [type, favs] of favoritesByType) {
+      const colors = (colorsByType.get(type) || []).slice().sort((a, b) => COLOR_SLOT_COUNTS[b] - COLOR_SLOT_COUNTS[a])
+      let idx = 0
+      for (const color of colors) {
+        const capacity = COLOR_SLOT_COUNTS[color]
+        const existing = byColor.get(color) || []
+        const space = Math.max(0, capacity - existing.length)
+        if (space <= 0) continue
+        const slice = favs.slice(idx, idx + space)
+        if (slice.length > 0) byColor.set(color, [...existing, ...slice])
+        idx += slice.length
+        if (idx >= favs.length) break
+      }
+      if (idx < favs.length) overflow.push(...favs.slice(idx))
+    }
+  } else {
+    // No mapping: everything becomes overflow and will be distributed by remaining capacity.
+    for (const favs of favoritesByType.values()) overflow.push(...favs)
+  }
+
+  // Place any overflow favorites into remaining slots (may mix types within a color group).
+  if (overflow.length > 0) {
+    for (const color of COLORS_BY_CAPACITY_DESC) {
+      if (overflow.length === 0) break
+      const capacity = COLOR_SLOT_COUNTS[color]
+      const existing = byColor.get(color) || []
+      const space = Math.max(0, capacity - existing.length)
+      if (space <= 0) continue
+      byColor.set(color, [...existing, ...overflow.splice(0, space)])
+    }
+  }
+
+  return byColor
+}
+
 export function getBSTTier(bst: number): BSTTier {
   if (bst <= 300) return 'very-common'
   if (bst <= 420) return 'common'
@@ -88,6 +233,9 @@ export function randomizeBoard(
   config: RandomizerConfig
 ): BoardAssignment {
   const rng = seedrandom(config.seed)
+  const pinnedFavoriteIds = new Set<number>(config.favorites.map(f => f.id))
+  const resolvedTypeColorMapping = resolveTypeColorMappingForFavorites(config.typeColorMapping, config.favorites)
+  const favoritesByColor = distributeFavoritesToColors(config.favorites, resolvedTypeColorMapping)
 
   // Log input state
   console.log('[Randomizer] Input state:', {
@@ -122,28 +270,10 @@ export function randomizeBoard(
   // Create slots based on board layout
   const properties: BoardSlot[] = []
 
-  // Process favorites - group by their assigned color (if type mapping exists)
-  const usedFavoriteIds = new Set<number>()
-  const favoritesByColor = new Map<BoardColor, Pokemon[]>()
-  
-  // If we have type mapping, assign favorites to colors based on their type
-  if (config.typeColorMapping) {
-    for (const fav of config.favorites) {
-      const primaryType = getPrimaryType(fav.types)
-      if (primaryType) {
-        // Find which color this type is assigned to
-        for (const [color, type] of Object.entries(config.typeColorMapping)) {
-          if (type === primaryType) {
-            if (!favoritesByColor.has(color as BoardColor)) {
-              favoritesByColor.set(color as BoardColor, [])
-            }
-            favoritesByColor.get(color as BoardColor)!.push(fav)
-            usedFavoriteIds.add(fav.id)
-            break
-          }
-        }
-      }
-    }
+  // Track which Pokémon have already been placed on the board (favorites + generated picks)
+  const usedPokemonIds = new Set<number>()
+  for (const favs of favoritesByColor.values()) {
+    for (const fav of favs) usedPokemonIds.add(fav.id)
   }
 
   // Track types already assigned to colors for diversity
@@ -175,27 +305,26 @@ export function randomizeBoard(
   // Fill each color group
   for (const { color, count } of BOARD_LAYOUT) {
     // Get available Pokémon (excluding already used)
-    const available = filteredPokemon.filter(p => !usedFavoriteIds.has(p.id))
+    const available = filteredPokemon.filter(p => !usedPokemonIds.has(p.id))
     
     console.log(`[Randomizer] Processing color group "${color}" (need ${count}):`, {
       availableCount: available.length,
       availableRegions: [...new Set(available.map(p => p.region))],
-      usedFavoriteIdsCount: usedFavoriteIds.size,
+      usedPokemonIdsCount: usedPokemonIds.size,
     })
 
     // Get favorites for this color
     const favoritesForThisColor = favoritesByColor.get(color) || []
-    // Limit to count
     const favoritesToUse = favoritesForThisColor.slice(0, count)
-    favoritesToUse.forEach(fav => usedFavoriteIds.add(fav.id))
+    favoritesToUse.forEach(fav => usedPokemonIds.add(fav.id))
 
     // Determine the primary type for this color group
     // Use explicit mapping if provided, otherwise auto-determine
     let targetType: string | null = null
     
-    if (config.typeColorMapping && config.typeColorMapping[color] !== null) {
+    if (resolvedTypeColorMapping && resolvedTypeColorMapping[color] !== null) {
       // Use explicit type-to-color mapping (only if not null)
-      targetType = config.typeColorMapping[color]!
+      targetType = resolvedTypeColorMapping[color]!
       usedTypes.add(targetType)
     } else if (favoritesToUse.length > 0) {
       // Use the primary type of the first favorite
@@ -358,9 +487,9 @@ export function randomizeBoard(
         if (slotsToFill <= 0) break
         for (const pokemon of familyMembers) {
           if (slotsToFill <= 0) break
-          if (!usedFavoriteIds.has(pokemon.id)) {
+          if (!usedPokemonIds.has(pokemon.id)) {
             selectedPokemon.push(pokemon)
-            usedFavoriteIds.add(pokemon.id)
+            usedPokemonIds.add(pokemon.id)
             slotsToFill--
           }
         }
@@ -370,7 +499,7 @@ export function randomizeBoard(
       // but still try to keep evolution families together
       if (slotsToFill > 0) {
         const fallbackAvailable = available.filter(
-          p => !usedFavoriteIds.has(p.id) && getPrimaryType(p.types) === targetType
+          p => !usedPokemonIds.has(p.id) && getPrimaryType(p.types) === targetType
         )
         
         // Group fallback by evolution family
@@ -390,9 +519,9 @@ export function randomizeBoard(
           if (slotsToFill <= 0) break
           for (const pokemon of familyMembers) {
             if (slotsToFill <= 0) break
-            if (!usedFavoriteIds.has(pokemon.id)) {
+            if (!usedPokemonIds.has(pokemon.id)) {
               selectedPokemon.push(pokemon)
-              usedFavoriteIds.add(pokemon.id)
+              usedPokemonIds.add(pokemon.id)
               slotsToFill--
             }
           }
@@ -404,11 +533,13 @@ export function randomizeBoard(
     const selectedTypes = new Set(selectedPokemon.map(p => getPrimaryType(p.types)).filter(Boolean))
     if (selectedTypes.size > 1 && targetType) {
       // If we have mixed types, prioritize the target type
-      const otherTypePokemon = selectedPokemon.filter(p => getPrimaryType(p.types) !== targetType)
+      const otherTypePokemon = selectedPokemon.filter(
+        p => getPrimaryType(p.types) !== targetType && !pinnedFavoriteIds.has(p.id)
+      )
       
       // Try to replace other types with target type if possible
       const replacementCandidates = typeFilteredAvailable.filter(
-        p => !usedFavoriteIds.has(p.id) && !selectedPokemon.includes(p)
+        p => !usedPokemonIds.has(p.id) && !selectedPokemon.includes(p)
       )
       
       if (replacementCandidates.length > 0) {
@@ -418,9 +549,9 @@ export function randomizeBoard(
           const replacement = replacementCandidates.shift()!
           const index = selectedPokemon.indexOf(toReplace)
           if (index !== -1) {
-            usedFavoriteIds.delete(toReplace.id)
+            usedPokemonIds.delete(toReplace.id)
             selectedPokemon[index] = replacement
-            usedFavoriteIds.add(replacement.id)
+            usedPokemonIds.add(replacement.id)
           }
         }
       }

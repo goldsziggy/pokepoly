@@ -10,6 +10,42 @@ const getBaseUrl = () => {
   return base.endsWith('/') ? base : `${base}/`
 }
 
+// Set before pdf() so WebP sprites can be resolved to PNG data URLs (react-pdf doesn't support WebP).
+let pdfSpriteResolvedMap: Map<string, string> | null = null
+
+export function setPdfSpriteResolvedMap(map: Map<string, string> | null): void {
+  pdfSpriteResolvedMap = map
+}
+
+/**
+ * Convert a sprite URL to an absolute URL for @react-pdf/renderer.
+ * Relative paths (e.g. /images/palworld/xxx.webp) must be absolute so the renderer can fetch them.
+ * If a WebP→PNG conversion was prepared (setPdfSpriteResolvedMap), returns the data URL instead.
+ */
+export function toAbsoluteSpriteUrl(sprite: string | undefined): string {
+  if (!sprite) return ''
+  const isAbsolute = sprite.startsWith('http://') || sprite.startsWith('https://')
+  const absolute = isAbsolute
+    ? sprite
+    : typeof window !== 'undefined'
+      ? `${window.location.origin}${getBaseUrl().replace(/\/$/, '') || ''}${sprite.startsWith('/') ? sprite : `/${sprite}`}`
+      : sprite
+  if (pdfSpriteResolvedMap?.has(absolute)) {
+    return pdfSpriteResolvedMap.get(absolute)!
+  }
+  return absolute
+}
+
+/** Build absolute URL for a sprite (for PDF prep); does not use resolved map. */
+export function getAbsoluteSpriteUrl(sprite: string): string {
+  if (!sprite) return ''
+  if (sprite.startsWith('http://') || sprite.startsWith('https://')) return sprite
+  if (typeof window === 'undefined') return sprite
+  const base = getBaseUrl().replace(/\/$/, '') || ''
+  const path = sprite.startsWith('/') ? sprite : `/${sprite}`
+  return `${window.location.origin}${base}${path}`
+}
+
 const fontUrl =
   typeof window !== 'undefined'
     ? `${window.location.origin}${getBaseUrl()}fonts/PressStart2P-Regular.ttf`

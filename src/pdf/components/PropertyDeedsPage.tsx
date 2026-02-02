@@ -1,7 +1,7 @@
 import { Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer'
 import type { PaperSize, PropertySpace, GymSpace, CardSize } from '@/types'
 import { CARD_SIZE_MULTIPLIERS, PAPER_DIMENSIONS } from '@/types/board'
-import { colors, baseStyles, deedStyles } from './styles'
+import { colors, baseStyles, deedStyles, toAbsoluteSpriteUrl } from './styles'
 import { getGymImage } from '@/components/board/spaceSprites'
 import { PokeCoinPDF } from '@/components/ui/PokeCoin'
 
@@ -99,7 +99,7 @@ function PropertyDeed({ property, cardSize }: PropertyDeedProps) {
       <View style={[deedStyles.deedBody, { padding: 6 * contentScale }]}>
         {property.pokemon?.sprite && (
           <View style={deedStylesScaled.spriteContainer}>
-            <Image src={property.pokemon.sprite} style={deedStylesScaled.sprite} />
+            <Image src={toAbsoluteSpriteUrl(property.pokemon.sprite)} style={deedStylesScaled.sprite} />
           </View>
         )}
         <Text style={[deedStyles.deedName, { fontSize: 7 * contentScale, marginBottom: 6 * contentScale }]}>
